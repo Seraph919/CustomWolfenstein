@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 15:12:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:53:42 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,38 @@
 
 #define SUCCESS 0
 #define ERROR 1
+#define SYERROR 2
+
+// ** this will be used to store the paths to the direction textures..
+typedef struct s_direction{
+    char *east_p;
+    char *west_p;
+    char *north_p;
+    char *south_p;
+} t_direction_p;
 
 typedef struct s_data{
     void *mlx_ptr;
     void *win_ptr;
     char **map;
+    char **cub_file;
     size_t map_x;
     size_t map_y;
     size_t player_x;
+    char *f_color;
+    char *c_color;
     size_t player_y;
+    t_direction_p *direction_paths;
 }   t_data;
+
+int char_in(char *s);
+bool not_in_str(char c, char *s);
+bool not_in_str(char c, char *s);
+bool is_white_space(char c);
+bool file_copying(t_data *data, int len);
+bool get_allocation_size(int *y);
+bool file_read(t_data *data);
+bool file_related(t_data *data);
+bool is_first_in(char c, char *s);
 
 #endif

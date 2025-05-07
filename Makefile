@@ -12,7 +12,8 @@ LIB = -Lminilibx-linux -l:libmlx_Linux.a -lX11 -lXext
 CLIB = cub3d.a
 LIBFT = src/libft/libft.a
 
-SRCS = main.c
+SRCS = main.c parsing_utils.c
+
 LIBFT_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
     	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
 		ft_lstclear_bonus.c ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstlast_bonus.c \
@@ -28,7 +29,7 @@ SRC_GNL = get_next_line_utils.c get_next_line.c
 PFDOBJ = $(addprefix src/printfd/, $(SRC_PFD:.c=.o))
 GNLOBJ = $(addprefix src/get_next_line/, $(SRC_GNL:.c=.o))
 OBJGRB = $(addprefix src/gc/, $(SRC_GRB:.c=.o))
-OBJS = $(SRCS:.c=.o)
+OBJS = $(addprefix src/utils/, $(SRCS:.c=.o))
 
 all: $(NAME)
 

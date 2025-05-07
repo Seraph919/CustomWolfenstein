@@ -6,6 +6,7 @@
         "scminput": false
     },
     "files.associations": {
-        "libft.h": "c"
+        "libft.h": "c",
+        "cub3d.h": "c"
     }
 }
