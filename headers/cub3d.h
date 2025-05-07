@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/06 18:53:35 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:12:31 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include "../lib/mlx.h"
+#include "../src/libft/libft.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 #include "../src/printfd/printfd.h"
-#include "../src/C_Garbage-Collector_v2/garbage.h"
+#include "../src/gc/garbage.h"
 #include "../src/get_next_line/get_next_line.h"
 
 #define SUCCESS 0

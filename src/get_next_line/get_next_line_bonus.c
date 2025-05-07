@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:05 by asoudani          #+#    #+#             */
-/*   Updated: 2024/11/28 13:22:14 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:10:43 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_next_line(int fd)
 		if (readen == -1)
 			return (fireforce(&stored[fd], &allocated), NULL);
 		allocated[readen] = '\0';
-		stored[fd] = ft_strjoin(stored[fd], allocated);
+		stored[fd] = ft_strrjoin(stored[fd], allocated);
 		if (!stored[fd])
 			return (fireforce(&stored[fd], &allocated), NULL);
 	}

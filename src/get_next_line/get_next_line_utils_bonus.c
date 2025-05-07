@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:12 by asoudani          #+#    #+#             */
-/*   Updated: 2024/11/27 20:26:03 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:10:27 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (returned);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strrjoin(char *s1, char *s2)
 {
 	int		len1;
 	int		len2;
