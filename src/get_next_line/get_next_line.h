@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:14:48 by asoudani          #+#    #+#             */
-/*   Updated: 2024/11/28 13:21:07 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:00:40 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *str, int search_str);
 char	*ft_strdup(const char *str1);
-void	fireforce(char **stored, char **allocated);
+void	fireforcee(char **stored, char **allocated);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
 void	allocation(char **stored, char **allocated);

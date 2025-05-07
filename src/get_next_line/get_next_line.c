@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:25 by asoudani          #+#    #+#             */
-/*   Updated: 2024/11/28 13:25:36 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:00:56 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	allocation(char **stored, char **allocated)
 	}
 }
 
-void	fireforce(char **stored, char **allocated)
+void	fireforcee(char **stored, char **allocated)
 {
 	free(*stored);
 	*stored = NULL;
@@ -85,7 +85,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	allocation(&stored, &allocated);
 	if (!stored || !allocated)
-		return (fireforce(&stored, &allocated), NULL);
+		return (fireforcee(&stored, &allocated), NULL);
 	readen = 1;
 	while (!(ft_strchr(stored, '\n')) && readen > 0)
 	{
@@ -93,14 +93,14 @@ char	*get_next_line(int fd)
 		if (readen == 0)
 			break ;
 		if (readen == -1)
-			return (fireforce(&stored, &allocated), NULL);
+			return (fireforcee(&stored, &allocated), NULL);
 		allocated[readen] = '\0';
 		stored = ft_strjoin(stored, allocated);
 		if (!stored)
-			return (fireforce(&stored, &allocated), NULL);
+			return (fireforcee(&stored, &allocated), NULL);
 	}
 	if (ft_strcmp(stored, "") == 0)
-		return (fireforce(&stored, &allocated), NULL);
+		return (fireforcee(&stored, &allocated), NULL);
 	return (free(allocated), returned_line(&stored, readen));
 }
 // int main()

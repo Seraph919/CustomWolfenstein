@@ -37,3 +37,6 @@ $(CLIB): $(OBJGRB) $(PFDOBJ) $(GNLOBJ) $(OBJS)
 
 $(NAME): $(CLIB)
 	cc $(CFLAGS) $(CLIB) $(LIB) -o $(NAME)
+
+test :
+	make re && make clean && clear && ./cub3D
