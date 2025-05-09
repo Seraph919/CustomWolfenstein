@@ -83,17 +83,17 @@
 //     {
 //         if (char_in(data->cub_file[i]) && char_in(data->cub_file[i]) != SYERROR)
 //         {
-//             if (data->cub_file[i] && is_first_in('N', data->cub_file[i])) // NO
-//                 direction->north_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
-//             else if (data->cub_file[i] && is_first_in('S', data->cub_file[i])) // SO
-//                 direction->south_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
-//             else if (data->cub_file[i] && is_first_in('W', data->cub_file[i])) // WE
-//                 direction->west_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
-//             else if (data->cub_file[i] && is_first_in('E', data->cub_file[i])) // EA
-//                 direction->east_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
-//             else if (data->cub_file[i] && is_first_in('F', data->cub_file[i])) // F
+//             if (data->cub_file[i] && TILE_SIZE_first_in('N', data->cub_file[i])) // NO
+//                 direction->north_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (data->cub_file[i] && TILE_SIZE_first_in('S', data->cub_file[i])) // SO
+//                 direction->south_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (data->cub_file[i] && TILE_SIZE_first_in('W', data->cub_file[i])) // WE
+//                 direction->west_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (data->cub_file[i] && TILE_SIZE_first_in('E', data->cub_file[i])) // EA
+//                 direction->east_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (data->cub_file[i] && TILE_SIZE_first_in('F', data->cub_file[i])) // F
 //                 data->f_color = ft_strdup(data->cub_file[i]);
-//             else if (data->cub_file[i] && is_first_in('C', data->cub_file[i])) // C 
+//             else if (data->cub_file[i] && TILE_SIZE_first_in('C', data->cub_file[i])) // C 
 //                 data->c_color = ft_strdup(data->cub_file[i]);
 //             else
 //                 data->map[k++] = ft_strdup(data->cub_file[i]);
@@ -130,16 +130,53 @@
 //     if (ac != 1)
 //         return (1);
 //     t_data data;
-//     t_game *game;
+//     t_data *data;
 //     (void)av;
 //     data.mlx_ptr = mlx_init();
 //     if (file_related(&data))
 //         return (ERROR);
-//     start_game(&game);
-//     finish_game(&game);
+//     start_data(&data);
+//     finTILE_SIZEh_data(&data);
 //     fireforce();
 //     return (SUCCESS);
 // }
+
+int	TILE_SIZE_valid_move(t_data *data, int new_x, int new_y)
+{
+	static int	i = 1;
+
+	if (new_x < 0 || new_x >= MAP_W
+		|| new_y < 0 || new_y >= MAP_H)
+		return (0);
+	if (data->map[new_y][new_x] == '1')
+		return (0);
+	if (data->map[new_y][new_x] == '0'
+			|| data->map[new_y][new_x] == 'C')
+		printf("Move-> %d\n", i++);
+	return (1);
+}
+
+void	update_player_position(t_data *data, int new_x, int new_y)
+{
+	mlx_put_image_to_window(
+		data->mlx,
+		data->window,
+		data->img,
+		data->player->x * TILE_SIZE,
+		data->player->y * TILE_SIZE
+		);
+	data->map[data->player->y][data->player->x] = '0';
+	data->map[new_y][new_x] = 'P';
+	data->player->x = new_x;
+	data->player->y = new_y;
+	mlx_put_image_to_window(
+		data->mlx,
+		data->window,
+		data->img,
+		new_x * TILE_SIZE,
+		new_y * TILE_SIZE
+		);
+}
 
 void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -149,7 +186,7 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int *)(data->addr + pixel) = color;
 }
 
-void render_map(t_data *data, int map[MAP_H][MAP_W])
+void render_map(t_data *data, char **map)
 {
     int y;
     int x;
@@ -164,14 +201,14 @@ void render_map(t_data *data, int map[MAP_H][MAP_W])
         while (x < MAP_W)
         {
             dy = 0;
-            if (map[y][x] == 1)
+            if (map[y][x] == '1')
                 color = WALL_COLOR;
-            if (map[y][x] == 0)
+            if (map[y][x] == '0')
                 color = EMPTY_COLOR;
-            if (map[y][x] == 2)
+            if (map[y][x] == '2')
             {
-                // data->player->x = x;
-                // data->player->y = y;
+                data->player->x = x;
+                data->player->y = y;
                 color = PLAYER;
             }
             while (dy < TILE_SIZE)
@@ -190,7 +227,7 @@ void render_map(t_data *data, int map[MAP_H][MAP_W])
     }
 }
 
-int init_mlx(t_data *data)
+int init_mlx(t_data *data, char **map)
 {
     data->mlx = mlx_init();
     if (!data->mlx)
@@ -204,6 +241,7 @@ int init_mlx(t_data *data)
         printf("mlx_new_window failed\n");
         return (0);
     }
+    data->map = map;
     data->img = mlx_new_image(data->mlx, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE);
     data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endian);
     return (1);
@@ -218,49 +256,51 @@ int close_window(t_data *data)
     exit(0);
 }
 
-// int key_press(int keycode, t_data *data)
-// {
-//     int x;
-//     int y;
+int key_press(int keycode, t_data *data)
+{
+    int x;
+    int y;
 
-//     x = data->player->x;
-//     x = data->player->y;
-//     if (keycode == U_KEY)
-//         y--;
-//     if (keycode == D_KEY)
-//         y++;
-//     if (keycode == L_KEY)
-//         x--;
-//     if (keycode == R_KEY)
-//         x++;
+    x = data->player->x;
+    y = data->player->y;
+    if (keycode == U_KEY)
+        y--;
+    if (keycode == D_KEY)
+        y++;
+    if (keycode == L_KEY)
+        x--;
+    if (keycode == R_KEY)
+        x++;
     
-//     if (is_valid_move())
-//         update_player_position(data);
-//     return (0);
-// }
+    if (TILE_SIZE_valid_move(data, x, y))
+        update_player_position(data, x, y);
+    return (0);
+}
 
 int main()
 {
     t_data data;
-    int map[MAP_H][MAP_W] = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1},
-        {1, 1, 1, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-        {1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    char *map[1024] = {
+        "111111111111111",
+        "100000000101001",
+        "111002010000011",
+        "101000011110001",
+        "101110000010001",
+        "100010111010101",
+        "101010101010101",
+        "101010101110101",
+        "101011100000101",
+        "101000000000001",
+        "111111111111111"
     };
 
-    if (!init_mlx(&data))
+
+
+    if (!init_mlx(&data, map))
         return (1);
     render_map(&data, map);
     mlx_put_image_to_window(data.mlx, data.window, data.img, 0, 0);
-    // mlx_hook(data.window, 2, 1L << 0, key_press, &data);
+    mlx_hook(data.window, 2, 1L << 0, key_press, &data);
     mlx_hook(data.window, 17, 0, close_window, &data);
     mlx_loop(data.mlx);
 

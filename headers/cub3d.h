@@ -70,24 +70,25 @@ typedef struct s_direction
 //     t_direction_p *dir_paths;
 // }   t_data;
 
+typedef struct s_player
+{
+    int x;
+    int y;
+    float angle;
+} t_player;
+
 typedef struct s_data
 {
     void *mlx;
     void *window;
     void *img;
     char *addr;
+    char  **map;
     int bpp;
     int size_line;
     int endian;
-    // t_player *player;
+    t_player *player;
 } t_data;
-
-typedef struct s_player
-{
-    float x;
-    float y;
-    float angle;
-} t_player;
 
 // typedef struct s_game
 // {
