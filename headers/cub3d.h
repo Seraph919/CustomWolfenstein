@@ -32,12 +32,19 @@
 #define SYERROR 2
 
 
-#define MAP_W 13
-#define MAP_H 10
-#define TILE_SIZE 64
+#define MAP_W 15
+#define MAP_H 11
+#define TILE_SIZE 16
 
-#define WALL_COLOR 0xFF0000
+#define WALL_COLOR 0x000080
 #define EMPTY_COLOR 0x808080
+#define PLAYER 0xFFFF00
+
+
+# define U_KEY 119
+# define D_KEY 115
+# define L_KEY 97
+# define R_KEY 100
 
 // ** this will be used to store the paths to the direction textures..
 typedef struct s_direction
@@ -72,7 +79,15 @@ typedef struct s_data
     int bpp;
     int size_line;
     int endian;
+    // t_player *player;
 } t_data;
+
+typedef struct s_player
+{
+    float x;
+    float y;
+    float angle;
+} t_player;
 
 // typedef struct s_game
 // {

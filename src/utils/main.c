@@ -155,6 +155,7 @@ void render_map(t_data *data, int map[MAP_H][MAP_W])
     int x;
     int dy;
     int dx;
+    int color;
 
     y = 0;
     while (y < MAP_H)
@@ -163,7 +164,16 @@ void render_map(t_data *data, int map[MAP_H][MAP_W])
         while (x < MAP_W)
         {
             dy = 0;
-            int color = (map[y][x] == 1) ? WALL_COLOR : EMPTY_COLOR;
+            if (map[y][x] == 1)
+                color = WALL_COLOR;
+            if (map[y][x] == 0)
+                color = EMPTY_COLOR;
+            if (map[y][x] == 2)
+            {
+                // data->player->x = x;
+                // data->player->y = y;
+                color = PLAYER;
+            }
             while (dy < TILE_SIZE)
             {
                 dx = 0;
@@ -183,18 +193,20 @@ void render_map(t_data *data, int map[MAP_H][MAP_W])
 int init_mlx(t_data *data)
 {
     data->mlx = mlx_init();
-    if (!data->mlx) {
+    if (!data->mlx)
+    {
         printf("mlx_init failed\n");
-        return 1;
+        return (0);
     }
     data->window = mlx_new_window(data->mlx, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE, "Cub3D Map");
-    if (!data->window) {
+    if (!data->window)
+    {
         printf("mlx_new_window failed\n");
-        return 1;
+        return (0);
     }
     data->img = mlx_new_image(data->mlx, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE);
     data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endian);
-    return 0;
+    return (1);
 }
 
 int close_window(t_data *data)
@@ -206,21 +218,49 @@ int close_window(t_data *data)
     exit(0);
 }
 
+// int key_press(int keycode, t_data *data)
+// {
+//     int x;
+//     int y;
+
+//     x = data->player->x;
+//     x = data->player->y;
+//     if (keycode == U_KEY)
+//         y--;
+//     if (keycode == D_KEY)
+//         y++;
+//     if (keycode == L_KEY)
+//         x--;
+//     if (keycode == R_KEY)
+//         x++;
+    
+//     if (is_valid_move())
+//         update_player_position(data);
+//     return (0);
+// }
+
 int main()
 {
+    t_data data;
     int map[MAP_H][MAP_W] = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 1, 1, 1, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1},
+        {1, 1, 1, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 1},
+        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1},
+        {1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1},
+        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    t_data data;
-    if (init_mlx(&data))
-        return 1;
+    if (!init_mlx(&data))
+        return (1);
     render_map(&data, map);
     mlx_put_image_to_window(data.mlx, data.window, data.img, 0, 0);
+    // mlx_hook(data.window, 2, 1L << 0, key_press, &data);
     mlx_hook(data.window, 17, 0, close_window, &data);
     mlx_loop(data.mlx);
 
