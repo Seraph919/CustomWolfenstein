@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 19:23:13 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:18:53 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ bool file_copying(t_data *data, int len)
     close(fd);
     return (SUCCESS);
 }
+
+
 
 bool get_allocation_size(int *y)
 {
@@ -75,7 +77,8 @@ bool outer_resources(t_data *data)
     
     data->direction_paths = malloc(sizeof (t_direction_p));
     if (!data->direction_paths)
-        return (ERROR);
+    return (ERROR);
+    set_tozero(data);
     direction = data->direction_paths;
     data->map = malloc(sizeof(char *) * (data->map_y - 6) + 1);
     if (!data->map)
@@ -87,17 +90,17 @@ bool outer_resources(t_data *data)
         if (char_in(data->cub_file[i]) && char_in(data->cub_file[i]) != SYERROR)
         {
             if (data->cub_file[i] && is_first_in('N', data->cub_file[i])) // NO
-                direction->north_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
+                direction->north_p  = ft_strdup(data->cub_file[i]), direction->n_ofn++; // free the pre-existed one..
             else if (data->cub_file[i] && is_first_in('S', data->cub_file[i])) // SO
-                direction->south_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
+                direction->south_p  = ft_strdup(data->cub_file[i]), direction->n_ofs++; // free the pre-existed one..
             else if (data->cub_file[i] && is_first_in('W', data->cub_file[i])) // WE
-                direction->west_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
+                direction->west_p  = ft_strdup(data->cub_file[i]), direction->n_ofw++; // free the pre-existed one..
             else if (data->cub_file[i] && is_first_in('E', data->cub_file[i])) // EA
-                direction->east_p  = ft_strdup(data->cub_file[i]); // free the pre-existed one..
+                direction->east_p  = ft_strdup(data->cub_file[i]), direction->n_ofe++; // free the pre-existed one..
             else if (data->cub_file[i] && is_first_in('F', data->cub_file[i])) // F
-                data->f_color = ft_strdup(data->cub_file[i]);
+                data->f_color = ft_strdup(data->cub_file[i]), direction->n_off++;
             else if (data->cub_file[i] && is_first_in('C', data->cub_file[i])) // C 
-                data->c_color = ft_strdup(data->cub_file[i]);
+                data->c_color = ft_strdup(data->cub_file[i]), direction->n_ofc++;
             else
                 data->map[k++] = ft_strdup(data->cub_file[i]);
         }
@@ -105,6 +108,16 @@ bool outer_resources(t_data *data)
     data->map[k] = NULL;
     data->map_y = k;
     return (SUCCESS);
+}
+
+void set_tozero(t_data *data)
+{
+    data->direction_paths->n_ofe = 0;
+    data->direction_paths->n_ofw = 0;
+    data->direction_paths->n_ofs = 0;
+    data->direction_paths->n_ofn = 0;
+    data->direction_paths->n_ofc = 0;
+    data->direction_paths->n_off = 0;
 }
 
 bool texture_loading(t_data *data)
@@ -131,12 +144,23 @@ bool texture_loading(t_data *data)
     return (SUCCESS);
 }
 
+bool outer_error_check(t_data *data)
+{
+    t_direction_p *dir;
+    
+    dir = data->direction_paths;
+    if (dir ->n_ofs > 1 || dir ->n_ofn > 1 || dir ->n_ofw > 1 
+        || dir ->n_ofe > 1 || dir ->n_ofc > 1 || dir ->n_off > 1)
+        return (ERROR);
+    return (SUCCESS);
+}
+
 bool file_related(t_data *data)
 {
-    if (file_read(data))
-    return (printfd(2, "Found an Error in .cub Processing\n"),ERROR);
-    if (outer_resources(data)) // need to free in case of errors
-    return (printfd(2, "Found an Error in The .cub File\n"), ERROR); // also here
+    if (file_read(data) || outer_resources(data) || outer_error_check(data))
+        return (printfd(2, "Found an Error in .cub Processing\n"),ERROR);
+     // need to free in case of errors
+
     printf("north :%s", data->direction_paths->north_p);
     printf("west :%s", data->direction_paths->west_p);
     printf("east :%s", data->direction_paths->east_p);

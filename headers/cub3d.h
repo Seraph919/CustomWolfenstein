@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 18:34:29 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:11:47 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,22 @@ typedef struct s_direction{
     char *west_p;
     char *north_p;
     char *south_p;
+    int n_ofs;
+    int n_ofn;
+    int n_ofe;
+    int n_ofw;
+    int n_off;
+    int n_ofc;
 } t_direction_p;
+
+typedef enum e_types{
+    NO,
+    SO,
+    WE,
+    EA,
+    F,
+    C
+} t_types;
 
 typedef struct s_data{
     void *east;
@@ -70,5 +85,5 @@ bool texture_loading(t_data *data);
 int    ft_strcmp(char *s1, char *s2);
 char *strend_trim(char *str, size_t nbytes);
 char *strafter_type(char *str);
-
+void set_tozero(t_data *data);
 #endif
