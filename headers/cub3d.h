@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 20:11:47 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:50:15 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,7 @@ int    ft_strcmp(char *s1, char *s2);
 char *strend_trim(char *str, size_t nbytes);
 char *strafter_type(char *str);
 void set_tozero(t_data *data);
+int map_validation(char **map, int map_size);
+char *skip_spaces(char *s);
+
 #endif

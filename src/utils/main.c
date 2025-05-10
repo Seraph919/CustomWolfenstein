@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 20:18:53 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:50:13 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,10 @@ bool outer_error_check(t_data *data)
 bool file_related(t_data *data)
 {
     if (file_read(data) || outer_resources(data) || outer_error_check(data))
-        return (printfd(2, "Found an Error in .cub Processing\n"),ERROR);
+        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"),ERROR);
      // need to free in case of errors
-
+    if (map_validation(data->map, data->map_y) == ERROR)
+        return (printfd(2, "ERROR\nFound an Error in map\n"),ERROR); // free the stuff
     printf("north :%s", data->direction_paths->north_p);
     printf("west :%s", data->direction_paths->west_p);
     printf("east :%s", data->direction_paths->east_p);

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 19:03:59 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:59:59 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool is_white_space(char c)
 
 bool not_in_str(char c, char *s)
 {
+    if (!s)
+        return (true);
     while (*s)
     {
         if (c == *s)
@@ -98,4 +100,78 @@ char *strend_trim(char *str, size_t nbytes)
     returned[i] = '\0';
     // free(str); // do it after removing GC..
     return (returned);
+}
+
+bool check_srnds(char **map, int x, int y)
+{
+    if (!map || !*map)
+        return (false);
+    if (y > 0 && map[y][x] && map[y][x] == '0')
+    {
+        if (map[y - 1][x] == ' ' || (map[y + 1][x] && map[y + 1][x] == ' ') 
+            || ( x != 0 && map[y][x - 1] == ' ') || (map[y][x + 1] && map[y][x + 1] == ' '))
+            return (false);
+    }
+    return (true);
+}
+
+bool str_validation(char **map, int line, bool end)
+{
+    if (!map || !map[line])
+        return (false);
+    size_t i;
+    char *temp;
+    int   endl;
+
+    i = 0;
+    while (map[line][i])
+    {
+        if ((line == 0 || end) && not_in_str(map[line][i], "1 \n"))
+            return (false);
+        else if (check_srnds(map, i, line) == false)
+            return (false);
+        if (i == 0 && map[line][i] == ' ')
+        {
+            temp = skip_spaces(map[line]);
+            endl = ft_strlen(temp) - 1;
+            if (!temp || *temp != '1' || temp[endl - 1] != '1')
+                return (false);
+        }
+        if (i == ft_strlen(map[line]) - 2 && map[line][i] != '1')
+            return (false);
+        i++;
+    }
+    return (true);
+}
+
+int map_validation(char **map, int map_size)
+{
+    if (!map || !*map)
+        return (ERROR);
+    int i;
+
+    i = 0;
+    while (i < map_size)
+    {
+        if (i == 0)
+        {
+            if (str_validation(map, 0, false) == false)
+                return (ERROR);
+        }
+        else if(str_validation(map, i, i == map_size - 1) == false) // bool
+            return (ERROR);
+        i++;
+    }
+    return (SUCCESS);
+}
+
+char *skip_spaces(char *s)
+{
+    if (!s)
+        return (NULL);
+    while (is_white_space(*s))
+        s++;
+    if (*s == '\0')
+        return (NULL);
+    return (s);
 }
