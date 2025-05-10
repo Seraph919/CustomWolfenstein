@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 15:10:21 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:01:10 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,20 @@ char	*ft_strrjoin(char *s1, char *s2)
 	return (returned);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int    ft_strcmp(char *s1, char *s2)
 {
-	int	i;
+    if (!s1 || !s2)
+        return (1);
+    int    i;
 
-	i = 0;
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-		{
-			return (s1[i] - s2[i]);
-		}
-		i++;
-	}
-	return (s1[i] - s2[i]);
+    i = 0;
+    while (s1[i] && s2[i])
+    {
+        if (s1[i] != s2[i])
+        {
+            return (s1[i] - s2[i]);
+        }
+        i++;
+    }
+    return (s1[i] - s2[i]);
 }

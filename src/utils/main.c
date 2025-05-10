@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 20:59:18 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:23:13 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ bool file_copying(t_data *data, int len)
     fd = open("src/map/file.cub", O_RDONLY);
     if (fd < 0 || len == 0)
         return (printfd(2, "Error in file opening\n"),ERROR);
-    data->cub_file = alloc((sizeof(char *) * len) + 1, ALLOC);
+    data->cub_file = malloc(sizeof(char *) * (len + 1));
     if (!data->cub_file)
         return (ERROR);
     while ((line = get_next_line(fd)))
     {
         data->cub_file[y++] = line;
     }
-    data->cub_file[y - 1] = NULL;
+    data->cub_file[y] = NULL;
     data->map_y = y;
     close(fd);
     return (SUCCESS);
@@ -44,12 +44,15 @@ bool get_allocation_size(int *y)
     fd = open("src/map/file.cub", O_RDONLY);
     if (fd < 0)
         return (printfd(2, "Error in file opening\n"),ERROR);
-    while ((line = get_next_line(fd)))
+    line = get_next_line(fd);
+    while (line)
     {
         *y += 1;
         free(line);
+        line = get_next_line(fd);
     }
     close(fd);
+    // printf("the len is : %d\n", *y);
     if (*y == 0)
         return (ERROR);
     return (SUCCESS);
@@ -70,11 +73,11 @@ bool outer_resources(t_data *data)
     int k;
     t_direction_p *direction;
     
-    data->direction_paths = alloc(sizeof (t_direction_p), ALLOC);
+    data->direction_paths = malloc(sizeof (t_direction_p));
     if (!data->direction_paths)
         return (ERROR);
     direction = data->direction_paths;
-    data->map = alloc (sizeof(char *) * (data->map_y - 6) + 1, ALLOC);
+    data->map = malloc(sizeof(char *) * (data->map_y - 6) + 1);
     if (!data->map)
         return (ERROR); // free on error
     i = -1;
@@ -99,6 +102,32 @@ bool outer_resources(t_data *data)
                 data->map[k++] = ft_strdup(data->cub_file[i]);
         }
     }
+    data->map[k] = NULL;
+    data->map_y = k;
+    return (SUCCESS);
+}
+
+bool texture_loading(t_data *data)
+{
+    t_direction_p *dir;
+    int width;
+    int height;
+    int     i;
+
+    dir = data->direction_paths;
+    i = 0;
+    data->north = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->north_p), &width, &height);
+    if (!data->north)
+        return (printf("texture error\n"), ERROR);
+    data->west = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->west_p), &width, &height);
+    if (!data->west)
+        return (printf("texture error\n"), ERROR);
+    data->east = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->east_p), &width, &height);
+    if (!data->east)
+        return (printf("texture error\n"), ERROR);
+    data->south = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->south_p), &width, &height);
+    if (!data->south)
+        return (printf("texture error\n"), ERROR);
     return (SUCCESS);
 }
 
@@ -115,15 +144,13 @@ bool file_related(t_data *data)
     printf("F :%s", data->f_color);
     printf("c :%s\n", data->c_color);
 
-    for (int i = 0; data->map[i]; i++)
+    for (size_t i = 0; i < data->map_y; i++)
         printf("%s", data->map[i]);
+    if (texture_loading(data))
+        return (ERROR);
     return (SUCCESS);
 }
 
-void fireforce(void)
-{
-    alloc(0, FREE);
-}
 
 int main(int ac, char **av)
 {
@@ -134,6 +161,17 @@ int main(int ac, char **av)
     data.mlx_ptr = mlx_init();
     if (file_related(&data))
         return (ERROR);
-    fireforce();
+    // fireforce(); removed GC so the leaks are there to remove..
     return (SUCCESS);
 }
+
+// take the paths and convert them to images
+// check the images
+
+// check the dup, the order, only one space before path..
+// paths then colors then map.
+
+// take a copy of the map and check the boarders..
+
+// check if the character have a void space near it
+

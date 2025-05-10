@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 20:53:42 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:34:29 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ typedef struct s_direction{
 } t_direction_p;
 
 typedef struct s_data{
+    void *east;
+    void *west;
+    void *north;
+    void *south;
     void *mlx_ptr;
     void *win_ptr;
     char **map;
@@ -62,5 +66,9 @@ bool get_allocation_size(int *y);
 bool file_read(t_data *data);
 bool file_related(t_data *data);
 bool is_first_in(char c, char *s);
+bool texture_loading(t_data *data);
+int    ft_strcmp(char *s1, char *s2);
+char *strend_trim(char *str, size_t nbytes);
+char *strafter_type(char *str);
 
 #endif

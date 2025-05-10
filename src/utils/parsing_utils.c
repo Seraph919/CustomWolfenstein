@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 20:18:53 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:03:59 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,40 @@ int char_in(char *s)
         s++;
     }
     return (0);
+}
+
+char *strafter_type(char *str)
+{
+    if (!str)
+        return (NULL);
+    while (!is_white_space(*str))
+        str++;
+    if (*str == '\0')
+        return (NULL);
+    while (is_white_space(*str))
+        str++;
+    if (*str == '\0')
+        return (NULL);
+    else
+        return (strend_trim(str, 1));
+}
+
+char *strend_trim(char *str, size_t nbytes)
+{
+    if (!str)
+        return (NULL);
+    size_t end;
+    char *returned;
+    size_t i;
+
+    i = -1;
+    end = strlen(str);
+    returned = malloc((sizeof(char) * end - nbytes) + 1);
+    if (!returned)
+        return (NULL);
+    while (++i  < end - nbytes)
+        returned[i] = str[i];
+    returned[i] = '\0';
+    // free(str); // do it after removing GC..
+    return (returned);
 }
