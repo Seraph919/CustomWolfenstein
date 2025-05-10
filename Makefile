@@ -12,7 +12,7 @@ LIB = -Lminilibx-linux -l:libmlx_Linux.a -lX11 -lXext
 CLIB = cub3d.a
 LIBFT = src/libft/libft.a
 
-SRCS = main.c parsing_utils.c
+SRCS = main.c parsing_utils.c init.c events.c game.c
 
 LIBFT_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
     	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
@@ -51,3 +51,5 @@ $(NAME): $(CLIB)
 
 test :
 	make re && make clean && clear && ./cub3D
+push :
+	git add . && git commit -m "mini map is done" && git push origin dont-touch

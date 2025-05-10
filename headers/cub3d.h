@@ -77,18 +77,20 @@ typedef struct s_player
     float angle;
 } t_player;
 
-typedef struct s_data
+typedef struct s_game
 {
     void *mlx;
     void *window;
     void *img;
     char *addr;
-    char  **map;
+    char **map;
     int bpp;
     int size_line;
     int endian;
+    int map_h;
+    int map_w;
     t_player *player;
-} t_data;
+} t_game;
 
 // typedef struct s_game
 // {
@@ -107,5 +109,17 @@ typedef struct s_data
 
 
 // t_game *start_game(t_game *game);
+
+// Init funcs
+int init_mlx(t_game *game, char **map);
+int get_map_height(char **map);
+int get_map_width(char **map);
+
+// Events funcs
+int key_press(int keycode, t_game *game);
+int close_window(t_game *game);
+
+// game funcs
+void render_map(t_game *game, char **map);
 
 #endif

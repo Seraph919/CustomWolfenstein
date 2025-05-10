@@ -12,7 +12,7 @@
 
 #include "../../headers/cub3d.h"
 
-// bool file_copying(t_data *data, int len)
+// bool file_copying(t_game *game, int len)
 // {
 //     int fd;
 //     int y;
@@ -22,15 +22,15 @@
 //     fd = open("src/map/file.cub", O_RDONLY);
 //     if (fd < 0 || len == 0)
 //         return (printfd(2, "Error in file opening\n"),ERROR);
-//     data->cub_file = alloc((sizeof(char *) * len) + 1, ALLOC);
-//     if (!data->cub_file)
+//     game->cub_file = alloc((sizeof(char *) * len) + 1, ALLOC);
+//     if (!game->cub_file)
 //         return (ERROR);
 //     while ((line = get_next_line(fd)))
 //     {
-//         data->cub_file[y++] = line;
+//         game->cub_file[y++] = line;
 //     }
-//     data->cub_file[y - 1] = NULL;
-//     data->map_y = y;
+//     game->cub_file[y - 1] = NULL;
+//     game->map_y = y;
 //     close(fd);
 //     return (SUCCESS);
 // }
@@ -54,69 +54,69 @@
 //         return (ERROR);
 //     return (SUCCESS);
 // }
-// bool file_read(t_data *data)
+// bool file_read(t_game *game)
 // {
 //     int y;
 
 //     y = 0;
-//     if (get_allocation_size(&y) || file_copying(data, y))
+//     if (get_allocation_size(&y) || file_copying(game, y))
 //         return (ERROR);
 //     return (SUCCESS);
 // }
 
-// bool outer_resources(t_data *data)
+// bool outer_resources(t_game *game)
 // {
 //     int i;
 //     int k;
 //     t_direction_p *direction;
     
-//     data->direction_paths = alloc(sizeof (t_direction_p), ALLOC);
-//     if (!data->direction_paths)
+//     game->direction_paths = alloc(sizeof (t_direction_p), ALLOC);
+//     if (!game->direction_paths)
 //         return (ERROR);
-//     direction = data->direction_paths;
-//     data->map = alloc (sizeof(char *) * (data->map_y - 6) + 1, ALLOC);
-//     if (!data->map)
+//     direction = game->direction_paths;
+//     game->map = alloc (sizeof(char *) * (game->map_y - 6) + 1, ALLOC);
+//     if (!game->map)
 //         return (ERROR); // free on error
 //     i = -1;
 //     k = 0;
-//     while (data->cub_file[++i])
+//     while (game->cub_file[++i])
 //     {
-//         if (char_in(data->cub_file[i]) && char_in(data->cub_file[i]) != SYERROR)
+//         if (char_in(game->cub_file[i]) && char_in(game->cub_file[i]) != SYERROR)
 //         {
-//             if (data->cub_file[i] && TILE_SIZE_first_in('N', data->cub_file[i])) // NO
-//                 direction->north_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
-//             else if (data->cub_file[i] && TILE_SIZE_first_in('S', data->cub_file[i])) // SO
-//                 direction->south_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
-//             else if (data->cub_file[i] && TILE_SIZE_first_in('W', data->cub_file[i])) // WE
-//                 direction->west_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
-//             else if (data->cub_file[i] && TILE_SIZE_first_in('E', data->cub_file[i])) // EA
-//                 direction->east_p  = ft_strdup(data->cub_file[i]); // free the pre-exTILE_SIZEted one..
-//             else if (data->cub_file[i] && TILE_SIZE_first_in('F', data->cub_file[i])) // F
-//                 data->f_color = ft_strdup(data->cub_file[i]);
-//             else if (data->cub_file[i] && TILE_SIZE_first_in('C', data->cub_file[i])) // C 
-//                 data->c_color = ft_strdup(data->cub_file[i]);
+//             if (game->cub_file[i] && TILE_SIZE_first_in('N', game->cub_file[i])) // NO
+//                 direction->north_p  = ft_strdup(game->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (game->cub_file[i] && TILE_SIZE_first_in('S', game->cub_file[i])) // SO
+//                 direction->south_p  = ft_strdup(game->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (game->cub_file[i] && TILE_SIZE_first_in('W', game->cub_file[i])) // WE
+//                 direction->west_p  = ft_strdup(game->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (game->cub_file[i] && TILE_SIZE_first_in('E', game->cub_file[i])) // EA
+//                 direction->east_p  = ft_strdup(game->cub_file[i]); // free the pre-exTILE_SIZEted one..
+//             else if (game->cub_file[i] && TILE_SIZE_first_in('F', game->cub_file[i])) // F
+//                 game->f_color = ft_strdup(game->cub_file[i]);
+//             else if (game->cub_file[i] && TILE_SIZE_first_in('C', game->cub_file[i])) // C 
+//                 game->c_color = ft_strdup(game->cub_file[i]);
 //             else
-//                 data->map[k++] = ft_strdup(data->cub_file[i]);
+//                 game->map[k++] = ft_strdup(game->cub_file[i]);
 //         }
 //     }
 //     return (SUCCESS);
 // }
 
-// bool file_related(t_data *data)
+// bool file_related(t_game *game)
 // {
-//     if (file_read(data))
+//     if (file_read(game))
 //     return (printfd(2, "Found an Error in .cub Processing\n"),ERROR);
-//     if (outer_resources(data)) // need to free in case of errors
+//     if (outer_resources(game)) // need to free in case of errors
 //     return (printfd(2, "Found an Error in The .cub File\n"), ERROR); // also here
-//     printf("north :%s", data->direction_paths->north_p);
-//     printf("west :%s", data->direction_paths->west_p);
-//     printf("east :%s", data->direction_paths->east_p);
-//     printf("south :%s\n", data->direction_paths->south_p);
-//     printf("F :%s", data->f_color);
-//     printf("c :%s\n", data->c_color);
+//     printf("north :%s", game->direction_paths->north_p);
+//     printf("west :%s", game->direction_paths->west_p);
+//     printf("east :%s", game->direction_paths->east_p);
+//     printf("south :%s\n", game->direction_paths->south_p);
+//     printf("F :%s", game->f_color);
+//     printf("c :%s\n", game->c_color);
 
-//     for (int i = 0; data->map[i]; i++)
-//         printf("%s", data->map[i]);
+//     for (int i = 0; game->map[i]; i++)
+//         printf("%s", game->map[i]);
 //     return (SUCCESS);
 // }
 
@@ -129,161 +129,27 @@
 // {
 //     if (ac != 1)
 //         return (1);
-//     t_data data;
-//     t_data *data;
+//     t_game game;
+//     t_game *game;
 //     (void)av;
-//     data.mlx_ptr = mlx_init();
-//     if (file_related(&data))
+//     game.mlx_ptr = mlx_init();
+//     if (file_related(&game))
 //         return (ERROR);
-//     start_data(&data);
-//     finTILE_SIZEh_data(&data);
+//     start_game(&game);
+//     finTILE_SIZEh_game(&game);
 //     fireforce();
 //     return (SUCCESS);
 // }
 
-int	TILE_SIZE_valid_move(t_data *data, int new_x, int new_y)
-{
-	static int	i = 1;
-
-	if (new_x < 0 || new_x >= MAP_W
-		|| new_y < 0 || new_y >= MAP_H)
-		return (0);
-	if (data->map[new_y][new_x] == '1')
-		return (0);
-	if (data->map[new_y][new_x] == '0'
-			|| data->map[new_y][new_x] == 'C')
-		printf("Move-> %d\n", i++);
-	return (1);
-}
-
-void	update_player_position(t_data *data, int new_x, int new_y)
-{
-	mlx_put_image_to_window(
-		data->mlx,
-		data->window,
-		data->img,
-		data->player->x * TILE_SIZE,
-		data->player->y * TILE_SIZE
-		);
-	data->map[data->player->y][data->player->x] = '0';
-	data->map[new_y][new_x] = 'P';
-	data->player->x = new_x;
-	data->player->y = new_y;
-	mlx_put_image_to_window(
-		data->mlx,
-		data->window,
-		data->img,
-		new_x * TILE_SIZE,
-		new_y * TILE_SIZE
-		);
-}
-
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-    int pixel;
-
-    pixel = (y * data->size_line + x * (data->bpp / 8));
-    *(unsigned int *)(data->addr + pixel) = color;
-}
-
-void render_map(t_data *data, char **map)
-{
-    int y;
-    int x;
-    int dy;
-    int dx;
-    int color;
-
-    y = 0;
-    while (y < MAP_H)
-    {
-        x = 0;
-        while (x < MAP_W)
-        {
-            dy = 0;
-            if (map[y][x] == '1')
-                color = WALL_COLOR;
-            if (map[y][x] == '0')
-                color = EMPTY_COLOR;
-            if (map[y][x] == '2')
-            {
-                data->player->x = x;
-                data->player->y = y;
-                color = PLAYER;
-            }
-            while (dy < TILE_SIZE)
-            {
-                dx = 0;
-                while (dx < TILE_SIZE)
-                {
-                    my_mlx_pixel_put(data, x * TILE_SIZE + dx, y * TILE_SIZE + dy, color);
-                    dx++;
-                }
-                dy++;
-            }
-            x++;
-        }
-        y++;
-    }
-}
-
-int init_mlx(t_data *data, char **map)
-{
-    data->mlx = mlx_init();
-    if (!data->mlx)
-    {
-        printf("mlx_init failed\n");
-        return (0);
-    }
-    data->window = mlx_new_window(data->mlx, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE, "Cub3D Map");
-    if (!data->window)
-    {
-        printf("mlx_new_window failed\n");
-        return (0);
-    }
-    data->map = map;
-    data->img = mlx_new_image(data->mlx, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE);
-    data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endian);
-    return (1);
-}
-
-int close_window(t_data *data)
-{
-    mlx_destroy_window(data->mlx, data->window);
-    mlx_destroy_image(data->mlx, data->img);
-    mlx_destroy_display(data->mlx);
-    free(data->mlx);
-    exit(0);
-}
-
-int key_press(int keycode, t_data *data)
-{
-    int x;
-    int y;
-
-    x = data->player->x;
-    y = data->player->y;
-    if (keycode == U_KEY)
-        y--;
-    if (keycode == D_KEY)
-        y++;
-    if (keycode == L_KEY)
-        x--;
-    if (keycode == R_KEY)
-        x++;
-    
-    if (TILE_SIZE_valid_move(data, x, y))
-        update_player_position(data, x, y);
-    return (0);
-}
-
 int main()
 {
-    t_data data;
-    char *map[1024] = {
+    t_game game;
+    // memset(&game, 0, sizeof(t_game));
+
+    char *map[] = {
         "111111111111111",
         "100000000101001",
-        "111002010000011",
+        "11100P010000011",
         "101000011110001",
         "101110000010001",
         "100010111010101",
@@ -291,18 +157,32 @@ int main()
         "101010101110101",
         "101011100000101",
         "101000000000001",
-        "111111111111111"
+        "111111111111111",
+        NULL
     };
 
-
-
-    if (!init_mlx(&data, map))
+    game.player = malloc(sizeof(t_player));
+    if (!game.player)
+    {
+        printf("Memory allocation for player failed\n");
         return (1);
-    render_map(&data, map);
-    mlx_put_image_to_window(data.mlx, data.window, data.img, 0, 0);
-    mlx_hook(data.window, 2, 1L << 0, key_press, &data);
-    mlx_hook(data.window, 17, 0, close_window, &data);
-    mlx_loop(data.mlx);
+    }
 
+    game.map_h = get_map_height(map);
+    game.map_w = get_map_width(map);
+
+    if (!init_mlx(&game, map))
+    {
+        free(game.player);
+        return (1);
+    }
+
+    render_map(&game, map);
+    mlx_put_image_to_window(game.mlx, game.window, game.img, 0, 0);
+    mlx_hook(game.window, 2, 1L << 0, key_press, &game);
+    mlx_hook(game.window, 17, 0, close_window, &game);
+    mlx_loop(game.mlx);
+
+    free(game.player);
     return 0;
 }
