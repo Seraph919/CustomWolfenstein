@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 22:50:13 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:07:06 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ bool file_copying(t_data *data, int len)
     return (SUCCESS);
 }
 
-
-
 bool get_allocation_size(int *y)
 {
     char *line;
@@ -59,6 +57,7 @@ bool get_allocation_size(int *y)
         return (ERROR);
     return (SUCCESS);
 }
+
 bool file_read(t_data *data)
 {
     int y;
@@ -69,16 +68,33 @@ bool file_read(t_data *data)
     return (SUCCESS);
 }
 
+bool texture_valid(char *s1, char *s2)
+{
+    if (ft_strncmpp(skip_spaces(s1), s2, 2) == 0)
+        return (true);
+    return (false);
+}
+
+
 bool outer_resources(t_data *data)
 {
+    t_colors *colors;
     int i;
     int k;
     t_direction_p *direction;
+    int after_map;
     
+    data->colors = malloc(sizeof(t_colors));
+    if (!data->colors)
+        return (ERROR);
+    colors = data->colors;
+        
     data->direction_paths = malloc(sizeof (t_direction_p));
     if (!data->direction_paths)
-    return (ERROR);
+        return (ERROR);
+    
     set_tozero(data);
+    after_map = 0;
     direction = data->direction_paths;
     data->map = malloc(sizeof(char *) * (data->map_y - 6) + 1);
     if (!data->map)
@@ -87,23 +103,30 @@ bool outer_resources(t_data *data)
     k = 0;
     while (data->cub_file[++i])
     {
-        if (char_in(data->cub_file[i]) && char_in(data->cub_file[i]) != SYERROR)
+        if (char_in(data->cub_file[i]))
         {
-            if (data->cub_file[i] && is_first_in('N', data->cub_file[i])) // NO
+            if (ft_strncmpp("1", skip_spaces(data->cub_file[i]), 1) && after_map > 0)
+                return (ERROR); // free the stuff if an error occured..
+            if (data->cub_file[i] && texture_valid(data->cub_file[i], "NO")) // NO
                 direction->north_p  = ft_strdup(data->cub_file[i]), direction->n_ofn++; // free the pre-existed one..
-            else if (data->cub_file[i] && is_first_in('S', data->cub_file[i])) // SO
+            else if (data->cub_file[i] && texture_valid(data->cub_file[i], "SO")) // SO
                 direction->south_p  = ft_strdup(data->cub_file[i]), direction->n_ofs++; // free the pre-existed one..
-            else if (data->cub_file[i] && is_first_in('W', data->cub_file[i])) // WE
+            else if (data->cub_file[i] && texture_valid(data->cub_file[i], "WE")) // WE
                 direction->west_p  = ft_strdup(data->cub_file[i]), direction->n_ofw++; // free the pre-existed one..
-            else if (data->cub_file[i] && is_first_in('E', data->cub_file[i])) // EA
+            else if (data->cub_file[i] && texture_valid(data->cub_file[i], "EA")) // EA
                 direction->east_p  = ft_strdup(data->cub_file[i]), direction->n_ofe++; // free the pre-existed one..
-            else if (data->cub_file[i] && is_first_in('F', data->cub_file[i])) // F
-                data->f_color = ft_strdup(data->cub_file[i]), direction->n_off++;
-            else if (data->cub_file[i] && is_first_in('C', data->cub_file[i])) // C 
-                data->c_color = ft_strdup(data->cub_file[i]), direction->n_ofc++;
+            else if (data->cub_file[i] && texture_valid(data->cub_file[i], "F ")) // F
+                colors->f = ft_strdup(data->cub_file[i]), direction->n_off++;
+            else if (data->cub_file[i] && texture_valid(data->cub_file[i], "C ")) // C 
+                colors->c = ft_strdup(data->cub_file[i]), direction->n_ofc++;
             else
+            {
                 data->map[k++] = ft_strdup(data->cub_file[i]);
+                after_map++; // check for anything after the map
+            }
         }
+        else if (after_map)
+            return (ERROR); // if a newline found between map lines..
     }
     data->map[k] = NULL;
     data->map_y = k;
@@ -152,6 +175,60 @@ bool outer_error_check(t_data *data)
     if (dir ->n_ofs > 1 || dir ->n_ofn > 1 || dir ->n_ofw > 1 
         || dir ->n_ofe > 1 || dir ->n_ofc > 1 || dir ->n_off > 1)
         return (ERROR);
+    if (color_filling(data) ==  ERROR)
+        return (ERROR);
+    
+    return (SUCCESS);
+}
+
+void print_stff(t_data *data)
+{
+    printf("north :%s", data->direction_paths->north_p);
+    printf("west :%s", data->direction_paths->west_p);
+    printf("east :%s", data->direction_paths->east_p);
+    printf("south :%s\n", data->direction_paths->south_p);
+    printf("F :%s", data->colors->f);
+    printf("c :%s\n", data->colors->c);
+
+    for (size_t i = 0; i < data->map_y; i++)
+        printf("%s", data->map[i]);
+}
+
+bool valid_colorstr(char *s)
+{
+    if (!s)
+        return (false);
+    s = skip_spaces(s);
+    if (!s)
+        return (false);
+    while (*s)
+    {
+        if (!ft_isdigit(*s))
+            return (false);
+        if (*s == ',')
+        {
+            s++;
+            if (*s == '\0' || !ft_isdigit(*s))
+                return (false);
+        }
+        s++;
+    }
+    return (true);
+}
+
+bool color_filling(t_data *data)
+{
+    t_colors *colors;
+
+    colors = data->colors;
+    colors->c = skip_spaces(colors->c);
+    colors->f = skip_spaces(colors->f);
+    if (!valid_colorstr(colors->c + 1) || !valid_colorstr(colors->f + 1))
+        return (ERROR);
+    colors->splitted_c = ft_split(skip_spaces(colors->c + 1), ',');
+    colors->splitted_f = ft_split(skip_spaces(colors->f + 1), ',');
+    if (!colors->splitted_c || !colors->splitted_f)
+        return (ERROR);
     return (SUCCESS);
 }
 
@@ -160,17 +237,12 @@ bool file_related(t_data *data)
     if (file_read(data) || outer_resources(data) || outer_error_check(data))
         return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"),ERROR);
      // need to free in case of errors
+    
     if (map_validation(data->map, data->map_y) == ERROR)
         return (printfd(2, "ERROR\nFound an Error in map\n"),ERROR); // free the stuff
-    printf("north :%s", data->direction_paths->north_p);
-    printf("west :%s", data->direction_paths->west_p);
-    printf("east :%s", data->direction_paths->east_p);
-    printf("south :%s\n", data->direction_paths->south_p);
-    printf("F :%s", data->f_color);
-    printf("c :%s\n", data->c_color);
-
-    for (size_t i = 0; i < data->map_y; i++)
-        printf("%s", data->map[i]);
+    
+    print_stff(data);
+    
     if (texture_loading(data))
         return (ERROR);
     return (SUCCESS);
@@ -190,13 +262,14 @@ int main(int ac, char **av)
     return (SUCCESS);
 }
 
-// take the paths and convert them to images
-// check the images
+// TODO colors should be at max 255,.. no nigatives
+// * add a 2d int array and fill it with them numbers..
+// * check the strings first, check if there is a number after ','
+// * then send that number to atoi and check if it's negative.. 
+// * or more that 255..
 
-// check the dup, the order, only one space before path..
-// paths then colors then map.
-
-// take a copy of the map and check the boarders..
-
-// check if the character have a void space near it
+// TODO recheck boarders and stuff + flood fill..
+// * The problem with the flood fill is that i should know if the player
+// * should or must be surrounded by 0s or it's ok if his path is closed by 1s
+// * since the map that was given in the intra is closed too.. 
 

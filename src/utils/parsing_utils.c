@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 22:59:59 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:52:31 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int char_in(char *s)
             s++;
         if (*s && !is_white_space(*s))
         {
-            if (not_in_str(*s, "NOSWEAFC10"))
-                return (SYERROR);
             return (1);
         }
         if (*s == '\0')
@@ -80,6 +78,22 @@ char *strafter_type(char *str)
         return (NULL);
     else
         return (strend_trim(str, 1));
+}
+
+int	ft_strncmpp(const char *s1, const char *s2, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && i < count)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	if (i < count)
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (0);
 }
 
 char *strend_trim(char *str, size_t nbytes)
@@ -115,6 +129,40 @@ bool check_srnds(char **map, int x, int y)
     return (true);
 }
 
+bool checkbefore(char *s, int end) // check the trailing spc
+{
+    if (!s)
+        return (false);
+    while (end > 0)
+    {
+        if (s[end] == '1')
+            return (true);
+        if (!is_white_space(s[end]))
+            break;
+        end--;
+    }
+    return (false);
+}
+// this will check if i have a char that is not in the list
+bool map_checker(char **map)
+{
+    int i;
+    int k;
+
+
+    i = -1;
+    while (map[++i])
+    {
+        k = -1;
+        while (map[i][++k])
+        {
+            if(not_in_str(map[i][k], "NWES10 \n"))
+                return (printfd(2,"ERROR\nChar '%c' is not expected in the map\n", map[i][k]), ERROR);
+        }
+    }
+    return (false);
+}
+
 bool str_validation(char **map, int line, bool end)
 {
     if (!map || !map[line])
@@ -124,21 +172,36 @@ bool str_validation(char **map, int line, bool end)
     int   endl;
 
     i = 0;
+    if (map_checker(map))
+        return (false);
     while (map[line][i])
     {
         if ((line == 0 || end) && not_in_str(map[line][i], "1 \n"))
             return (false);
+        
         else if (check_srnds(map, i, line) == false)
             return (false);
+        
         if (i == 0 && map[line][i] == ' ')
         {
             temp = skip_spaces(map[line]);
             endl = ft_strlen(temp) - 1;
             if (!temp || *temp != '1' || temp[endl - 1] != '1')
+            {
+                if (checkbefore(temp, endl - 1))
+                    ;
+                else
+                    return (false);
+            }
+        }
+        
+        if (i == ft_strlen(map[line]) - 2 && map[line][i] != '1')
+        {
+            if (checkbefore(temp, endl - 1))
+                ;
+            else
                 return (false);
         }
-        if (i == ft_strlen(map[line]) - 2 && map[line][i] != '1')
-            return (false);
         i++;
     }
     return (true);

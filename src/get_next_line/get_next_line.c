@@ -6,25 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:25 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 15:10:08 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/11 21:12:22 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-	{
-		return (0);
-	}
-	while (str[i])
-		i++;
-	return (i);
-}
 
 void	allocation(char **stored, char **allocated)
 {

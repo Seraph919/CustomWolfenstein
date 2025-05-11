@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 22:50:15 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/11 21:50:36 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef enum e_types{
     F,
     C
 } t_types;
+typedef struct s_colors{
+    char *c;
+    char *f;
+    char **splitted_c;
+    char **splitted_f;
+    int *f_c;
+    int *c_c;
+} t_colors;
 
 typedef struct s_data{
     void *east;
@@ -68,6 +76,7 @@ typedef struct s_data{
     size_t player_x;
     char *f_color;
     char *c_color;
+    t_colors *colors;
     size_t player_y;
     t_direction_p *direction_paths;
 }   t_data;
@@ -88,5 +97,9 @@ char *strafter_type(char *str);
 void set_tozero(t_data *data);
 int map_validation(char **map, int map_size);
 char *skip_spaces(char *s);
+int	ft_strncmpp(const char *s1, const char *s2, size_t count);
+bool map_checker(char **map);
+bool color_filling(t_data *data);
+bool valid_colorstr(char *s);
 
 #endif

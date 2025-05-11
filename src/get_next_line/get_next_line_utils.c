@@ -6,53 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/10 18:01:10 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/11 21:12:47 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strchr(const char *str, int search_str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-	{
-		return (NULL);
-	}
-	while (str[i])
-	{
-		if (str[i] == (char)search_str)
-			return (&((char *)str)[i]);
-		i++;
-	}
-	if ((char)search_str == '\0')
-		return (&((char *)str)[i]);
-	return (NULL);
-}
-
-char	*ft_strdup(const char *str1)
-{
-	int		i;
-	char	*allocated;
-
-	i = 0;
-	if (!str1)
-	{
-		return (NULL);
-	}
-	allocated = malloc(sizeof(char) * ft_strlen(str1) + 1);
-	if (!allocated)
-		return (NULL);
-	while (str1[i])
-	{
-		allocated[i] = str1[i];
-		i++;
-	}
-	allocated[i] = '\0';
-	return (allocated);
-}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

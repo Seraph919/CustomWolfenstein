@@ -4,13 +4,15 @@
 #				██╔══╝     ██║          ██║  ██║██╔══██║██║  ██║██║  ██║██╔══██║
 #				██║        ██║ ███████╗ ██████╔╝██║  ██║██████╔╝██████╔╝██║  ██║
 #				╚═╝        ╚═╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═════╝ ╚═╝  ╚═╝
-                                                              
+
 NAME = cub3D
 CFLAGS = -Wall -Wextra -Werror -g
 
 LIB = -Lminilibx-linux -l:libmlx_Linux.a -lX11 -lXext
 CLIB = cub3d.a
-LIBFT = src/libft/libft.a
+
+GREEN = \033[1;32m
+RESET = \033[0m
 
 SRCS = main.c parsing_utils.c
 
@@ -22,6 +24,7 @@ LIBFT_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
     	ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c \
     	ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c \
     	ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c
+
 SRC_GRB = garbage.c
 SRC_PFD = check_char.c p_hexa.c putnbrr_fd.c unsigned.c formats.c p_memory.c printfd.c putcharr_fd.c putstrr_fd.c upper_hexa.c
 SRC_GNL = get_next_line_utils.c get_next_line.c
@@ -30,24 +33,41 @@ PFDOBJ = $(addprefix src/printfd/, $(SRC_PFD:.c=.o))
 GNLOBJ = $(addprefix src/get_next_line/, $(SRC_GNL:.c=.o))
 OBJGRB = $(addprefix src/gc/, $(SRC_GRB:.c=.o))
 OBJS = $(addprefix src/utils/, $(SRCS:.c=.o))
+LIBFTOBJ = $(addprefix src/libft/, $(LIBFT_SRC:.c=.o))
 
+ALL_OBJS = $(PFDOBJ) $(GNLOBJ) $(OBJGRB) $(OBJS) $(LIBFTOBJ)
+TOTAL := $(words $(ALL_OBJS))
+
+# Default target
 all: $(NAME)
 
-bonus : $(NAME)
+bonus : all
+
+define COMPILE_WITH_PROGRESS
+  INDEX=`echo "$(ALL_OBJS)" | tr ' ' '\n' | grep -n "$@" | cut -d: -f1`; \
+  printf "$(GREEN)[ %2s / $(TOTAL) ]$(RESET) Compiling %s\n" "$$INDEX" "$<"; \
+  $(CC) $(CFLAGS) -c $< -o $@
+endef
+
+%.o: %.c
+	@$(COMPILE_WITH_PROGRESS)
 
 clean:
-	rm -f $(OBJS) $(PFDOBJ) $(GNLOBJ) $(CLIB) $(OBJGRB)
+	rm -f $(OBJS) $(PFDOBJ) $(GNLOBJ) $(CLIB) $(OBJGRB) $(LIBFTOBJ)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-$(CLIB): $(OBJGRB) $(PFDOBJ) $(GNLOBJ) $(OBJS)
-	ar rcs $(CLIB) $^
+$(CLIB): $(ALL_OBJS)
+	@ar rcs $(CLIB) $^
 
 $(NAME): $(CLIB)
-	cc $(CFLAGS) $(LIBFT) $(CLIB) $(LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(CLIB) $(LIB) -o $(NAME)
+	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
-test :
+test:
 	make re && make clean && clear && ./cub3D
+
+.PHONY: all bonus clean fclean re test
