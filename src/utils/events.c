@@ -19,14 +19,80 @@ int is_valid_move(t_game *game, int new_x, int new_y)
     return 1;
 }
 
+void move_forward(t_game *game)
+{
+
+    float move_x = cos(game->player->angle) * PLAYER_SPEED;
+    float move_y = sin(game->player->angle) * PLAYER_SPEED;
+
+    float new_x = game->player->x + move_x;
+    float new_y = game->player->y + move_y;
+
+    if (is_valid_move(game, (int)(new_x), (int)(new_y)))
+    {
+        game->player->x = new_x;
+        game->player->y = new_y;
+    } else {
+        printf("Invalid move: move forward failed.\n");
+    }
+}
+
+void move_backward(t_game *game)
+{
+    float move_x = cos(game->player->angle) * PLAYER_SPEED;
+    float move_y = sin(game->player->angle) * PLAYER_SPEED;
+
+    float new_x = game->player->x - move_x;
+    float new_y = game->player->y - move_y;
+
+    if (is_valid_move(game, (int)(new_x), (int)(new_y)))
+    {
+        game->player->x = new_x;
+        game->player->y = new_y;
+    } else {
+        printf("Invalid move: move backward failed.\n");
+    }
+}
+
+void strafe_left(t_game *game)
+{
+    float move_x = cos(game->player->angle - PI / 2) * PLAYER_SPEED;
+    float move_y = sin(game->player->angle - PI / 2) * PLAYER_SPEED;
+
+    game->player->x += move_x;
+    game->player->y += move_y;
+}
+
+void strafe_right(t_game *game)
+{
+    float move_x = cos(game->player->angle + PI / 2) * PLAYER_SPEED;
+    float move_y = sin(game->player->angle + PI / 2) * PLAYER_SPEED;
+
+    game->player->x += move_x;
+    game->player->y += move_y;
+}
+
 void update_player_position(t_game *game, int new_x, int new_y)
 {
+    if (game->keys_held & (1 << 0))
+        move_forward(game);
+    if (game->keys_held & (1 << 1))
+        move_backward(game);
+    if (game->keys_held & (1 << 2))
+        strafe_left(game);
+    if (game->keys_held & (1 << 3))
+        strafe_right(game);
+    if (game->keys_held & (1 << 4))
+        game->player->angle -= 0.05;
+    if (game->keys_held & (1 << 5))
+        game->player->angle += 0.05;
+
     if (new_x < 0 || new_x >= game->map_w || new_y < 0 || new_y >= game->map_h)
     {
         printf("Invalid move: out of bounds\n");
         return;
     }
-    game->map[game->player->y][game->player->x] = '0';
+    game->map[(int)game->player->y][(int)game->player->x] = '0';
     game->map[new_y][new_x] = 'P';
     game->player->x = new_x;
     game->player->y = new_y;
@@ -43,19 +109,19 @@ int close_window(t_game *game)
     exit(0);
 }
 
-int key_press(int keycode, t_game *game)
-{
-    int x;
-    int y;
-    x = game->player->x;
-    y = game->player->y;
+// int key_press(int keycode, t_game *game)
+// {
+//     int x;
+//     int y;
+//     x = game->player->x;
+//     y = game->player->y;
 
-    if (keycode == U_KEY) y--;
-    if (keycode == D_KEY) y++;
-    if (keycode == L_KEY) x--;
-    if (keycode == R_KEY) x++;
+//     if (keycode == U_KEY) y--;
+//     if (keycode == D_KEY) y++;
+//     if (keycode == L_KEY) x--;
+//     if (keycode == R_KEY) x++;
 
-    if (is_valid_move(game, x, y))
-        update_player_position(game, x, y);
-    return (0);
-}
+//     if (is_valid_move(game, x, y))
+//         update_player_position(game, x, y);
+//     return (0);
+// }

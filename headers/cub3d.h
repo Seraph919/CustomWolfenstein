@@ -19,6 +19,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <float.h>
+#include <math.h>
 #include "../lib/mlx.h"
 #include "../src/libft/libft.h"
 # include <X11/X.h>
@@ -30,23 +32,51 @@
 #define SUCCESS 0
 #define ERROR 1
 #define SYERROR 2
-
-
 #define MAP_W 15
 #define MAP_H 11
-#define TILE_SIZE 16
-
+#define TILE_SIZE 8
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
+#define FOV 60
+#define NUM_RAYS WINDOW_WIDTH
 #define WALL_COLOR 0x000080
 #define EMPTY_COLOR 0x808080
-#define PLAYER 0xFFFF00
+#define PLAYER_COLOR 0xFFFF00
+#define WALL_STRIP_WIDTH 1
+#define PLAYER_SIZE 4
 
+#define U_KEY   85
+#define L_KEY   76
+#define R_KEY   82
 
-# define U_KEY 119
-# define D_KEY 115
-# define L_KEY 97
-# define R_KEY 100
+#define PLAYER 0xFF0000
 
-// ** this will be used to store the paths to the direction textures..
+#define W_KEY 119
+#define S_KEY 115
+#define A_KEY 97
+#define D_KEY 100
+#define LEFT_ARROW 65361
+#define RIGHT_ARROW 65363
+
+// Radians conversion
+#define PI 3.14159265359
+#define TWO_PI 6.28318530718
+#define HALF_PI 1.57079632679
+#define DEG_TO_RAD 0.01745329251 // PI / 180.0
+
+// Player movement constants
+#define MOVE_SPEED 0.05
+#define ROTATION_SPEED 0.03
+
+// Texture properties
+#define TEX_WIDTH 64
+#define TEX_HEIGHT 64
+
+#define PLAYER_SPEED 0.1f
+
+#define ROT_SPEED 0.05
+
+// This will be used to store the paths to the direction textures
 typedef struct s_direction
 {
     char *east_p;
@@ -55,26 +85,42 @@ typedef struct s_direction
     char *south_p;
 } t_direction_p;
 
-// typedef struct s_data
-// {
-//     void *mlx_ptr;
-//     void *win_ptr;
-//     char **map;
-//     char **cub_file;
-//     size_t map_x;
-//     size_t map_y;
-//     size_t player_x;
-//     char *f_color;
-//     char *c_color;
-//     size_t player_y;
-//     t_direction_p *dir_paths;
-// }   t_data;
+// Ray structure to store ray casting results
+typedef struct s_ray
+{
+    float ray_angle;
+    float wall_hit_x;
+    float wall_hit_y;
+    float distance;
+    bool hit_vertical;
+    int wall_face;   // 0=north, 1=south, 2=east, 3=west
+    int wall_height;
+} t_ray;
+
+// Texture structure
+typedef struct s_texture
+{
+    void *img;
+    char *addr;
+    int width;
+    int height;
+    int bpp;
+    int size_line;
+    int endian;
+} t_texture;
 
 typedef struct s_player
 {
-    int x;
-    int y;
+    float x;
+    float y;
     float angle;
+    float fov;
+    double dir_x;   // Direction X
+    double dir_y;   // Direction Y
+    float move_speed;
+    float rotation_speed;
+    double plane_x;
+    double plane_y;
 } t_player;
 
 typedef struct s_game
@@ -89,7 +135,14 @@ typedef struct s_game
     int endian;
     int map_h;
     int map_w;
+    int window_width;
+    int window_height;
     t_player *player;
+    t_ray *rays;
+    t_texture textures[4]; // North, South, East, West
+    bool is_game_running;
+    int key_state;
+    int keys_held;
 } t_game;
 
 // typedef struct s_game
@@ -118,6 +171,13 @@ int get_map_width(char **map);
 // Events funcs
 int key_press(int keycode, t_game *game);
 int close_window(t_game *game);
+char **duplicate_map(char **map);
+
+
+void move_forward(t_game *game);
+void move_backward(t_game *game);
+void strafe_left(t_game *game);
+void strafe_right(t_game *game);
 
 // game funcs
 void render_map(t_game *game, char **map);

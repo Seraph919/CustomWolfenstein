@@ -8,7 +8,7 @@
 NAME = cub3D
 CFLAGS = -Wall -Wextra -Werror -g
 
-LIB = -Lminilibx-linux -l:libmlx_Linux.a -lX11 -lXext
+LIB = -Lminilibx-linux -l:libmlx_Linux.a -lX11 -lXext -lm
 CLIB = cub3d.a
 LIBFT = src/libft/libft.a
 

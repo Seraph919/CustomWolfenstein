@@ -46,22 +46,22 @@ char **duplicate_map(char **map)
     return new_map;
 }
 
-int init_mlx(t_game *game, char **map)
-{
-    game->mlx = mlx_init();
-    if (!game->mlx)
-    {
-        printf("mlx_init failed\n");
-        return (0);
-    }
-    game->window = mlx_new_window(game->mlx, game->map_w * TILE_SIZE, game->map_h * TILE_SIZE, "Cub3D Map");
-    if (!game->window)
-    {
-        printf("mlx_new_window failed\n");
-        return (0);
-    }
-    game->map = duplicate_map(map);
-    game->img = mlx_new_image(game->mlx, game->map_w * TILE_SIZE, game->map_h * TILE_SIZE);
-    game->addr = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
-    return (1);
-}
+// int init_mlx(t_game *game, char **map)
+// {
+//     game->mlx = mlx_init();
+//     if (!game->mlx)
+//     {
+//         printf("mlx_init failed\n");
+//         return (0);
+//     }
+//     game->window = mlx_new_window(game->mlx, game->map_w * TILE_SIZE, game->map_h * TILE_SIZE, "Cub3D Map");
+//     if (!game->window)
+//     {
+//         printf("mlx_new_window failed\n");
+//         return (0);
+//     }
+//     game->map = duplicate_map(map);
+//     game->img = mlx_new_image(game->mlx, game->map_w * TILE_SIZE, game->map_h * TILE_SIZE);
+//     game->addr = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
+//     return (1);
+// }
