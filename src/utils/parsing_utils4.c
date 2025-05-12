@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:50:15 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:50:53 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:35:19 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,29 @@ int map_validation(char **map, int map_size, t_data *data)
         i++;
     }
     return (SUCCESS);
+}
+
+bool map_checker(char **map)
+{
+    int i;
+    int k;
+    bool player_found;
+
+
+    i = -1;
+    player_found = false;
+    while (map[++i])
+    {
+        k = -1;
+        while (map[i][++k])
+        {
+            if(not_in_str(map[i][k], "NWES10 \n"))
+                return (ERROR);
+            if (not_in_str(map[i][k], "NWES") == false && player_found)
+                return (ERROR);
+            if (not_in_str(map[i][k], "NWES") == false)
+                player_found = true;
+        }
+    }
+    return (false);
 }

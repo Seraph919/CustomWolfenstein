@@ -14,7 +14,8 @@ CLIB = cub3d.a
 GREEN = \033[1;32m
 RESET = \033[0m
 
-SRCS = main.c parsing_utils.c parsing_utils2.c parsing_utils3.c parsing_utils4.c
+SRCS = main.c parsing_utils.c parsing_utils2.c parsing_utils3.c parsing_utils4.c \
+ 	   map_related.c map_related2.c fireforce.c file_related.c
 
 LIBFT_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
     	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \

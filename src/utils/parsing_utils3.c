@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:48:18 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:13:57 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,36 +64,40 @@ char *strend_trim(char *str, size_t nbytes)
     return (returned);
 }
 
-bool above_checker(char **map, int y)
+bool file_process(t_data *data, char **av)
 {
-    int x;
-
-    x = -1;
-    if (!map || !map[y] )
-        return (ERROR);
-    while (map[y][++x])
-    {
-        if (is_white_space(map[y][x]) 
-            && map[y - 1][x] && map[y - 1][x] == '0')
-            return (ERROR);
-    }
-    if (map[y][x] == '\0' && map[y - 1][x] && map[y - 1][x] == '0')
-        return (ERROR);
+    if (file_read(data, av) || outer_resources(data) || outer_error_check(data))
+        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
+     // if !file_read free free (data->cub_file);
+     // if (!outer) free data->colors data->directions, data->map
+     // free 2d colors->splitted_c.. colors->c_c also
+    if (map_validation(data->map, data->map_y, data) == ERROR)
+        return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR); // free the stuff
+        
+    if (texture_loading(data))
+        return (fireforce(data, AFTER), ERROR);
+    print_stff(data);
     return (SUCCESS);
 }
 
-bool is_void(char **map, size_t x, size_t y, size_t map_max)
+bool valid_colorstr(char *s)
 {
-    if ((map[y - 1][x] && is_white_space(map[y - 1][x]))
-            || (y + 1 < map_max - 1 && map[y + 1] && map[y + 1][x] && is_white_space(map[y + 1][x])) 
-            || ( x != 0 && is_white_space(map[y][x - 1])) 
-            || (map[y][x + 1] && is_white_space(map[y][x + 1]))
-            || !map[y][x + 1])
-            return (true);
-    if (y + 1 == map_max - 1)
+    if (!s)
+        return (false);
+    s = skip_spaces(s);
+    if (!s)
+        return (false);
+    while (*s)
     {
-        if (above_checker(map, y + 1))
-            return (true);
+        if (!ft_isdigit(*s) && *s != ',' && *s != '\n')
+            return (false);
+        if (*s == ',')
+        {
+            s++;
+            if (*s == '\0' || !ft_isdigit(*s))
+                return (false);
+        }
+        s++;
     }
-    return (false);
+    return (true);
 }

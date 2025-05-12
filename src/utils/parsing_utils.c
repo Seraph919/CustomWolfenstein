@@ -6,113 +6,91 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 18:19:38 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:13:32 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3d.h"
 
-bool check_srnds(char **map, int x, int y, size_t map_max)
+bool file_copying(t_data *data, int len, char **av)
 {
-    if (!map || !*map)
-        return (false);
-    if (y > 0 && map[y][x] && map[y][x] == '0')
+    int fd;
+    int y;
+    char *line;
+    
+    y = 0;
+    data->file_size = len;
+    fd = open(av[1], O_RDONLY);
+    if (fd < 0 || len == 0)
+        return (printfd(2, "Error\nError in file opening\n"),ERROR);
+    data->cub_file = alloc(sizeof(char *) * (len + 1), ALLOC);
+    if (!data->cub_file)
+        return (ERROR);
+    while ((line = get_next_line(fd)))
     {
-        if (is_void(map, x, y, map_max))
-            return (false);
+        data->cub_file[y++] = ft_strdup(line);
+        free(line);
     }
-    return (true);
+    data->cub_file[y] = NULL;
+    data->map_y = y;
+    close(fd);
+    return (SUCCESS);
 }
 
-bool checkbefore(char *s, int end) // check the trailing spc
+bool get_allocation_size(int *y, char **av)
 {
+    char *line;
+    int fd;
+    
+    *y = 0;
+    fd = open(av[1], O_RDONLY);
+    if (fd < 0)
+        return (printfd(2, "Error in file opening\n"),ERROR);
+    line = get_next_line(fd);
+    while (line)
+    {
+        *y += 1;
+        free(line);
+        line = get_next_line(fd);
+    }
+    close(fd);
+    // printf("the len is : %d\n", *y);
+    if (*y == 0)
+        return (ERROR);
+    return (SUCCESS);
+}
+
+bool file_read(t_data *data, char **av)
+{
+    int y;
+
+    y = 0;
+    if (!valid_file_name(av[1]))
+        return (ERROR);
+    if (get_allocation_size(&y, av) || file_copying(data, y, av))
+        return (ERROR); // file copp
+    return (SUCCESS);
+}
+
+bool texture_valid(char *s1, char *s2)
+{
+    if (ft_strncmpp(skip_spaces(s1), s2, 2) == 0)
+        return (true);
+    return (false);
+}
+
+size_t count_char(char *s, char c)
+{
+    size_t counter;
+
+    counter = 0;
     if (!s)
-        return (false);
-    while (end > 0)
+        return (0);
+    while (*s)
     {
-        if (s[end] == '1')
-            return (true);
-        if (!is_white_space(s[end]))
-            break;
-        end--;
+        if (*s == c)
+            counter++;
+        s++;
     }
-    return (false);
-}
-// this will check if i have a char that is not in the list
-bool map_checker(char **map)
-{
-    int i;
-    int k;
-    bool player_found;
-
-
-    i = -1;
-    player_found = false;
-    while (map[++i])
-    {
-        k = -1;
-        while (map[i][++k])
-        {
-            if(not_in_str(map[i][k], "NWES10 \n"))
-                return (ERROR);
-            if (not_in_str(map[i][k], "NWES") == false && player_found)
-                return (ERROR);
-            if (not_in_str(map[i][k], "NWES") == false)
-                player_found = true;
-        }
-    }
-    return (false);
-}
-
-bool conditions(t_norm1 *norm)
-{
-    if (norm->i == 0 && norm->map[norm->line][norm->i] == ' ')
-    {
-        norm->temp = skip_spaces(norm->map[norm->line]);
-        norm->endl = ft_strlen(norm->temp) - 1;
-        if (!norm->temp || *norm->temp != '1' || norm->temp[norm->endl - 1] != '1')
-        {
-            if (!checkbefore(norm->temp, norm->endl - 1))
-                return (false);
-        }
-    }
-    return (true);
-}
-
-void t_norm1_init(t_norm1 *norm, int line, int end)
-{
-    norm->end = end;
-    norm->endl = 0;
-    norm->i = 0;
-    norm->line = line;
-    norm->temp = NULL;
-}
-
-bool str_validation(char **map, int line, bool end, t_data *data)
-{
-    if (!map || !map[line])
-        return (false);
-    t_norm1 norm;
-
-    t_norm1_init(&norm, line, end);
-    norm.map = data->map;
-    norm.map_y = data->map_y;
-    if (map_checker(norm.map))
-        return (false);
-    while (map[line][norm.i])
-    {
-        if ((norm.line == 0 || norm.end) && not_in_str(map[line][norm.i], "1 \n"))
-            return (false);
-        if (conditions(&norm) == false)
-            return false;
-        else if (check_srnds(map, norm.i, line, norm.map_y) == false)
-            return (false);
-        if (norm.i == ft_strlen(map[line]) - 2 && map[line][norm.i] != '1')
-        {
-            if (!checkbefore(norm.temp, norm.endl - 1))
-                return (false);
-        }
-        norm.i++;
-    }
-    return (true);
+    return (counter);
 }

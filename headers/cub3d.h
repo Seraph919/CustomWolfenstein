@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 18:27:00 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:14:47 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ typedef struct s_colors{
     int *c_c;
 } t_colors;
 
+typedef struct usedonce2{
+    int i;
+    int k;
+    int after_map;
+    t_colors *colors;
+    t_direction_p *direction;
+    
+} t_norm2;
+
+
 typedef struct s_data{
     void *east;
     void *west;
@@ -122,5 +132,13 @@ size_t count_char(char *s, char c);
 bool valid_file_name(char *s);
 bool is_void(char **map, size_t x, size_t y, size_t map_max);
 bool str_validation(char **map, int line, bool end, t_data *data);
+bool map_checker(char **map);
+void fireforce(t_data *data, t_place place);
+void free2d(char **s, size_t size);
+void free_texture(t_data *data);
+bool outer_resources(t_data *data);
+bool outer_error_check(t_data *data);
+bool texture_valid(char *s1, char *s2);
+void print_stff(t_data *data);
 
 #endif
