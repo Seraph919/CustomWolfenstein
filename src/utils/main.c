@@ -6,11 +6,49 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 10:15:41 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:04:25 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3d.h"
+
+void free2d(char **s, size_t size)
+{
+    size_t i;
+
+    i = -1;
+    if (!s)
+        return ;
+    while (++i < size - 1)
+    {
+        if (s && s[i])
+            free(s[i]);
+    }
+    free(s);
+}
+
+void free_texture(t_data *data)
+{
+    if (data->south)
+        mlx_destroy_image(data->mlx_ptr, data->south);
+    if (data->north)
+        mlx_destroy_image(data->mlx_ptr, data->north);
+    if (data->west)
+        mlx_destroy_image(data->mlx_ptr, data->west);
+    if (data->east)
+        mlx_destroy_image(data->mlx_ptr, data->east);
+}
+
+void fireforce(t_data *data, t_place place)
+{
+    alloc(0, FREE);
+    // if (data->cub_file)
+    //     free2d(data->cub_file, data->file_size);
+    if (place == AFTER)
+        free_texture(data);
+    mlx_destroy_display(data->mlx_ptr);
+    free(data->mlx_ptr);
+}
 
 bool file_copying(t_data *data, int len)
 {
@@ -19,15 +57,17 @@ bool file_copying(t_data *data, int len)
     char *line;
     
     y = 0;
+    data->file_size = len;
     fd = open("src/map/file.cub", O_RDONLY);
     if (fd < 0 || len == 0)
-        return (printfd(2, "Error in file opening\n"),ERROR);
-    data->cub_file = malloc(sizeof(char *) * (len + 1));
+        return (printfd(2, "Error\nError in file opening\n"),ERROR);
+    data->cub_file = alloc(sizeof(char *) * (len + 1), ALLOC);
     if (!data->cub_file)
         return (ERROR);
     while ((line = get_next_line(fd)))
     {
-        data->cub_file[y++] = line;
+        data->cub_file[y++] = ft_strdup(line);
+        free(line);
     }
     data->cub_file[y] = NULL;
     data->map_y = y;
@@ -64,7 +104,7 @@ bool file_read(t_data *data)
 
     y = 0;
     if (get_allocation_size(&y) || file_copying(data, y))
-        return (ERROR);
+        return (ERROR); // file copp
     return (SUCCESS);
 }
 
@@ -84,19 +124,19 @@ bool outer_resources(t_data *data)
     t_direction_p *direction;
     int after_map;
     
-    data->colors = malloc(sizeof(t_colors));
+    data->colors = alloc(sizeof(t_colors), ALLOC);
     if (!data->colors)
         return (ERROR);
     colors = data->colors;
         
-    data->direction_paths = malloc(sizeof (t_direction_p));
+    data->direction_paths = alloc(sizeof (t_direction_p), ALLOC);
     if (!data->direction_paths)
         return (ERROR);
     
     set_tozero(data);
     after_map = 0;
     direction = data->direction_paths;
-    data->map = malloc(sizeof(char *) * (data->map_y - 6) + 1);
+    data->map = alloc(sizeof(char *) * (data->map_y - 6) + 1, ALLOC);
     if (!data->map)
         return (ERROR); // free on error
     i = -1;
@@ -157,6 +197,10 @@ void set_tozero(t_data *data)
     data->direction_paths->n_ofn = 0;
     data->direction_paths->n_ofc = 0;
     data->direction_paths->n_off = 0;
+    data->south = NULL;
+    data->north = NULL;
+    data->west = NULL;
+    data->east = NULL;
 }
 
 bool texture_loading(t_data *data)
@@ -170,16 +214,16 @@ bool texture_loading(t_data *data)
     i = 0;
     data->north = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->north_p), &width, &height);
     if (!data->north)
-        return (printf("texture error\n"), ERROR);
+        return (printf("Error\ntexture error\n"), ERROR);
     data->west = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->west_p), &width, &height);
     if (!data->west)
-        return (printf("texture error\n"), ERROR);
+        return (printf("Error\ntexture error\n"), ERROR);
     data->east = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->east_p), &width, &height);
     if (!data->east)
-        return (printf("texture error\n"), ERROR);
+        return (printf("Error\ntexture error\n"), ERROR);
     data->south = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->south_p), &width, &height);
     if (!data->south)
-        return (printf("texture error\n"), ERROR);
+        return (printf("Error\ntexture error\n"), ERROR);
     return (SUCCESS);
 }
 
@@ -248,36 +292,40 @@ bool color_filling(t_data *data)
     colors->splitted_f = ft_split(skip_spaces(colors->f + 1), ',');
     if (!colors->splitted_c || !colors->splitted_f)
         return (ERROR);
-    colors->f_c = malloc(sizeof(int) * 3);
-    colors->c_c = malloc(sizeof(int) * 3);
+    colors->f_c = alloc(sizeof(int) * 4, ALLOC);
+    colors->c_c = alloc(sizeof(int) * 4, ALLOC);
     if (!colors->f_c || !colors->c_c )
-        return (ERROR);
+    return (ERROR);
     i = -1;
     while (++i < 3)
     {
         colors->f_c[i] = ft_atoi(colors->splitted_f[i]);
         colors->c_c[i] = ft_atoi(colors->splitted_c[i]);
+        if (colors->f_c[i] == -1 || colors->c_c[i] == -1)
+        {
+            free2d(colors->splitted_c, 5);
+            free2d(colors->splitted_f, 5);
+            return (ERROR);
+        }// free stuff here..
     }
-    for (int i = 0; i < 3; i++)
-    {
-        printf("c[%d]=%d\nf[%d]=%d\n",i, colors->c_c[i], i, colors->f_c[i]);
-    }
+    free2d(colors->splitted_c, 5);
+    free2d(colors->splitted_f, 5);
     return (SUCCESS);
 }
 
 bool file_related(t_data *data)
 {
     if (file_read(data) || outer_resources(data) || outer_error_check(data))
-        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"),ERROR);
-     // need to free in case of errors
-    
-    if (map_validation(data->map, data->map_y) == ERROR)
-        return (printfd(2, "ERROR\nFound an Error in map\n"),ERROR); // free the stuff
-    
+        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
+     // if !file_read free free (data->cub_file);
+     // if (!outer) free data->colors data->directions, data->map
+     // free 2d colors->splitted_c.. colors->c_c also
+    if (map_validation(data->map, data->map_y, data) == ERROR)
+        return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR); // free the stuff
     print_stff(data);
     
     if (texture_loading(data))
-        return (ERROR);
+        return (fireforce(data, AFTER), ERROR);
     return (SUCCESS);
 }
 
@@ -291,18 +339,22 @@ int main(int ac, char **av)
     data.mlx_ptr = mlx_init();
     if (file_related(&data))
         return (ERROR);
-    // fireforce(); removed GC so the leaks are there to remove..
+    fireforce(&data, AFTER); //removed GC so the leaks are there to remove..
     return (SUCCESS);
 }
 
 // TODO colors should be at max 255,.. no nigatives
-// * add a 2d int array and fill it with them numbers..
-// * check the strings first, check if there is a number after ','
-// * then send that number to atoi and check if it's negative.. 
-// * or more that 255..
+// * add a 2d int array and fill it with them numbers.. (done!)
+// * check the strings first, check if there is a number after ',' (done!)
+// * then send that number to atoi and check if it's negative.. (done!)
+// * or more that 255.. (done!)
 
-// TODO recheck boarders and stuff + flood fill..
+// TODO free on errors~ (prob done!)
+
+// TODO recheck boarders and stuff (done !)
 // * The problem with the flood fill is that i should know if the player
 // * should or must be surrounded by 0s or it's ok if his path is closed by 1s
 // * since the map that was given in the intra is closed too.. 
 
+// TODO flood fill..
+// * i need to know the error cases first then see what can i do about them!

@@ -6,13 +6,13 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:12 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 15:10:27 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:52:46 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strchr(const char *str, int search_str)
+char	*ft_strchrr(const char *str, int search_str)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ char	*ft_strchr(const char *str, int search_str)
 	return (NULL);
 }
 
-char	*ft_strdup(const char *str1)
+char	*ft_strdupps(const char *str1)
 {
 	int		i;
 	char	*allocated;
@@ -54,7 +54,7 @@ char	*ft_strdup(const char *str1)
 	return (allocated);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substrr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*returned;
@@ -65,7 +65,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	slen = ft_strlen(s);
 	if (len == 0 || start >= slen)
-		return (ft_strdup(""));
+		return (ft_strdupp(""));
 	if (len > slen - start)
 		len = slen - start;
 	returned = (char *)malloc(sizeof(char) * (len + 1));
@@ -108,7 +108,7 @@ char	*ft_strrjoin(char *s1, char *s2)
 	return (returned);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmpp(char *s1, char *s2)
 {
 	int	i;
 

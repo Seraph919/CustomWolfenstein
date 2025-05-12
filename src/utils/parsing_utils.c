@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/11 19:52:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:02:33 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char *strend_trim(char *str, size_t nbytes)
 
     i = -1;
     end = strlen(str);
-    returned = malloc((sizeof(char) * end - nbytes) + 1);
+    returned = alloc((sizeof(char) * end - nbytes) + 1, ALLOC);
     if (!returned)
         return (NULL);
     while (++i  < end - nbytes)
@@ -116,14 +116,46 @@ char *strend_trim(char *str, size_t nbytes)
     return (returned);
 }
 
-bool check_srnds(char **map, int x, int y)
+bool above_checker(char **map, int y)
+{
+    int x;
+
+    x = -1;
+    if (!map || !map[y] )
+        return (ERROR);
+    while (map[y][++x])
+    {
+        if (is_white_space(map[y][x]) 
+            && map[y - 1][x] && map[y - 1][x] == '0')
+            return (ERROR);
+    }
+    if (map[y][x] == '\0' && map[y - 1][x] && map[y - 1][x] == '0')
+        return (ERROR);
+    return (SUCCESS);
+}
+
+bool is_void(char **map, size_t x, size_t y, size_t map_max)
+{
+    if ((map[y - 1][x] && is_white_space(map[y - 1][x]))
+            || (y + 1 < map_max - 1 && map[y + 1] && map[y + 1][x] && is_white_space(map[y + 1][x])) 
+            || ( x != 0 && is_white_space(map[y][x - 1])) 
+            || (map[y][x + 1] && is_white_space(map[y][x + 1]))
+            || !map[y][x + 1])
+            return (true);
+    if (y + 1 == map_max - 1)
+    {
+        if (above_checker(map, y + 1))
+            return (true);
+    }
+    return (false);
+}
+bool check_srnds(char **map, int x, int y, size_t map_max)
 {
     if (!map || !*map)
         return (false);
     if (y > 0 && map[y][x] && map[y][x] == '0')
     {
-        if (map[y - 1][x] == ' ' || (map[y + 1][x] && map[y + 1][x] == ' ') 
-            || ( x != 0 && map[y][x - 1] == ' ') || (map[y][x + 1] && map[y][x + 1] == ' '))
+        if (is_void(map, x, y, map_max))
             return (false);
     }
     return (true);
@@ -163,7 +195,7 @@ bool map_checker(char **map)
     return (false);
 }
 
-bool str_validation(char **map, int line, bool end)
+bool str_validation(char **map, int line, bool end, t_data *data)
 {
     if (!map || !map[line])
         return (false);
@@ -179,7 +211,7 @@ bool str_validation(char **map, int line, bool end)
         if ((line == 0 || end) && not_in_str(map[line][i], "1 \n"))
             return (false);
         
-        else if (check_srnds(map, i, line) == false)
+        else if (check_srnds(map, i, line, data->map_y) == false)
             return (false);
         
         if (i == 0 && map[line][i] == ' ')
@@ -207,7 +239,7 @@ bool str_validation(char **map, int line, bool end)
     return (true);
 }
 
-int map_validation(char **map, int map_size)
+int map_validation(char **map, int map_size, t_data *data)
 {
     if (!map || !*map)
         return (ERROR);
@@ -218,10 +250,10 @@ int map_validation(char **map, int map_size)
     {
         if (i == 0)
         {
-            if (str_validation(map, 0, false) == false)
+            if (str_validation(map, 0, false, data) == false)
                 return (ERROR);
         }
-        else if(str_validation(map, i, i == map_size - 1) == false) // bool
+        else if(str_validation(map, i, i == map_size - 1, data) == false) // bool
             return (ERROR);
         i++;
     }

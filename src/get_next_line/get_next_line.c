@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:25 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/11 21:12:22 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:52:13 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	allocation(char **stored, char **allocated)
 {
 	if (!*stored)
 	{
-		*stored = ft_strdup("");
+		*stored = ft_strdupp("");
 		if (!*stored)
 			*stored = NULL;
 	}
@@ -46,7 +46,7 @@ char	*returned_line(char **stored, int readen)
 	{
 		temp_saved = *stored;
 		pos = ft_strchr(temp_saved, '\n');
-		*stored = ft_strdup(pos + 1);
+		*stored = ft_strdupp(pos + 1);
 		if (*stored && **stored == '\0')
 		{
 			free(*stored);
@@ -55,7 +55,7 @@ char	*returned_line(char **stored, int readen)
 		*(pos + 1) = '\0';
 		return (temp_saved);
 	}
-	temp_saved = ft_strdup(*stored);
+	temp_saved = ft_strdupp(*stored);
 	free(*stored);
 	*stored = NULL;
 	return (temp_saved);

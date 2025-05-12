@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:05 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 15:10:43 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:52:57 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	allocation(char **stored, char **allocated)
 {
 	if (!*stored)
 	{
-		*stored = ft_strdup("");
+		*stored = ft_strdupps("");
 		if (!*stored)
 			*stored = NULL;
 	}
@@ -51,12 +51,12 @@ char	*returned_line(char **stored, int readen)
 	if (readen > 0)
 	{
 		temp_stored = *stored;
-		pos = ft_strchr(temp_stored, '\n');
-		*stored = ft_strdup(pos + 1);
+		pos = ft_strchrr(temp_stored, '\n');
+		*stored = ft_strdupps(pos + 1);
 		*(pos + 1) = '\0';
 		return (temp_stored);
 	}
-	temp_stored = ft_strdup(*stored);
+	temp_stored = ft_strdupps(*stored);
 	free(*stored);
 	*stored = NULL;
 	return (temp_stored);
@@ -82,7 +82,7 @@ char	*get_next_line(int fd)
 	if (!stored[fd] || !allocated)
 		return (fireforce(&stored[fd], &allocated), NULL);
 	readen = 1;
-	while (!(ft_strchr(stored[fd], '\n')) && readen > 0)
+	while (!(ft_strchrr(stored[fd], '\n')) && readen > 0)
 	{
 		readen = read(fd, allocated, BUFFER_SIZE);
 		if (readen == 0)
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 		if (!stored[fd])
 			return (fireforce(&stored[fd], &allocated), NULL);
 	}
-	if (ft_strcmp(stored[fd], "") == 0)
+	if (ft_strcmpp(stored[fd], "") == 0)
 		return (fireforce(&stored[fd], &allocated), NULL);
 	return (free(allocated), returned_line(&stored[fd], readen));
 }

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 09:57:34 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:44:12 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef enum e_types{
     F,
     C
 } t_types;
+
+typedef enum place{
+    START,
+    M_ERROR,
+    T_ERROR,
+    AFTER
+} t_place;
+
 typedef struct s_colors{
     char *c;
     char *f;
@@ -71,6 +79,7 @@ typedef struct s_data{
     void *win_ptr;
     char **map;
     char **cub_file;
+    size_t file_size;
     size_t map_x;
     size_t map_y;
     size_t player_x;
@@ -93,7 +102,7 @@ int    ft_strcmp(char *s1, char *s2);
 char *strend_trim(char *str, size_t nbytes);
 char *strafter_type(char *str);
 void set_tozero(t_data *data);
-int map_validation(char **map, int map_size);
+int map_validation(char **map, int map_size, t_data *data);
 char *skip_spaces(char *s);
 int	ft_strncmpp(const char *s1, const char *s2, size_t count);
 bool map_checker(char **map);

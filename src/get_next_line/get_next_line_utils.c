@@ -6,13 +6,49 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/11 21:12:47 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:55:40 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+size_t	ft_strlenn(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+	{
+		return (0);
+	}
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strdupp(const char *str1)
+{
+	int		i;
+	char	*allocated;
+
+	i = 0;
+	if (!str1)
+	{
+		return (NULL);
+	}
+	allocated = malloc(sizeof(char) * ft_strlenn(str1) + 1);
+	if (!allocated)
+		return (NULL);
+	while (str1[i])
+	{
+		allocated[i] = str1[i];
+		i++;
+	}
+	allocated[i] = '\0';
+	return (allocated);
+}
+
+char	*ft_substrr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*returned;
@@ -21,9 +57,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	slen = ft_strlen(s);
+	slen = ft_strlenn(s);
 	if (len == 0 || start >= slen)
-		return (ft_strdup(""));
+		return (ft_strdupp(""));
 	if (len > slen - start)
 		len = slen - start;
 	returned = (char *)malloc(sizeof(char) * (len + 1));
@@ -48,8 +84,8 @@ char	*ft_strrjoin(char *s1, char *s2)
 	if (!s1 && !s2)
 		return (NULL);
 	i = -1;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ft_strlenn(s1);
+	len2 = ft_strlenn(s2);
 	returned = malloc(sizeof(char) * len1 + len2 + 1);
 	if (!returned)
 		return (free(s1), s1 = NULL, NULL);
