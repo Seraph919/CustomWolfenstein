@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/11 21:50:36 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 09:57:34 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct s_data{
     size_t map_x;
     size_t map_y;
     size_t player_x;
-    char *f_color;
-    char *c_color;
     t_colors *colors;
     size_t player_y;
     t_direction_p *direction_paths;
@@ -101,5 +99,6 @@ int	ft_strncmpp(const char *s1, const char *s2, size_t count);
 bool map_checker(char **map);
 bool color_filling(t_data *data);
 bool valid_colorstr(char *s);
+size_t count_char(char *s, char c);
 
 #endif

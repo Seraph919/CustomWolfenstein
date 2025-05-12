@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/11 22:07:06 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 10:15:41 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,22 @@ bool outer_resources(t_data *data)
     return (SUCCESS);
 }
 
+size_t count_char(char *s, char c)
+{
+    size_t counter;
+
+    counter = 0;
+    if (!s)
+        return (0);
+    while (*s)
+    {
+        if (*s == c)
+            counter++;
+        s++;
+    }
+    return (counter);
+}
+
 void set_tozero(t_data *data)
 {
     data->direction_paths->n_ofe = 0;
@@ -203,7 +219,7 @@ bool valid_colorstr(char *s)
         return (false);
     while (*s)
     {
-        if (!ft_isdigit(*s))
+        if (!ft_isdigit(*s) && *s != ',' && *s != '\n')
             return (false);
         if (*s == ',')
         {
@@ -218,6 +234,7 @@ bool valid_colorstr(char *s)
 
 bool color_filling(t_data *data)
 {
+    int i;
     t_colors *colors;
 
     colors = data->colors;
@@ -225,10 +242,26 @@ bool color_filling(t_data *data)
     colors->f = skip_spaces(colors->f);
     if (!valid_colorstr(colors->c + 1) || !valid_colorstr(colors->f + 1))
         return (ERROR);
+    if (count_char(colors->c,',') != 2 || count_char(colors->f,',') != 2)
+        return (ERROR);
     colors->splitted_c = ft_split(skip_spaces(colors->c + 1), ',');
     colors->splitted_f = ft_split(skip_spaces(colors->f + 1), ',');
     if (!colors->splitted_c || !colors->splitted_f)
         return (ERROR);
+    colors->f_c = malloc(sizeof(int) * 3);
+    colors->c_c = malloc(sizeof(int) * 3);
+    if (!colors->f_c || !colors->c_c )
+        return (ERROR);
+    i = -1;
+    while (++i < 3)
+    {
+        colors->f_c[i] = ft_atoi(colors->splitted_f[i]);
+        colors->c_c[i] = ft_atoi(colors->splitted_c[i]);
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        printf("c[%d]=%d\nf[%d]=%d\n",i, colors->c_c[i], i, colors->f_c[i]);
+    }
     return (SUCCESS);
 }
 
