@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 16:44:12 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:29:18 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int char_in(char *s);
 bool not_in_str(char c, char *s);
 bool not_in_str(char c, char *s);
 bool is_white_space(char c);
-bool file_copying(t_data *data, int len);
-bool get_allocation_size(int *y);
-bool file_read(t_data *data);
-bool file_related(t_data *data);
+bool file_copying(t_data *data, int len, char **av);
+bool get_allocation_size(int *y, char **av);
+bool file_read(t_data *data, char **av);
+bool file_related(t_data *data, char **av);
 bool is_first_in(char c, char *s);
 bool texture_loading(t_data *data);
 int    ft_strcmp(char *s1, char *s2);
@@ -109,5 +109,6 @@ bool map_checker(char **map);
 bool color_filling(t_data *data);
 bool valid_colorstr(char *s);
 size_t count_char(char *s, char c);
+bool valid_file_name(char *s);
 
 #endif

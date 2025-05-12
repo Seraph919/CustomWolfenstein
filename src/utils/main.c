@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:04:25 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:36:47 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void fireforce(t_data *data, t_place place)
     free(data->mlx_ptr);
 }
 
-bool file_copying(t_data *data, int len)
+bool file_copying(t_data *data, int len, char **av)
 {
     int fd;
     int y;
@@ -58,7 +58,7 @@ bool file_copying(t_data *data, int len)
     
     y = 0;
     data->file_size = len;
-    fd = open("src/map/file.cub", O_RDONLY);
+    fd = open(av[1], O_RDONLY);
     if (fd < 0 || len == 0)
         return (printfd(2, "Error\nError in file opening\n"),ERROR);
     data->cub_file = alloc(sizeof(char *) * (len + 1), ALLOC);
@@ -75,13 +75,13 @@ bool file_copying(t_data *data, int len)
     return (SUCCESS);
 }
 
-bool get_allocation_size(int *y)
+bool get_allocation_size(int *y, char **av)
 {
     char *line;
     int fd;
     
     *y = 0;
-    fd = open("src/map/file.cub", O_RDONLY);
+    fd = open(av[1], O_RDONLY);
     if (fd < 0)
         return (printfd(2, "Error in file opening\n"),ERROR);
     line = get_next_line(fd);
@@ -98,12 +98,14 @@ bool get_allocation_size(int *y)
     return (SUCCESS);
 }
 
-bool file_read(t_data *data)
+bool file_read(t_data *data, char **av)
 {
     int y;
 
     y = 0;
-    if (get_allocation_size(&y) || file_copying(data, y))
+    if (!valid_file_name(av[1]))
+        return (ERROR);
+    if (get_allocation_size(&y, av) || file_copying(data, y, av))
         return (ERROR); // file copp
     return (SUCCESS);
 }
@@ -313,9 +315,9 @@ bool color_filling(t_data *data)
     return (SUCCESS);
 }
 
-bool file_related(t_data *data)
+bool file_related(t_data *data, char **av)
 {
-    if (file_read(data) || outer_resources(data) || outer_error_check(data))
+    if (file_read(data, av) || outer_resources(data) || outer_error_check(data))
         return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
      // if !file_read free free (data->cub_file);
      // if (!outer) free data->colors data->directions, data->map
@@ -332,12 +334,11 @@ bool file_related(t_data *data)
 
 int main(int ac, char **av)
 {
-    if (ac != 1)
+    if (ac != 2)
         return (1);
     t_data data;
-    (void)av;
     data.mlx_ptr = mlx_init();
-    if (file_related(&data))
+    if (file_related(&data, av))
         return (ERROR);
     fireforce(&data, AFTER); //removed GC so the leaks are there to remove..
     return (SUCCESS);
@@ -355,6 +356,8 @@ int main(int ac, char **av)
 // * The problem with the flood fill is that i should know if the player
 // * should or must be surrounded by 0s or it's ok if his path is closed by 1s
 // * since the map that was given in the intra is closed too.. 
-
+// * make sure that the file ends with .cub.. (done!)
+// ! in the map, only one of the characters in the subject should be at once..
+// ! chars "N,S,E or W"
 // TODO flood fill..
 // * i need to know the error cases first then see what can i do about them!

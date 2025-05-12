@@ -6,11 +6,24 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:02:33 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:42:38 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3d.h"
+
+bool valid_file_name(char *s)
+{
+    int end;
+    if (!s)
+        return (false);
+    end = ft_strlen(s) - 1;
+    if (s[end--] == 'b' && s[end--] == 'u'
+        && s[end--] == 'c' && s[end--] == '.' 
+        && (s[end--] != '/' && end != -1))
+        return (true);
+    return (false);
+}
 
 bool is_white_space(char c)
 {
@@ -180,16 +193,22 @@ bool map_checker(char **map)
 {
     int i;
     int k;
+    bool player_found;
 
 
     i = -1;
+    player_found = false;
     while (map[++i])
     {
         k = -1;
         while (map[i][++k])
         {
             if(not_in_str(map[i][k], "NWES10 \n"))
-                return (printfd(2,"ERROR\nChar '%c' is not expected in the map\n", map[i][k]), ERROR);
+                return (ERROR);
+            if (not_in_str(map[i][k], "NWES") == false && player_found)
+                return (ERROR);
+            if (not_in_str(map[i][k], "NWES") == false)
+                player_found = true;
         }
     }
     return (false);
@@ -238,6 +257,7 @@ bool str_validation(char **map, int line, bool end, t_data *data)
     }
     return (true);
 }
+
 
 int map_validation(char **map, int map_size, t_data *data)
 {
