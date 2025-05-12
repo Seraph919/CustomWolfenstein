@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:29:18 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:27:00 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ typedef enum place{
     AFTER
 } t_place;
 
+typedef struct usedonce{
+    char *temp;
+    int endl;
+    int map_y;
+    int end;
+    int line;
+    char **map;
+    size_t i;
+} t_norm1;
+
 typedef struct s_colors{
     char *c;
     char *f;
@@ -95,7 +105,7 @@ bool is_white_space(char c);
 bool file_copying(t_data *data, int len, char **av);
 bool get_allocation_size(int *y, char **av);
 bool file_read(t_data *data, char **av);
-bool file_related(t_data *data, char **av);
+bool file_process(t_data *data, char **av);
 bool is_first_in(char c, char *s);
 bool texture_loading(t_data *data);
 int    ft_strcmp(char *s1, char *s2);
@@ -110,5 +120,7 @@ bool color_filling(t_data *data);
 bool valid_colorstr(char *s);
 size_t count_char(char *s, char c);
 bool valid_file_name(char *s);
+bool is_void(char **map, size_t x, size_t y, size_t map_max);
+bool str_validation(char **map, int line, bool end, t_data *data);
 
 #endif

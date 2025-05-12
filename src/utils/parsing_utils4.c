@@ -1,0 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils4.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/12 17:50:15 by asoudani          #+#    #+#             */
+/*   Updated: 2025/05/12 17:50:53 by asoudani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../headers/cub3d.h"
+
+char *skip_spaces(char *s)
+{
+    if (!s)
+        return (NULL);
+    while (is_white_space(*s))
+        s++;
+    if (*s == '\0')
+        return (NULL);
+    return (s);
+}
+
+int map_validation(char **map, int map_size, t_data *data)
+{
+    if (!map || !*map)
+        return (ERROR);
+    int i;
+
+    i = 0;
+    while (i < map_size)
+    {
+        if (i == 0)
+        {
+            if (str_validation(map, 0, false, data) == false)
+                return (ERROR);
+        }
+        else if(str_validation(map, i, i == map_size - 1, data) == false) // bool
+            return (ERROR);
+        i++;
+    }
+    return (SUCCESS);
+}

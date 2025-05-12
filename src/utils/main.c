@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:36:47 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:33:51 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,16 +216,16 @@ bool texture_loading(t_data *data)
     i = 0;
     data->north = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->north_p), &width, &height);
     if (!data->north)
-        return (printf("Error\ntexture error\n"), ERROR);
+        return (printf("Error\nTexture Error\n"), ERROR);
     data->west = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->west_p), &width, &height);
     if (!data->west)
-        return (printf("Error\ntexture error\n"), ERROR);
+        return (printf("Error\nTexture Error\n"), ERROR);
     data->east = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->east_p), &width, &height);
     if (!data->east)
-        return (printf("Error\ntexture error\n"), ERROR);
+        return (printf("Error\nTexture Error\n"), ERROR);
     data->south = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->south_p), &width, &height);
     if (!data->south)
-        return (printf("Error\ntexture error\n"), ERROR);
+        return (printf("Error\nTexture Error\n"), ERROR);
     return (SUCCESS);
 }
 
@@ -315,7 +315,7 @@ bool color_filling(t_data *data)
     return (SUCCESS);
 }
 
-bool file_related(t_data *data, char **av)
+bool file_process(t_data *data, char **av)
 {
     if (file_read(data, av) || outer_resources(data) || outer_error_check(data))
         return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
@@ -324,7 +324,7 @@ bool file_related(t_data *data, char **av)
      // free 2d colors->splitted_c.. colors->c_c also
     if (map_validation(data->map, data->map_y, data) == ERROR)
         return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR); // free the stuff
-    print_stff(data);
+    // print_stff(data);
     
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
@@ -338,7 +338,7 @@ int main(int ac, char **av)
         return (1);
     t_data data;
     data.mlx_ptr = mlx_init();
-    if (file_related(&data, av))
+    if (file_process(&data, av))
         return (ERROR);
     fireforce(&data, AFTER); //removed GC so the leaks are there to remove..
     return (SUCCESS);
@@ -357,7 +357,7 @@ int main(int ac, char **av)
 // * should or must be surrounded by 0s or it's ok if his path is closed by 1s
 // * since the map that was given in the intra is closed too.. 
 // * make sure that the file ends with .cub.. (done!)
-// ! in the map, only one of the characters in the subject should be at once..
-// ! chars "N,S,E or W"
+// * in the map, only one of the characters in the subject should be at once..
+// * chars "N,S,E or W" (done !)
 // TODO flood fill..
 // * i need to know the error cases first then see what can i do about them!
