@@ -34,7 +34,7 @@
 #define SYERROR 2
 #define MAP_W 15
 #define MAP_H 11
-#define TILE_SIZE 8
+#define TILE_SIZE 16
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
 #define FOV 60
@@ -77,13 +77,13 @@
 #define ROT_SPEED 0.05
 
 // This will be used to store the paths to the direction textures
-typedef struct s_direction
-{
-    char *east_p;
-    char *west_p;
-    char *north_p;
-    char *south_p;
-} t_direction_p;
+// typedef struct s_direction
+// {
+//     char *east_p;
+//     char *west_p;
+//     char *north_p;
+//     char *south_p;
+// } t_direction_p;
 
 // Ray structure to store ray casting results
 typedef struct s_ray
@@ -145,23 +145,8 @@ typedef struct s_game
     int keys_held;
 } t_game;
 
-// typedef struct s_game
-// {
-//     t_data *data;
-// }   t_game;
-
-// int char_in(char *s);
-// bool not_in_str(char c, char *s);
-// bool not_in_str(char c, char *s);
-// bool is_white_space(char c);
-// bool file_copying(t_data *data, int len);
-// bool get_allocation_size(int *y);
-// bool file_read(t_data *data);
-// bool file_related(t_data *data);
-// bool is_first_in(char c, char *s);
 
 
-// t_game *start_game(t_game *game);
 
 // Init funcs
 int init_mlx(t_game *game, char **map);
@@ -181,5 +166,128 @@ void strafe_right(t_game *game);
 
 // game funcs
 void render_map(t_game *game, char **map);
+
+
+
+
+
+#define SUCCESS 0
+#define ERROR 1
+#define SYERROR 2
+
+// ** this will be used to store the paths to the direction textures..
+typedef struct s_direction{
+    char *east_p;
+    char *west_p;
+    char *north_p;
+    char *south_p;
+    int n_ofs;
+    int n_ofn;
+    int n_ofe;
+    int n_ofw;
+    int n_off;
+    int n_ofc;
+} t_direction_p;
+
+typedef enum e_types{
+    NO,
+    SO,
+    WE,
+    EA,
+    F,
+    C
+} t_types;
+
+typedef enum place{
+    START,
+    M_ERROR,
+    T_ERROR,
+    AFTER
+} t_place;
+
+typedef struct usedonce{
+    char *temp;
+    int endl;
+    int map_y;
+    int end;
+    int line;
+    char **map;
+    size_t i;
+} t_norm1;
+
+typedef struct s_colors{
+    char *c;
+    char *f;
+    char **splitted_c;
+    char **splitted_f;
+    int *f_c;
+    int *c_c;
+} t_colors;
+
+typedef struct usedonce2{
+    int i;
+    int k;
+    int after_map;
+    t_colors *colors;
+    t_direction_p *direction;
+    
+} t_norm2;
+
+
+typedef struct s_data
+{
+    void *east;
+    void *west;
+    void *north;
+    void *south;
+    void *mlx_ptr;
+    void *win_ptr;
+    char **map;
+    char **cub_file;
+    size_t file_size;
+    size_t map_x;
+    size_t map_y;
+    size_t player_x;
+    t_colors *colors;
+    size_t player_y;
+    t_direction_p *direction_paths;
+}   t_data;
+
+int char_in(char *s);
+bool not_in_str(char c, char *s);
+bool not_in_str(char c, char *s);
+bool is_white_space(char c);
+bool file_copying(t_data *data, int len, char **av);
+bool get_allocation_size(int *y, char **av);
+bool file_read(t_data *data, char **av);
+bool file_process(t_data *data, char **av);
+bool is_first_in(char c, char *s);
+bool texture_loading(t_data *data);
+int    ft_strcmp(char *s1, char *s2);
+char *strend_trim(char *str, size_t nbytes);
+char *strafter_type(char *str);
+void set_tozero(t_data *data);
+int map_validation(char **map, int map_size, t_data *data);
+char *skip_spaces(char *s);
+int	ft_strncmpp(const char *s1, const char *s2, size_t count);
+bool map_checker(char **map);
+bool color_filling(t_data *data);
+bool valid_colorstr(char *s);
+size_t count_char(char *s, char c);
+bool valid_file_name(char *s);
+bool is_void(char **map, size_t x, size_t y, size_t map_max);
+bool str_validation(int line, bool end, t_data *data);
+bool map_checker(char **map);
+void fireforce(t_data *data, t_place place);
+void free2d(char **s, size_t size);
+void free_texture(t_data *data);
+bool outer_resources(t_data *data);
+bool outer_error_check(t_data *data);
+bool texture_valid(char *s1, char *s2);
+void print_stff(t_data *data);
+
+
+
+
 
 #endif

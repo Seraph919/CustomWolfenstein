@@ -12,27 +12,21 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *str, int search_str)
+size_t	ft_strlenn(const char *str)
 {
 	int	i;
 
 	i = 0;
 	if (!str)
 	{
-		return (NULL);
+		return (0);
 	}
 	while (str[i])
-	{
-		if (str[i] == (char)search_str)
-			return (&((char *)str)[i]);
 		i++;
-	}
-	if ((char)search_str == '\0')
-		return (&((char *)str)[i]);
-	return (NULL);
+	return (i);
 }
 
-char	*ft_strdup(const char *str1)
+char	*ft_strdupp(const char *str1)
 {
 	int		i;
 	char	*allocated;
@@ -42,7 +36,7 @@ char	*ft_strdup(const char *str1)
 	{
 		return (NULL);
 	}
-	allocated = malloc(sizeof(char) * ft_strlen(str1) + 1);
+	allocated = malloc(sizeof(char) * ft_strlenn(str1) + 1);
 	if (!allocated)
 		return (NULL);
 	while (str1[i])
@@ -54,7 +48,7 @@ char	*ft_strdup(const char *str1)
 	return (allocated);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substrr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*returned;
@@ -63,9 +57,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	slen = ft_strlen(s);
+	slen = ft_strlenn(s);
 	if (len == 0 || start >= slen)
-		return (ft_strdup(""));
+		return (ft_strdupp(""));
 	if (len > slen - start)
 		len = slen - start;
 	returned = (char *)malloc(sizeof(char) * (len + 1));
@@ -90,8 +84,8 @@ char	*ft_strrjoin(char *s1, char *s2)
 	if (!s1 && !s2)
 		return (NULL);
 	i = -1;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ft_strlenn(s1);
+	len2 = ft_strlenn(s2);
 	returned = malloc(sizeof(char) * len1 + len2 + 1);
 	if (!returned)
 		return (free(s1), s1 = NULL, NULL);
@@ -108,18 +102,20 @@ char	*ft_strrjoin(char *s1, char *s2)
 	return (returned);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int    ft_strcmp(char *s1, char *s2)
 {
-	int	i;
+    if (!s1 || !s2)
+        return (1);
+    int    i;
 
-	i = 0;
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-		{
-			return (s1[i] - s2[i]);
-		}
-		i++;
-	}
-	return (s1[i] - s2[i]);
+    i = 0;
+    while (s1[i] && s2[i])
+    {
+        if (s1[i] != s2[i])
+        {
+            return (s1[i] - s2[i]);
+        }
+        i++;
+    }
+    return (s1[i] - s2[i]);
 }

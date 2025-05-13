@@ -26,7 +26,7 @@ void render_map(t_game *game, char **map)
                 color = WALL_COLOR;
             else if (map[y][x] == '0')
                 color = EMPTY_COLOR;
-            else if (map[y][x] == 'P')
+            else if (map[y][x] == 'N')
             {
                 game->player->x = x;
                 game->player->y = y;

@@ -93,7 +93,7 @@ void update_player_position(t_game *game, int new_x, int new_y)
         return;
     }
     game->map[(int)game->player->y][(int)game->player->x] = '0';
-    game->map[new_y][new_x] = 'P';
+    game->map[new_y][new_x] = 'N';
     game->player->x = new_x;
     game->player->y = new_y;
     render_map(game, game->map);
