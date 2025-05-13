@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:50:15 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 18:35:19 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:03:25 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int map_validation(char **map, int map_size, t_data *data)
     {
         if (i == 0)
         {
-            if (str_validation(map, 0, false, data) == false)
+            if (str_validation(0, false, data) == false)
                 return (ERROR);
         }
-        else if(str_validation(map, i, i == map_size - 1, data) == false) // bool
+        else if(str_validation(i, i == map_size - 1, data) == false) // bool
             return (ERROR);
         i++;
     }

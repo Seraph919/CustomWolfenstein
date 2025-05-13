@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 20:14:47 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:03:00 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ bool valid_colorstr(char *s);
 size_t count_char(char *s, char c);
 bool valid_file_name(char *s);
 bool is_void(char **map, size_t x, size_t y, size_t map_max);
-bool str_validation(char **map, int line, bool end, t_data *data);
+bool str_validation(int line, bool end, t_data *data);
 bool map_checker(char **map);
 void fireforce(t_data *data, t_place place);
 void free2d(char **s, size_t size);

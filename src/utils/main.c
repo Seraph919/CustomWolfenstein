@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 20:15:09 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:06:34 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void print_stff(t_data *data)
 
     for (size_t i = 0; i < data->map_y; i++)
         printf("%s", data->map[i]);
-    printf("\n");
+    printf("\n\n");
+    printf("the player is in(%zu,%zu)\n", data->player_x, data->player_y);
 }
 
 bool color_filling(t_data *data)
@@ -145,3 +146,5 @@ int main(int ac, char **av)
 // * chars "N,S,E or W" (done !)
 // TODO flood fill..
 // * i need to know the error cases first then see what can i do about them!
+
+// TODO fill the player_x and player_y from the map..
