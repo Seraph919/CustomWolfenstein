@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 20:53:42 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:22:45 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@
 #define SYERROR 2
 #define MAP_W 15
 #define MAP_H 11
-#define TILE_SIZE 16
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
+#define TILE_SIZE 32
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 #define FOV 60
 #define NUM_RAYS WINDOW_WIDTH
 #define WALL_COLOR 0x000080

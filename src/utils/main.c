@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/07 20:59:18 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:16:17 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -771,10 +771,7 @@ int main(int ac, char **av)
         return (ERROR);
     t_game game;
 
-
-
     game.map = NULL;
-    
     start_gaming(game, data.map);
     
     return 0;
