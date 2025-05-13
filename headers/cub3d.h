@@ -34,7 +34,7 @@
 #define SYERROR 2
 #define MAP_W 15
 #define MAP_H 11
-#define TILE_SIZE 32
+#define TILE_SIZE 8
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
 #define FOV 60

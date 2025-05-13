@@ -1,34 +1,39 @@
 #include "../../headers/cub3d.h"
 
-int is_valid_move(t_game *game, int new_x, int new_y)
+int is_valid_move(t_game *game, float new_x, float new_y)
 {
+    // Convert floating point coordinates to map grid coordinates
+    int map_x = (int)(new_x / TILE_SIZE);
+    int map_y = (int)(new_y / TILE_SIZE);
+    
     static int i = 1;
-
-    if (new_x < 0 || new_x >= game->map_w || new_y < 0 || new_y >= game->map_h)
+    
+    if (map_x < 0 || map_x >= game->map_w || map_y < 0 || map_y >= game->map_h)
     {
         printf("Invalid move out of bounds!\n");
         return 0;
     }
-    if (game->map[new_y][new_x] == '1') {
+    
+    if (game->map[map_y][map_x] == '1') {
         printf("Invalid move: hit a wall\n");
         return 0;
     }
-    if (game->map[new_y][new_x] == '0') {
+    
+    if (game->map[map_y][map_x] == '0') {
         printf("Move-> %d\n", i++);
     }
+    
     return 1;
 }
 
 void move_forward(t_game *game)
 {
-
     float move_x = cos(game->player->angle) * PLAYER_SPEED;
     float move_y = sin(game->player->angle) * PLAYER_SPEED;
-
     float new_x = game->player->x + move_x;
     float new_y = game->player->y + move_y;
-
-    if (is_valid_move(game, (int)(new_x), (int)(new_y)))
+    
+    if (is_valid_move(game, new_x, new_y))
     {
         game->player->x = new_x;
         game->player->y = new_y;
@@ -58,18 +63,32 @@ void strafe_left(t_game *game)
 {
     float move_x = cos(game->player->angle - PI / 2) * PLAYER_SPEED;
     float move_y = sin(game->player->angle - PI / 2) * PLAYER_SPEED;
-
-    game->player->x += move_x;
-    game->player->y += move_y;
+    float new_x = game->player->x + move_x;
+    float new_y = game->player->y + move_y;
+    
+    if (is_valid_move(game, new_x, new_y))
+    {
+        game->player->x = new_x;
+        game->player->y = new_y;
+    } else {
+        printf("Invalid move: strafe left failed.\n");
+    }
 }
 
 void strafe_right(t_game *game)
 {
     float move_x = cos(game->player->angle + PI / 2) * PLAYER_SPEED;
     float move_y = sin(game->player->angle + PI / 2) * PLAYER_SPEED;
-
-    game->player->x += move_x;
-    game->player->y += move_y;
+    float new_x = game->player->x + move_x;
+    float new_y = game->player->y + move_y;
+    
+    if (is_valid_move(game, new_x, new_y))
+    {
+        game->player->x = new_x;
+        game->player->y = new_y;
+    } else {
+        printf("Invalid move: strafe right failed.\n");
+    }
 }
 
 void update_player_position(t_game *game, int new_x, int new_y)
