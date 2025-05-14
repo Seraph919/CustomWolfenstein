@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:50:15 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/13 15:03:25 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:25:48 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int map_validation(char **map, int map_size, t_data *data)
             return (ERROR);
         i++;
     }
+    data->map = remove_newlines(data);
+    if (!data->map)
+        return (ERROR);
     return (SUCCESS);
 }
 

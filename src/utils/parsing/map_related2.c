@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:43:20 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 18:43:34 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:24:39 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,19 @@ bool is_void(char **map, size_t x, size_t y, size_t map_max)
             return (true);
     }
     return (false);
+}
+
+char **remove_newlines(t_data *data)
+{
+    size_t i;
+    if (!data->map)
+        return (NULL);
+
+    i = -1;
+    while (++i < data->map_y)
+    {
+        if (data->map[i] && i != (data->map_y - 1))
+            data->map[i] = strend_trim(data->map[i], 1);
+    }
+    return (data->map);
 }

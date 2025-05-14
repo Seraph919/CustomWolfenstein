@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 20:13:57 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:25:10 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool file_process(t_data *data, char **av)
      // free 2d colors->splitted_c.. colors->c_c also
     if (map_validation(data->map, data->map_y, data) == ERROR)
         return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR); // free the stuff
-        
+    
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
     print_stff(data);

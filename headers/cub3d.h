@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/13 18:22:45 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:24:45 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ bool outer_resources(t_data *data);
 bool outer_error_check(t_data *data);
 bool texture_valid(char *s1, char *s2);
 void print_stff(t_data *data);
-
+char **remove_newlines(t_data *data);
 
 
 
