@@ -39,11 +39,11 @@
 #define WINDOW_HEIGHT 1080
 #define FOV 60
 #define NUM_RAYS WINDOW_WIDTH
-#define WALL_COLOR 0x000080
-#define EMPTY_COLOR 0x808080
-#define PLAYER_COLOR 0xFFFF00
+#define WALL_COLOR 0x424242
+#define EMPTY_COLOR 0xebebeb
+#define PLAYER_COLOR 0x003aba
 #define WALL_STRIP_WIDTH 1
-#define PLAYER_SIZE 4
+#define PLAYER_SIZE 5
 
 #define U_KEY   85
 #define L_KEY   76
@@ -65,14 +65,14 @@
 #define DEG_TO_RAD 0.01745329251 // PI / 180.0
 
 // Player movement constants
-#define MOVE_SPEED 0.05
-#define ROTATION_SPEED 0.03
+#define MOVE_SPEED 0.15
+#define ROTATION_SPEED 0.02
 
 // Texture properties
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
 
-#define PLAYER_SPEED 0.1f
+#define PLAYER_SPEED 0.15
 
 #define ROT_SPEED 0.05
 

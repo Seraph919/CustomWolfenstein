@@ -2,10 +2,12 @@
 
 void generate_3d_projection(t_game *game)
 {
-    draw_rect(game, 0, 0, game->window_width, game->window_height / 2, 0x87CEEB);
-    draw_rect(game, 0, game->window_height / 2, game->window_width, game->window_height / 2, 0x8B4513);
-    
-    for (int i = 0; i < NUM_RAYS; i++)
+    int i;
+
+    i = 0;
+    draw_rect(game, 0, 0, game->window_width, game->window_height / 2, 0x000000);
+    draw_rect(game, 0, game->window_height / 2, game->window_width, game->window_height / 2, 0x5e2c00);
+    while (i < NUM_RAYS)
     {
         float perpendicular_distance = game->rays[i].distance * cos(game->rays[i].ray_angle - game->player->angle);
         float wall_height = (TILE_SIZE / perpendicular_distance) * ((game->window_width / 2) / tan(game->player->fov / 2));
@@ -18,9 +20,10 @@ void generate_3d_projection(t_game *game)
             wall_bottom = game->window_height;
         int wall_color;
         if (game->rays[i].hit_vertical)
-            wall_color = game->rays[i].wall_face == 2 ? 0x8A2BE2 : 0x4B0082;
+            wall_color = game->rays[i].wall_face == 2 ? 0x132873 : 0x5a6aa1;
         else
-            wall_color = game->rays[i].wall_face == 0 ? 0x00BFFF : 0x1E90FF;
+            wall_color = game->rays[i].wall_face == 0 ? 0x1f1973 : 0x423f6b;
         draw_rect(game, i * WALL_STRIP_WIDTH, wall_top, WALL_STRIP_WIDTH, wall_bottom - wall_top, wall_color);
+        i++;
     }
 }

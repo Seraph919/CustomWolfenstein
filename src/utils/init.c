@@ -48,7 +48,7 @@ char **duplicate_map(char **map)
 
 int init_mlx(t_game *game, char **map)
 {
-    game->map = map;
+    game->map = duplicate_map(map);
     game->window_width = WINDOW_WIDTH;
     game->window_height = WINDOW_HEIGHT;
     game->player->fov = FOV * DEG_TO_RAD;
@@ -67,7 +67,6 @@ int init_mlx(t_game *game, char **map)
     game->rays = malloc(sizeof(t_ray) * NUM_RAYS);
     if (!game->rays)
         return 0;
-    game->map = duplicate_map(map);
     game->player->dir_x = 1.0;
     game->player->dir_y = 0.0;
     game->player->plane_x = 0.66;  // FOV: 66°
