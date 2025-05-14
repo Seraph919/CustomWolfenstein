@@ -2,7 +2,6 @@
 
 int is_valid_move(t_game *game, float new_x, float new_y)
 {
-    // Convert floating point coordinates to map grid coordinates
     int map_x = (int)(new_x / TILE_SIZE);
     int map_y = (int)(new_y / TILE_SIZE);
     
@@ -13,16 +12,13 @@ int is_valid_move(t_game *game, float new_x, float new_y)
         printf("Invalid move out of bounds!\n");
         return 0;
     }
-    
     if (game->map[map_y][map_x] == '1') {
         printf("Invalid move: hit a wall\n");
         return 0;
     }
-    
     if (game->map[map_y][map_x] == '0') {
         printf("Move-> %d\n", i++);
     }
-    
     return 1;
 }
 
@@ -127,20 +123,3 @@ int close_window(t_game *game)
     free(game->mlx);
     exit(0);
 }
-
-// int key_press(int keycode, t_game *game)
-// {
-//     int x;
-//     int y;
-//     x = game->player->x;
-//     y = game->player->y;
-
-//     if (keycode == U_KEY) y--;
-//     if (keycode == D_KEY) y++;
-//     if (keycode == L_KEY) x--;
-//     if (keycode == R_KEY) x++;
-
-//     if (is_valid_move(game, x, y))
-//         update_player_position(game, x, y);
-//     return (0);
-// }

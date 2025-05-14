@@ -152,11 +152,16 @@ typedef struct s_game
 int init_mlx(t_game *game, char **map);
 int get_map_height(char **map);
 int get_map_width(char **map);
+int init_mlx(t_game *game, char **map);
 
 // Events funcs
 int key_press(int keycode, t_game *game);
 int close_window(t_game *game);
 char **duplicate_map(char **map);
+void move_player(t_game *game);
+
+int key_press(int keycode, t_game *game);
+int key_release(int keycode, t_game *game);
 
 
 void move_forward(t_game *game);
@@ -164,8 +169,31 @@ void move_backward(t_game *game);
 void strafe_left(t_game *game);
 void strafe_right(t_game *game);
 
+void my_mlx_pixel_put(t_game *game, int x, int y, int color);
+
 // game funcs
 void render_map(t_game *game, char **map);
+
+// Raycasting funcs
+void cast_ray(t_game *game, float ray_angle, int ray_id);
+void draw_rect(t_game *game, int x, int y, int width, int height, int color);
+void draw_line(t_game *game, int x1, int y1, int x2, int y2, int color);
+float normalize_angle(float angle);
+bool is_wall(t_game *game, float x, float y);
+float distance_between_points(float x1, float y1, float x2, float y2);
+void cast_rays(t_game *game);
+
+//projection funcs
+void generate_3d_projection(t_game *game);
+
+// minimap funcs
+void render_minimap(t_game *game);
+
+// Game funcs
+int game_loop(t_game *game);
+void render_map(t_game *game, char **map);
+int start_gaming(t_game game, char **map);
+
 
 
 
