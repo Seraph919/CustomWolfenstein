@@ -1,5 +1,18 @@
 #include "../../headers/cub3d.h"
 
+int mouse_move(int x, int y, t_game *game)
+{
+    int mouse_delta_x;
+    float sensitivity;
+
+    mouse_delta_x = x - game->last_mouse_x;
+    sensitivity = 0.005f;
+    game->player->angle += mouse_delta_x * sensitivity;
+    game->last_mouse_x = x;
+    game->last_mouse_y = y;
+    return (0);
+}
+
 int is_valid_move(t_game *game, float new_x, float new_y)
 {
     int map_x = (int)(new_x / TILE_SIZE);

@@ -76,16 +76,6 @@
 
 #define ROT_SPEED 0.05
 
-// This will be used to store the paths to the direction textures
-// typedef struct s_direction
-// {
-//     char *east_p;
-//     char *west_p;
-//     char *north_p;
-//     char *south_p;
-// } t_direction_p;
-
-// Ray structure to store ray casting results
 typedef struct s_ray
 {
     float ray_angle;
@@ -93,11 +83,11 @@ typedef struct s_ray
     float wall_hit_y;
     float distance;
     bool hit_vertical;
+    // int hit_horizontal; // 1 if the ray hit a horizontal wall, 0 otherwise
     int wall_face;   // 0=north, 1=south, 2=east, 3=west
     int wall_height;
 } t_ray;
 
-// Texture structure
 typedef struct s_texture
 {
     void *img;
@@ -123,6 +113,21 @@ typedef struct s_player
     double plane_y;
 } t_player;
 
+typedef struct s_wall_hit
+{
+    float x;
+    float y;
+    bool found;
+}   t_wall_hit;
+
+typedef struct s_ray_dir
+{
+    bool facing_down;
+    bool facing_up;
+    bool facing_right;
+    bool facing_left;
+}   t_ray_dir;
+
 typedef struct s_game
 {
     void *mlx;
@@ -143,6 +148,10 @@ typedef struct s_game
     bool is_game_running;
     int key_state;
     int keys_held;
+    // int ceiling_color;
+    // int floor_color;
+    int last_mouse_x;
+    int last_mouse_y;
 } t_game;
 
 
@@ -159,6 +168,8 @@ int key_press(int keycode, t_game *game);
 int close_window(t_game *game);
 char **duplicate_map(char **map);
 void move_player(t_game *game);
+
+int mouse_move(int x, int y, t_game *game);
 
 int key_press(int keycode, t_game *game);
 int key_release(int keycode, t_game *game);
@@ -194,7 +205,13 @@ int game_loop(t_game *game);
 void render_map(t_game *game, char **map);
 int start_gaming(t_game game, char **map);
 
+// Texture loading functions
+// int load_texture(t_game *game, t_texture *texture, char *path);
+// void destroy_textures(t_game *game);
 
+// Texture drawing functions
+int get_texture_color(t_texture *texture, int tex_x, int tex_y);
+void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id);
 
 
 

@@ -46,6 +46,7 @@ char **duplicate_map(char **map)
     return new_map;
 }
 
+
 int init_mlx(t_game *game, char **map)
 {
     game->map = duplicate_map(map);
@@ -84,6 +85,19 @@ int init_mlx(t_game *game, char **map)
             }
         }
     }
+    game->last_mouse_x = game->window_width / 2;
+    game->last_mouse_y = game->window_height / 2;
+
+    mlx_mouse_move(game->mlx, game->window, game->last_mouse_x, game->last_mouse_y);
+    mlx_mouse_hide(game->mlx, game->window);
+    // mlx_mouse_hide();
+    // load_texture(game, &game->textures[0], "./src/textures/greystone.xpm");
+    // load_texture(game, &game->textures[1], "./src/textures/purplestone.xpm");
+    // load_texture(game, &game->textures[2], "./src/textures/wood.xpm");
+    // load_texture(game, &game->textures[3], "./src/textures/redbrick.xpm");
+
+    // game->ceiling_color = 0x000000;
+    // game->floor_color = 0x5e2c00;
     game->is_game_running = true;
     return 1;
 }

@@ -293,6 +293,18 @@ bool color_filling(t_data *data)
 //     return 0;
 // }
 
+// void destroy_textures(t_game *game)
+// {
+//     for (int i = 0; i < 4; i++)
+//     {
+//         if (game->textures[i].img)
+//         {
+//             mlx_destroy_image(game->mlx, game->textures[i].img);
+//             game->textures[i].img = NULL;
+//             game->textures[i].addr = NULL;
+//         }
+//     }
+// }
 
 
 int main(int ac, char **av)
@@ -308,6 +320,7 @@ int main(int ac, char **av)
 
     game.map = NULL;
     start_gaming(game, data.map);
+    // destroy_textures(&game);
     
     return 0;
 }
