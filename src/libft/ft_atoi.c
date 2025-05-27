@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoudani <asoudani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 03:50:52 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 13:59:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2024/11/09 09:53:37 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ssize_t	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	casee;
@@ -33,9 +33,6 @@ ssize_t	ft_atoi(const char *str)
 	while ((str[i] >= '0' && str[i] <= '9'))
 	{
 		number = number * 10 + (str[i++] - '0');
-		if (number * casee > 255 || number * casee < 0)
-			return (-1);
-			
 	}
 	return (number * casee);
 }

@@ -6,11 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 20:13:32 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../../../headers/cub3d.h"
 
 bool file_copying(t_data *data, int len, char **av)
 {
@@ -54,7 +54,6 @@ bool get_allocation_size(int *y, char **av)
         line = get_next_line(fd);
     }
     close(fd);
-    // printf("the len is : %d\n", *y);
     if (*y == 0)
         return (ERROR);
     return (SUCCESS);
@@ -68,7 +67,7 @@ bool file_read(t_data *data, char **av)
     if (!valid_file_name(av[1]))
         return (ERROR);
     if (get_allocation_size(&y, av) || file_copying(data, y, av))
-        return (ERROR); // file copp
+        return (ERROR);
     return (SUCCESS);
 }
 

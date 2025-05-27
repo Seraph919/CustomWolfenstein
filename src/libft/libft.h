@@ -18,7 +18,6 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <string.h>
-# include "../gc/garbage.h"
 # include <unistd.h>
 
 typedef struct s_list
@@ -47,7 +46,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t count);
 void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-ssize_t		ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nitems, size_t size);
 char	*ft_strdup(const char *str1);
 

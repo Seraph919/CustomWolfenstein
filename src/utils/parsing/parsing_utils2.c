@@ -6,11 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:46:46 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 17:47:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../../../headers/cub3d.h"
 
 bool valid_file_name(char *s)
 {
@@ -44,8 +44,6 @@ bool not_in_str(char c, char *s)
     }
     return (true);
 }
-
-// ** this will be used to pick the paths and colors from the .cub file..
 
 bool is_first_in(char c, char *s)
 {

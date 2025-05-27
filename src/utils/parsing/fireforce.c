@@ -6,11 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:42:06 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 19:45:35 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:41:28 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../../../headers/cub3d.h"
 
 void free2d(char **s, size_t size)
 {

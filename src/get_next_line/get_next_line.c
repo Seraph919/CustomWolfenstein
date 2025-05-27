@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:25 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 15:52:13 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,52 +89,3 @@ char	*get_next_line(int fd)
 		return (fireforcee(&stored, &allocated), NULL);
 	return (free(allocated), returned_line(&stored, readen));
 }
-// int main()
-// {
-//     int i = 1;
-//     int fd = open("files.txt", O_RDONLY | O_CREAT, 0644);
-//     if (fd == -1)
-//         return (0);
-//     char *s = get_next_line(fd);
-//     printf("[%d] : %s", i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-//     s = get_next_line(fd);
-//     printf("[%d] : %s", ++i, s);
-//     free(s);
-// }

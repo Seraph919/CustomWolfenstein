@@ -6,11 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 20:13:57 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:41:57 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../../../headers/cub3d.h"
 
 char *strafter_type(char *str)
 {
@@ -60,7 +60,6 @@ char *strend_trim(char *str, size_t nbytes)
     while (++i  < end - nbytes)
         returned[i] = str[i];
     returned[i] = '\0';
-    // free(str); // do it after removing GC..
     return (returned);
 }
 
@@ -68,12 +67,9 @@ bool file_process(t_data *data, char **av)
 {
     if (file_read(data, av) || outer_resources(data) || outer_error_check(data))
         return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
-     // if !file_read free free (data->cub_file);
-     // if (!outer) free data->colors data->directions, data->map
-     // free 2d colors->splitted_c.. colors->c_c also
     if (map_validation(data->map, data->map_y, data) == ERROR)
-        return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR); // free the stuff
-        
+        return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR);
+    
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
     print_stff(data);

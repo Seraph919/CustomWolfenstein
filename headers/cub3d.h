@@ -6,19 +6,22 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/13 15:03:00 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/26 00:42:51 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 #define CUB3D_H
 
+#include "data_structures.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <float.h>
+#include <math.h>
 #include "../lib/mlx.h"
 #include "../src/libft/libft.h"
 # include <X11/X.h>
@@ -31,82 +34,111 @@
 #define ERROR 1
 #define SYERROR 2
 
-// ** this will be used to store the paths to the direction textures..
-typedef struct s_direction{
-    char *east_p;
-    char *west_p;
-    char *north_p;
-    char *south_p;
-    int n_ofs;
-    int n_ofn;
-    int n_ofe;
-    int n_ofw;
-    int n_off;
-    int n_ofc;
-} t_direction_p;
+#define MAP_W 15
+#define MAP_H 11
 
-typedef enum e_types{
-    NO,
-    SO,
-    WE,
-    EA,
-    F,
-    C
-} t_types;
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
-typedef enum place{
-    START,
-    M_ERROR,
-    T_ERROR,
-    AFTER
-} t_place;
+#define WALL_COLOR 0x424242
+#define EMPTY_COLOR 0xebebeb
+#define PLAYER_COLOR 0x003aba
+#define PLAYER 0xFF0000
 
-typedef struct usedonce{
-    char *temp;
-    int endl;
-    int map_y;
-    int end;
-    int line;
-    char **map;
-    size_t i;
-} t_norm1;
+#define TILE_SIZE 8
+#define PLAYER_SIZE 5
 
-typedef struct s_colors{
-    char *c;
-    char *f;
-    char **splitted_c;
-    char **splitted_f;
-    int *f_c;
-    int *c_c;
-} t_colors;
+#define TEX_WIDTH 64
+#define TEX_HEIGHT 64
 
-typedef struct usedonce2{
-    int i;
-    int k;
-    int after_map;
-    t_colors *colors;
-    t_direction_p *direction;
-    
-} t_norm2;
+#define FOV 60
+#define NUM_RAYS WINDOW_WIDTH
+#define WALL_STRIP_WIDTH 1
 
 
-typedef struct s_data{
-    void *east;
-    void *west;
-    void *north;
-    void *south;
-    void *mlx_ptr;
-    void *win_ptr;
-    char **map;
-    char **cub_file;
-    size_t file_size;
-    size_t map_x;
-    size_t map_y;
-    size_t player_x;
-    t_colors *colors;
-    size_t player_y;
-    t_direction_p *direction_paths;
-}   t_data;
+// #define U_KEY   85
+// #define L_KEY   76
+#define R_KEY   82
+
+#define W_KEY 119
+#define S_KEY 115
+#define A_KEY 97
+#define D_KEY 100
+#define LEFT_ARROW 65361
+#define RIGHT_ARROW 65363
+
+// Radians conversion
+#define PI 3.14159265359
+#define TWO_PI 6.28318530718
+#define HALF_PI 1.57079632679
+#define DEG_TO_RAD 0.01745329251 // PI / 180.0
+
+// Player movement constants
+#define MOVE_SPEED 0.15
+#define ROTATION_SPEED 0.02
+
+#define PLAYER_SPEED 0.30
+
+#define ROT_SPEED 0.05
+
+
+// Init funcs
+int init_mlx(t_game *game, char **map);
+int get_map_height(char **map);
+int get_map_width(char **map);
+int init_mlx(t_game *game, char **map);
+
+// Events funcs
+int key_press(int keycode, t_game *game);
+int close_window(t_game *game);
+char **duplicate_map(char **map);
+void move_player(t_game *game);
+
+int mouse_move(int x, int y, t_game *game);
+
+int key_press(int keycode, t_game *game);
+int key_release(int keycode, t_game *game);
+
+
+void move_forward(t_game *game);
+void move_backward(t_game *game);
+void strafe_left(t_game *game);
+void strafe_right(t_game *game);
+
+void my_mlx_pixel_put(t_game *game, int x, int y, int color);
+
+// game funcs
+void render_map(t_game *game, char **map);
+
+// Raycasting funcs
+void cast_ray(t_game *game, float ray_angle, int ray_id);
+void draw_rect(t_game *game, int x, int y, int width, int height, int color);
+void draw_line(t_game *game, int x1, int y1, int x2, int y2, int color);
+float normalize_angle(float angle);
+bool is_wall(t_game *game, float x, float y);
+float distance_between_points(float x1, float y1, float x2, float y2);
+void cast_rays(t_game *game);
+
+//projection funcs
+void generate_3d_projection(t_game *game);
+
+// minimap funcs
+void render_minimap(t_game *game);
+
+// Game funcs
+int game_loop(t_game *game);
+void render_map(t_game *game, char **map);
+int start_gaming(t_game game, char **map);
+
+// Texture loading functions
+// int load_texture(t_game *game, t_texture *texture, char *path);
+// void destroy_textures(t_game *game);
+
+// Texture drawing functions
+int get_texture_color(t_texture *texture, int tex_x, int tex_y);
+void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id);
+
+
 
 int char_in(char *s);
 bool not_in_str(char c, char *s);
@@ -129,6 +161,7 @@ bool map_checker(char **map);
 bool color_filling(t_data *data);
 bool valid_colorstr(char *s);
 size_t count_char(char *s, char c);
+int rgb_to_int(int r, int g, int b);
 bool valid_file_name(char *s);
 bool is_void(char **map, size_t x, size_t y, size_t map_max);
 bool str_validation(int line, bool end, t_data *data);
@@ -140,5 +173,9 @@ bool outer_resources(t_data *data);
 bool outer_error_check(t_data *data);
 bool texture_valid(char *s1, char *s2);
 void print_stff(t_data *data);
+char **remove_newlines(t_data *data);
+
+void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
+
 
 #endif

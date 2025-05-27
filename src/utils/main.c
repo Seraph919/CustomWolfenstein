@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/13 15:06:34 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,42 +109,29 @@ bool color_filling(t_data *data)
             free2d(colors->splitted_c, 5);
             free2d(colors->splitted_f, 5);
             return (ERROR);
-        }// free stuff here..
+        }
     }
     free2d(colors->splitted_c, 5);
     free2d(colors->splitted_f, 5);
+    colors->c_color = rgb_to_int(colors->c_c[0], colors->c_c[1], colors->c_c[2]);
+    colors->f_color = rgb_to_int(colors->f_c[0], colors->f_c[1], colors->f_c[2]);
     return (SUCCESS);
 }
 
-
 int main(int ac, char **av)
 {
+
     if (ac != 2)
         return (1);
     t_data data;
     data.mlx_ptr = mlx_init();
     if (file_process(&data, av))
         return (ERROR);
-    fireforce(&data, AFTER); //removed GC so the leaks are there to remove..
-    return (SUCCESS);
+    t_game game;
+
+    game.map = NULL;
+    game.data = &data;
+    start_gaming(game, data.map);
+    
+    return 0;
 }
-
-// TODO colors should be at max 255,.. no nigatives
-// * add a 2d int array and fill it with them numbers.. (done!)
-// * check the strings first, check if there is a number after ',' (done!)
-// * then send that number to atoi and check if it's negative.. (done!)
-// * or more that 255.. (done!)
-
-// TODO free on errors~ (prob done!)
-
-// TODO recheck boarders and stuff (done !)
-// * The problem with the flood fill is that i should know if the player
-// * should or must be surrounded by 0s or it's ok if his path is closed by 1s
-// * since the map that was given in the intra is closed too.. 
-// * make sure that the file ends with .cub.. (done!)
-// * in the map, only one of the characters in the subject should be at once..
-// * chars "N,S,E or W" (done !)
-// TODO flood fill..
-// * i need to know the error cases first then see what can i do about them!
-
-// TODO fill the player_x and player_y from the map..

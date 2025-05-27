@@ -4,18 +4,19 @@
 #				██╔══╝     ██║          ██║  ██║██╔══██║██║  ██║██║  ██║██╔══██║
 #				██║        ██║ ███████╗ ██████╔╝██║  ██║██████╔╝██████╔╝██║  ██║
 #				╚═╝        ╚═╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═════╝ ╚═╝  ╚═╝
-
+                                                              
 NAME = cub3D
 CFLAGS = -Wall -Wextra -Werror -g
 
-LIB = -Lminilibx-linux -l:libmlx_Linux.a -lX11 -lXext
+LIB = -Llib -l:libmlx_Linux.a -lX11 -lXext -lm
 CLIB = cub3d.a
 
 GREEN = \033[1;32m
 RESET = \033[0m
 
-SRCS = main.c parsing_utils.c parsing_utils2.c parsing_utils3.c parsing_utils4.c \
- 	   map_related.c map_related2.c fireforce.c file_related.c
+SRCS = main.c ./parsing/parsing_utils.c init.c events.c game.c ./parsing/parsing_utils.c ./parsing/parsing_utils2.c ./parsing/parsing_utils3.c ./parsing/parsing_utils4.c \
+ 	   ./parsing/map_related.c ./parsing/map_related2.c ./parsing/fireforce.c ./parsing/file_related.c ./raycasting/raycast.c ./raycasting/projection.c ./raycasting/minimap.c \
+	   ./raycasting/move_player.c ./raycasting/keys_handle.c
 
 LIBFT_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
     	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
@@ -57,7 +58,7 @@ clean:
 	rm -f $(OBJS) $(PFDOBJ) $(GNLOBJ) $(CLIB) $(OBJGRB) $(LIBFTOBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) ./src/libft/libft.a
 
 re: fclean all
 
@@ -70,5 +71,8 @@ $(NAME): $(CLIB)
 
 test:
 	make re && make clean && clear && ./cub3D
+
+push :
+	git add . && git commit -m "mini map is done" && git push origin dont-touch
 
 .PHONY: all bonus clean fclean re test

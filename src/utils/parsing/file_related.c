@@ -6,11 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:47:07 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/12 20:12:21 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../../../headers/cub3d.h"
 
 int allocations(t_data *data)
 {
@@ -38,23 +38,23 @@ void t_norm2_init(t_data *data, t_norm2 *norm)
 bool element_allocation(t_data *data, t_norm2 *n)
 {
     if (ft_strncmpp("1", skip_spaces(data->cub_file[n->i]), 1) && n->after_map > 0)
-        return (ERROR); // free the stuff if an error occured..
-    if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "NO")) // NO
-        n->direction->north_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofn++; // free the pre-existed one..
-    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "SO")) // SO
-        n->direction->south_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofs++; // free the pre-existed one..
-    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "WE")) // WE
-        n->direction->west_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofw++; // free the pre-existed one..
-    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "EA")) // EA
-        n->direction->east_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofe++; // free the pre-existed one..
-    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "F ")) // F
+        return (ERROR);
+    if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "NO"))
+        n->direction->north_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofn++;
+    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "SO"))
+        n->direction->south_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofs++;
+    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "WE"))
+        n->direction->west_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofw++;
+    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "EA"))
+        n->direction->east_p  = ft_strdup(data->cub_file[n->i]), n->direction->n_ofe++;
+    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "F "))
         n->colors->f = ft_strdup(data->cub_file[n->i]), n->direction->n_off++;
-    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "C ")) // C 
+    else if (data->cub_file[n->i] && texture_valid(data->cub_file[n->i], "C "))
         n->colors->c = ft_strdup(data->cub_file[n->i]), n->direction->n_ofc++;
     else
     {
         data->map[n->k++] = ft_strdup(data->cub_file[n->i]);
-        n->after_map++; // check for anything after the map
+        n->after_map++;
     }
     return (SUCCESS);
 }
@@ -74,7 +74,7 @@ bool outer_resources(t_data *data)
             element_allocation(data, &norm);
         }
         else if (norm.after_map)
-            return (ERROR); // if a newline found between map lines..
+            return (ERROR);
     }
     data->map[norm.k] = NULL;
     data->map_y = norm.k;

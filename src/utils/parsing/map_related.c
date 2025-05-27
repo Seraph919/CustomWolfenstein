@@ -6,11 +6,11 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:35:54 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/13 15:03:51 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../../../headers/cub3d.h"
 
 bool check_srnds(t_data *data, int x, int y, size_t map_max)
 {
@@ -29,7 +29,7 @@ bool check_srnds(t_data *data, int x, int y, size_t map_max)
     return (true);
 }
 
-bool checkbefore(char *s, int end) // check the trailing spc
+bool checkbefore(char *s, int end)
 {
     if (!s)
         return (false);
@@ -43,7 +43,6 @@ bool checkbefore(char *s, int end) // check the trailing spc
     }
     return (false);
 }
-// this will check if i have a char that is not in the list
 
 bool conditions(t_norm1 *norm)
 {
