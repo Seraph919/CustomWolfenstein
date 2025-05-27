@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 16:41:57 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:52:09 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char *strafter_type(char *str)
     if (*str == '\0')
         return (NULL);
     else
-        return (strend_trim(str, 1));
+        return (strend_trim(str, 1, 0));
 }
 
 int	ft_strncmpp(const char *s1, const char *s2, size_t count)
@@ -44,22 +44,23 @@ int	ft_strncmpp(const char *s1, const char *s2, size_t count)
 	return (0);
 }
 
-char *strend_trim(char *str, size_t nbytes)
+char *strend_trim(char *str, size_t nbytes, int start_index)
 {
     if (!str)
         return (NULL);
     size_t end;
     char *returned;
     size_t i;
+    int k = 0;
 
-    i = -1;
+    i = start_index--;
     end = strlen(str);
     returned = alloc((sizeof(char) * end - nbytes) + 1, ALLOC);
     if (!returned)
         return (NULL);
     while (++i  < end - nbytes)
-        returned[i] = str[i];
-    returned[i] = '\0';
+        returned[k++] = str[i];
+    returned[k] = '\0';
     return (returned);
 }
 
@@ -69,7 +70,6 @@ bool file_process(t_data *data, char **av)
         return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
     if (map_validation(data->map, data->map_y, data) == ERROR)
         return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR);
-    
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
     print_stff(data);
@@ -96,4 +96,18 @@ bool valid_colorstr(char *s)
         s++;
     }
     return (true);
+}
+
+int index_after_spaces(char *s)
+{
+    int i = 0;
+    if (!s)
+        return (0);
+    while (is_white_space(s[i]))
+        i++;
+    if (!s[i])
+        return (0);
+    while (!is_white_space(s[i]))
+        i++;
+    return (i);
 }

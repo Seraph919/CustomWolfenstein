@@ -90,29 +90,29 @@ int init_mlx(t_game *game, char **map)
     mlx_mouse_move(game->mlx, game->window, game->last_mouse_x, game->last_mouse_y);
     mlx_mouse_hide(game->mlx, game->window);
 
-    game->textures[0].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/toilet_wall.xpm", &game->textures[0].width, &game->textures[0].height);
-    if (!game->textures[0].img)
-        printf("Failed to load texture 0\n");
+    game->textures[NORTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->north_p, &game->textures[NORTH].width, &game->textures[NORTH].height);
+    if (!game->textures[NORTH].img)
+        printf("Failed to load texture NORTH\n");
     else
-        game->textures[0].addr = mlx_get_data_addr(game->textures[0].img, &game->textures[0].bpp, &game->textures[0].size_line, &game->textures[0].endian);
+        game->textures[NORTH].addr = mlx_get_data_addr(game->textures[NORTH].img, &game->textures[NORTH].bpp, &game->textures[NORTH].size_line, &game->textures[NORTH].endian);
 
-    game->textures[1].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/toilet_wall.xpm", &game->textures[1].width, &game->textures[1].height);
-    if (!game->textures[1].img)
-        printf("Failed to load texture 1\n");
+    game->textures[SOUTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->south_p, &game->textures[SOUTH].width, &game->textures[SOUTH].height);
+    if (!game->textures[SOUTH].img)
+        printf("Failed to load texture SOUTH\n");
     else
-        game->textures[1].addr = mlx_get_data_addr(game->textures[1].img, &game->textures[1].bpp, &game->textures[1].size_line, &game->textures[1].endian);
+        game->textures[SOUTH].addr = mlx_get_data_addr(game->textures[SOUTH].img, &game->textures[SOUTH].bpp, &game->textures[SOUTH].size_line, &game->textures[SOUTH].endian);
 
-    game->textures[2].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/toilet_wall.xpm", &game->textures[2].width, &game->textures[2].height);
-    if (!game->textures[2].img)
-        printf("Failed to load texture 2\n");
+    game->textures[EAST].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->east_p, &game->textures[EAST].width, &game->textures[EAST].height);
+    if (!game->textures[EAST].img)
+        printf("Failed to load texture EAST\n");
     else
-        game->textures[2].addr = mlx_get_data_addr(game->textures[2].img, &game->textures[2].bpp, &game->textures[2].size_line, &game->textures[2].endian);
+        game->textures[EAST].addr = mlx_get_data_addr(game->textures[EAST].img, &game->textures[EAST].bpp, &game->textures[EAST].size_line, &game->textures[EAST].endian);
 
-    game->textures[3].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/toilet_wall.xpm", &game->textures[3].width, &game->textures[3].height);
-    if (!game->textures[3].img)
-        printf("Failed to load texture 3\n");
+    game->textures[WEST].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->west_p, &game->textures[WEST].width, &game->textures[WEST].height);
+    if (!game->textures[WEST].img)
+        printf("Failed to load texture WEST\n");
     else
-        game->textures[3].addr = mlx_get_data_addr(game->textures[3].img, &game->textures[3].bpp, &game->textures[3].size_line, &game->textures[3].endian);
+        game->textures[WEST].addr = mlx_get_data_addr(game->textures[WEST].img, &game->textures[WEST].bpp, &game->textures[WEST].size_line, &game->textures[WEST].endian);
 
     game->imgs = alloc(sizeof(char *) * 4, ALLOC);
 

@@ -116,6 +116,13 @@ typedef enum place{
     AFTER
 } t_place;
 
+typedef enum direction{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+} t_texture_direction;
+
 typedef struct usedonce{
     char *temp;
     int endl;

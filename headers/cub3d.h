@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/26 00:42:51 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:35:45 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,8 @@ bool file_process(t_data *data, char **av);
 bool is_first_in(char c, char *s);
 bool texture_loading(t_data *data);
 int    ft_strcmp(char *s1, char *s2);
-char *strend_trim(char *str, size_t nbytes);
+char *strend_trim(char *str, size_t nbytes, int start_index);
+int index_after_spaces(char *s);
 char *strafter_type(char *str);
 void set_tozero(t_data *data);
 int map_validation(char **map, int map_size, t_data *data);

@@ -32,7 +32,7 @@ void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int 
     face= ray->wall_face;
     if (face < 0 || face > 3 || !game->textures[face].addr)
         return;
-    texture = &game->textures[face];
+    texture = &game->textures[face]; // ! here are the sides..
     if (ray->hit_vertical)
         wall_x = ray->wall_hit_y;
     else

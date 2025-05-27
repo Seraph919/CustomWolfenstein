@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:52:34 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ bool texture_loading(t_data *data)
 
     dir = data->direction_paths;
     i = 0;
-    data->north = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->north_p), &width, &height);
+    data->north = mlx_xpm_file_to_image(data->mlx_ptr, dir->north_p, &width, &height);
     if (!data->north)
         return (printf("Error\nTexture Error\n"), ERROR);
-    data->west = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->west_p), &width, &height);
+    data->west = mlx_xpm_file_to_image(data->mlx_ptr, dir->west_p, &width, &height);
     if (!data->west)
         return (printf("Error\nTexture Error\n"), ERROR);
-    data->east = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->east_p), &width, &height);
+    data->east = mlx_xpm_file_to_image(data->mlx_ptr, dir->east_p, &width, &height);
     if (!data->east)
         return (printf("Error\nTexture Error\n"), ERROR);
-    data->south = mlx_xpm_file_to_image(data->mlx_ptr, strafter_type(dir->south_p), &width, &height);
+    data->south = mlx_xpm_file_to_image(data->mlx_ptr, dir->south_p, &width, &height);
     if (!data->south)
         return (printf("Error\nTexture Error\n"), ERROR);
     return (SUCCESS);
