@@ -75,14 +75,18 @@ typedef struct s_game
     int window_height;
     t_player *player;
     t_ray *rays;
-    t_texture textures[4]; // North, South, East, West
-    t_texture pistol_texture; // <-- Add this line
+    t_texture *textures; // North, South, East, West
+    t_texture *pistol_texture;
     bool is_game_running;
     int key_state;
     int keys_held;
     int last_mouse_x;
     int last_mouse_y;
     t_data *data;
+    bool animation_running;
+    int current_anim_index;
+    bool syle_animation_running;
+    int current_style_index;
 } t_game;
 
 
@@ -120,7 +124,8 @@ typedef enum direction{
     NORTH,
     SOUTH,
     EAST,
-    WEST
+    WEST,
+    AIM
 } t_texture_direction;
 
 typedef struct usedonce{

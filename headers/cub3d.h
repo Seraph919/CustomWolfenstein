@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 19:35:45 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:58:06 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,21 @@
 #define ERROR 1
 #define SYERROR 2
 
+#define DRAW_RAYS 0
+
 #define MAP_W 15
 #define MAP_H 11
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define WALL_COLOR 0x424242
 #define EMPTY_COLOR 0xebebeb
 #define PLAYER_COLOR 0x003aba
 #define PLAYER 0xFF0000
 
-#define TILE_SIZE 8
-#define PLAYER_SIZE 5
+#define TILE_SIZE 5
+#define PLAYER_SIZE 3
 
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
@@ -80,6 +82,12 @@
 #define PLAYER_SPEED 0.30
 
 #define ROT_SPEED 0.05
+
+
+// mouse buttons
+
+#define LEFT_CLICK 1
+#define RIGHT_CLICK 2
 
 
 // Init funcs
@@ -177,6 +185,6 @@ void print_stff(t_data *data);
 char **remove_newlines(t_data *data);
 
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
-
+void draw_weapon(t_game *game, int index);
 
 #endif

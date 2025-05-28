@@ -36,9 +36,9 @@ void draw_line(t_game *game, int x1, int y1, int x2, int y2, int color)
 
     while (1)
     {
-        my_mlx_pixel_put(game, x1, y1, color);
         if (x1 == x2 && y1 == y2) break;
-
+        my_mlx_pixel_put(game, x1, y1, color);
+        
         int e2 = 2 * err;
         if (e2 > -dy)
         {

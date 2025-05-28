@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 19:52:34 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:01:56 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,3 +135,5 @@ int main(int ac, char **av)
     
     return 0;
 }
+// ! free memory after game opening success..
+// ! use gc only for errors..

@@ -14,9 +14,9 @@ void render_minimap(t_game *game)
         {
             int color;
             if (game->map[y][x] == '1')
-                color = WALL_COLOR;
-            else
                 color = EMPTY_COLOR;
+            else
+                color = WALL_COLOR;
             draw_rect(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, color);
         }
     }
@@ -25,24 +25,26 @@ void render_minimap(t_game *game)
               game->player->x - PLAYER_SIZE / 2, 
               game->player->y - PLAYER_SIZE / 2, 
               PLAYER_SIZE, PLAYER_SIZE, 
-              PLAYER_COLOR);
-
-    float dx = cos(game->player->angle) * 20;
-    float dy = sin(game->player->angle) * 20;
-    draw_line(game, 
-              game->player->x, 
-              game->player->y, 
-              game->player->x + dx, 
-              game->player->y + dy, 
-              0xFF0000);
-
-    for (int i = 0; i < NUM_RAYS; i += 50)
+              0xffffff);
+    if (DRAW_RAYS)
     {
+        float dx = cos(game->player->angle) * 20;
+        float dy = sin(game->player->angle) * 20;
         draw_line(game, 
-                  game->player->x, 
-                  game->player->y, 
-                  game->rays[i].wall_hit_x, 
-                  game->rays[i].wall_hit_y, 
-                  0xFF0000);
+                game->player->x, 
+                game->player->y, 
+                game->player->x + dx, 
+                game->player->y + dy, 
+                0xFF0000);
+
+        for (int i = 0; i < NUM_RAYS; i++)
+        {
+            draw_line(game, 
+                    game->player->x, 
+                    game->player->y, 
+                    game->rays[i].wall_hit_x, 
+                    game->rays[i].wall_hit_y, 
+                    0xFF0000);
+        }
     }
 }
