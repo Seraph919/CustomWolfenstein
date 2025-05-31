@@ -6,13 +6,15 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/28 14:58:06 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/31 09:56:54 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 #define CUB3D_H
 
+#include <pthread.h>
+#include <signal.h>
 #include "data_structures.h"
 #include <math.h>
 #include <stdio.h>
@@ -166,7 +168,7 @@ void set_tozero(t_data *data);
 int map_validation(char **map, int map_size, t_data *data);
 char *skip_spaces(char *s);
 int	ft_strncmpp(const char *s1, const char *s2, size_t count);
-bool map_checker(char **map);
+bool map_checker(char **map, t_data *data);
 bool color_filling(t_data *data);
 bool valid_colorstr(char *s);
 size_t count_char(char *s, char c);
@@ -174,7 +176,6 @@ int rgb_to_int(int r, int g, int b);
 bool valid_file_name(char *s);
 bool is_void(char **map, size_t x, size_t y, size_t map_max);
 bool str_validation(int line, bool end, t_data *data);
-bool map_checker(char **map);
 void fireforce(t_data *data, t_place place);
 void free2d(char **s, size_t size);
 void free_texture(t_data *data);

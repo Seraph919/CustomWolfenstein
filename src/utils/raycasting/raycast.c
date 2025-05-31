@@ -246,6 +246,7 @@ void store_ray_properties(t_game *game, int ray_id, float ray_angle,
             game->rays[ray_id].wall_face = 1;
     }
     game->rays[ray_id].ray_angle = ray_angle;
+    // printf("h = %f v = %f\n  ", h_distance, v_distance);
 }
 
 void cast_ray(t_game *game, float ray_angle, int ray_id)

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:35:54 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 16:40:20 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/31 09:57:01 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool str_validation(int line, bool end, t_data *data)
     t_norm1_init(&norm, line, end);
     norm.map = data->map;
     norm.map_y = data->map_y;
-    if (map_checker(norm.map))
+    if (map_checker(norm.map, data))
         return (false);
     while (data->map[line][norm.i])
     {

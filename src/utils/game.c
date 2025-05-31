@@ -33,6 +33,28 @@ void draw_weapon(t_game *game, int index)
     draw_sprite(game, &game->pistol_texture[game->current_anim_index], pistol_x, pistol_y, pistol_w, pistol_h);
 }
 
+pid_t play_sound(t_game *game)
+{
+    int fd;
+    int id = fork();
+    if (id == 0)
+    {
+        fd = 3;
+        while (fd < 1024)
+            close(fd++);
+        if (game->sounds.game_vibes)
+            execlp("paplay", "paplay", "./sounds/one_piece_ingame.wav", (char *)NULL);
+        else
+        {
+            execlp("paplay", "paplay", "./sounds/pew.wav", (char *)NULL);
+        }
+         _exit(1);
+    }
+    if (game->sounds.game_vibes)
+        return id;
+    else
+        return (0);
+}
 int game_loop(t_game *game)
 {
     if (!game->is_game_running)
@@ -51,16 +73,22 @@ int game_loop(t_game *game)
         game->player->angle -= 0.05;
     if (game->keys_held & (1 << 5))
         game->player->angle += 0.05;
-
+    if (game->sounds.fire || game->sounds.game_vibes)
+    {
+        game->vibesound_id = play_sound(game);
+        game->sounds.fire = false;
+        game->sounds.game_vibes = false;
+    }
     cast_rays(game);
     generate_3d_projection(game);
     render_minimap(game);
-    if (!game->syle_animation_running)
-        draw_weapon(game, game->current_anim_index);
+    // if (!game->syle_animation_running)
+    draw_weapon(game, game->current_anim_index);
     // else
     //     draw_weapon(game, game->current_style_index);
     draw_sprite(game, &game->textures[AIM],(WINDOW_WIDTH/ 2) -45, (WINDOW_HEIGHT / 2) - 45, 45, 45);
     mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
+
     return 0;
 }
 
@@ -94,10 +122,39 @@ int mouse_butt(int button, int x, int y, void *param)
 
     game = (t_game *) param;
     if (button == LEFT_CLICK)
+    {
         game->animation_running = true;
+        game->sounds.fire = true;
+    }
     if (button == RIGHT_CLICK)
         game->syle_animation_running = true;
+    else
+        printf("button == %d\n", button);
     return (0);
+}
+
+pid_t play_opening_sound()
+{
+    int id;
+    int fd;
+
+    id = fork();
+    if (id == 0)
+    {
+        fd = 3;
+        while (fd < 1024)
+            close(fd++);
+        execlp("paplay", "paplay", "./sounds/op.wav", (char *)NULL);
+        _exit(1);
+    }
+    return id;
+}
+
+void draw_opening_scene(t_game *game)
+{
+    draw_sprite(game, &game->textures[OPEN], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
+    sleep(10);
 }
 
 int start_gaming(t_game game, char **map)
@@ -115,7 +172,11 @@ int start_gaming(t_game game, char **map)
         free(game.player);
         return (1);
     }
+
+    // game.opsound_id = play_opening_sound();
     render_map(&game, map);
+    // draw_opening_scene(&game);
+    game.sounds.game_vibes = true;
     mlx_hook(game.window, 2, 1L << 0, key_press, &game);
     mlx_hook(game.window, 3, 1L << 1, key_release, &game);
     mlx_hook(game.window, 6, 1L << 6, mouse_move, &game);

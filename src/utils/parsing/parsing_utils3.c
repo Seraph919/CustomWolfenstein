@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 19:52:09 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/30 09:59:36 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ bool file_process(t_data *data, char **av)
         return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR);
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
-    print_stff(data);
+    // print_stff(data);
     return (SUCCESS);
 }
 

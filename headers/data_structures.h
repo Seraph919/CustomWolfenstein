@@ -18,6 +18,12 @@ typedef struct s_ray
     int wall_height;
 } t_ray;
 
+typedef struct sound{
+    bool fire;
+    bool opening_song;
+    bool game_vibes;
+} t_sounds;
+
 typedef struct s_texture
 {
     void *img;
@@ -41,6 +47,7 @@ typedef struct s_player
     float rotation_speed;
     double plane_x;
     double plane_y;
+    char player_char;
 } t_player;
 
 typedef struct s_wall_hit
@@ -87,8 +94,11 @@ typedef struct s_game
     int current_anim_index;
     bool syle_animation_running;
     int current_style_index;
+    bool first_time;
+    t_sounds sounds;
+    pid_t vibesound_id;
+    pid_t opsound_id;
 } t_game;
-
 
 
 typedef struct s_direction{
@@ -125,7 +135,8 @@ typedef enum direction{
     SOUTH,
     EAST,
     WEST,
-    AIM
+    AIM,
+    OPEN
 } t_texture_direction;
 
 typedef struct usedonce{
@@ -176,6 +187,7 @@ typedef struct s_data
     t_colors *colors;
     size_t player_y;
     t_direction_p *direction_paths;
+    char player_char;
 }   t_data;
 
 #endif

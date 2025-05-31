@@ -4,6 +4,11 @@ int key_press(int keycode, t_game *game)
 {
     if (keycode == W_KEY)
         game->keys_held |= (1 << 0);
+    if (keycode == XK_space)
+    {
+        game->animation_running = true;
+        game->sounds.fire = true;
+    }
     else if (keycode == S_KEY)
         game->keys_held |= (1 << 1);
     else if (keycode == A_KEY)

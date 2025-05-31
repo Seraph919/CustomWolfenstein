@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/28 10:01:56 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:02:08 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ bool texture_loading(t_data *data)
     t_direction_p *dir;
     int width;
     int height;
-    int     i;
+    // int     i;
 
     dir = data->direction_paths;
-    i = 0;
+    // i = 0;
     data->north = mlx_xpm_file_to_image(data->mlx_ptr, dir->north_p, &width, &height);
     if (!data->north)
         return (printf("Error\nTexture Error\n"), ERROR);
@@ -129,6 +129,7 @@ int main(int ac, char **av)
         return (ERROR);
     t_game game;
 
+    printf("the player side is : %c\n", data.player_char);
     game.map = NULL;
     game.data = &data;
     start_gaming(game, data.map);

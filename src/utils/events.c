@@ -122,7 +122,7 @@ void update_player_position(t_game *game, int new_x, int new_y)
         return;
     }
     game->map[(int)game->player->y][(int)game->player->x] = '0';
-    game->map[new_y][new_x] = 'N';
+    game->map[new_y][new_x] = game->data->player_char;
     game->player->x = new_x;
     game->player->y = new_y;
     render_map(game, game->map);
@@ -136,5 +136,11 @@ int close_window(t_game *game)
     mlx_destroy_display(game->mlx);
     free(game->mlx);
     alloc(0, FREE);
+    // printf("PID 1 = %d PID 2 = %d\n", game->vibesound_id, game->opsound_id);
+    if (game->vibesound_id > 0)
+        kill(game->vibesound_id, SIGKILL);
+    if (game->opsound_id > 0)
+        kill(game->opsound_id, SIGKILL);
+    system("pkill -9 paplay");
     exit(0);
 }

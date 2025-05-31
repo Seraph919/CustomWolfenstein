@@ -6,9 +6,9 @@
 #				╚═╝        ╚═╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═════╝ ╚═╝  ╚═╝
                                                               
 NAME = cub3D
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g #-I$(HOME)/sdl2-local/include/SDL2 
 
-LIB = -Llib -l:libmlx_Linux.a -lX11 -lXext -lm
+LIB = -Llib -l:libmlx_Linux.a -lX11 -lXext -lm # $(HOME)/sdl2-local/lib/libSDL2.a
 CLIB = cub3d.a
 
 GREEN = \033[1;32m
