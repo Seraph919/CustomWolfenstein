@@ -8,7 +8,7 @@ int mouse_move(int x, int y, t_game *game)
     float sensitivity;
 
     mouse_delta_x = x - center_x;
-    sensitivity = 0.005f;
+    sensitivity = 0.002f;
     game->player->angle += mouse_delta_x * sensitivity;
     mlx_mouse_move(game->mlx, game->window, center_x, center_y);
     game->last_mouse_x = center_x;
