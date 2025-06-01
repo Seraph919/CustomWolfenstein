@@ -1,7 +1,7 @@
-NO /home/asoudani/cub/src/textures/toilet_wall.xpm
-SO /home/asoudani/cub/src/textures/toilet_wall.xpm
-EA /home/asoudani/cub/src/textures/toilet_wall.xpm
-WE /home/asoudani/cub/src/textures/toilet_wall.xpm
+NO ./src/textures/toilet_wall.xpm
+SO ./src/textures/toilet_wall.xpm
+EA ./src/textures/toilet_wall.xpm
+WE ./src/textures/toilet_wall.xpm
 
 F 90,90,90
 C 236,236,236

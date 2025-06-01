@@ -72,6 +72,8 @@ void generate_3d_projection(t_game *game)
     }
 }
 
+
+
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h)
 {
     for (int y = 0; y < dest_h; y++)

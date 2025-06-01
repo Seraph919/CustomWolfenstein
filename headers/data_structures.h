@@ -6,6 +6,14 @@
 #include <stdio.h>
 typedef struct s_data t_data;
 
+typedef struct door{
+    float ray_angle;
+    float door_hit_x;
+    float door_hit_y;
+    float distance;
+    bool hit_vertical;
+}   t_door;
+
 typedef struct s_ray
 {
     float ray_angle;
@@ -98,6 +106,7 @@ typedef struct s_game
     t_sounds sounds;
     pid_t vibesound_id;
     pid_t opsound_id;
+    t_door door;
 } t_game;
 
 
@@ -136,7 +145,8 @@ typedef enum direction{
     EAST,
     WEST,
     AIM,
-    OPEN
+    OPEN,
+    DOOR
 } t_texture_direction;
 
 typedef struct usedonce{

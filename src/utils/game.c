@@ -165,14 +165,13 @@ int start_gaming(t_game game, char **map)
         printfd(2, "Memory allocation for player failed\n");
         return (1);
     }
-    game.map_h = get_map_height(map);
+    game.map_h = get_map_height(map); // ! do u still work with this stuff??
     game.map_w = get_map_width(map);
     if (!init_mlx(&game, map))
     {
         free(game.player);
         return (1);
     }
-
     // game.opsound_id = play_opening_sound();
     render_map(&game, map);
     // draw_opening_scene(&game);

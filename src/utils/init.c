@@ -2,6 +2,8 @@
 
 int get_map_height(char **map)
 {
+    if (!map || !*map)
+        return (0);
     int h = 0;
     while (map[h])
         h++;
@@ -10,6 +12,8 @@ int get_map_height(char **map)
 
 int get_map_width(char **map)
 {
+        if (!map || !*map)
+        return (0);
     int w = 0;
     while (map[0][w])
         w++;
@@ -56,6 +60,7 @@ int texture_data(t_game *game)
     game->textures[WEST].addr = mlx_get_data_addr(game->textures[WEST].img, &game->textures[WEST].bpp, &game->textures[WEST].size_line, &game->textures[WEST].endian);
     game->textures[AIM].addr = mlx_get_data_addr(game->textures[AIM].img, &game->textures[AIM].bpp, &game->textures[AIM].size_line, &game->textures[AIM].endian);
     game->textures[OPEN].addr = mlx_get_data_addr(game->textures[OPEN].img, &game->textures[OPEN].bpp, &game->textures[OPEN].size_line, &game->textures[OPEN].endian);
+    game->textures[DOOR].addr = mlx_get_data_addr(game->textures[DOOR].img, &game->textures[DOOR].bpp, &game->textures[DOOR].size_line, &game->textures[DOOR].endian);
     return (SUCCESS);
 }
 
@@ -137,7 +142,7 @@ int init_mlx(t_game *game, char **map)
 
     mlx_mouse_move(game->mlx, game->window, game->last_mouse_x, game->last_mouse_y);
     mlx_mouse_hide(game->mlx, game->window);
-    game->textures = alloc(sizeof(t_texture) *  6, ALLOC);
+    game->textures = alloc(sizeof(t_texture) *  7, ALLOC);
     if (!game->textures)
         return (alloc(0, FREE), exit(1), ERROR);
     game->textures[NORTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->north_p, &game->textures[NORTH].width, &game->textures[NORTH].height);
@@ -146,6 +151,7 @@ int init_mlx(t_game *game, char **map)
     game->textures[WEST].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->west_p, &game->textures[WEST].width, &game->textures[WEST].height);
     game->textures[AIM].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/aim_cross.xpm", &game->textures[AIM].width, &game->textures[AIM].height);
     game->textures[OPEN].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/opening_scene.xpm", &game->textures[OPEN].width, &game->textures[OPEN].height);
+    game->textures[DOOR].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/door.xpm", &game->textures[DOOR].width, &game->textures[DOOR].height);
     game->imgs = alloc(sizeof(char *) * 4, ALLOC);
 
     if (texture_data(game) == ERROR)
