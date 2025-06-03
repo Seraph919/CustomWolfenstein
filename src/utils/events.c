@@ -21,25 +21,38 @@ int mouse_move(int x, int y, t_game *game)
 
 int is_valid_move(t_game *game, float new_x, float new_y)
 {
-    int map_x = (int)(new_x / TILE_SIZE);
-    int map_y = (int)(new_y / TILE_SIZE);
-    
-    static int i = 1;
-    
-    if (map_x < 0 || map_x >= game->map_w || map_y < 0 || map_y >= game->map_h)
+    int i = 0;
+    float buffer = 1.0f; // distance from the wall bel pixels
+    float corners[4][2] = {
+        {new_x - buffer, new_y - buffer},
+        {new_x + buffer, new_y - buffer},
+        {new_x - buffer, new_y + buffer},
+        {new_x + buffer, new_y + buffer}
+    };
+
+    while (i < 4)
     {
-        printf("Invalid move out of bounds!\n");
-        return 0;
+        int cx = (int)(corners[i][0] / TILE_SIZE);
+        int cy = (int)(corners[i][1] / TILE_SIZE);
+
+        if (cx < 0 || cx >= game->map_w || cy < 0 || cy >= game->map_h)
+        {
+            printf("Invalid move: out of bounds!\n");
+            return 0;
+        }
+        if (game->map[cy][cx] == '1')
+        {
+            printf("Invalid move: too close to wall!\n");
+            return 0;
+        }
+        i++;
     }
-    if (game->map[map_y][map_x] == '1') {
-        printf("Invalid move: hit a wall\n");
-        return 0;
-    }
-    if (game->map[map_y][map_x] == '0') {
-        printf("Move-> %d\n", i++);
-    }
+
+    static int j = 1;
+    printf("Move-> %d\n", j++);
     return 1;
 }
+
 
 void move_forward(t_game *game)
 {
