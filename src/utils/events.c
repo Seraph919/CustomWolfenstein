@@ -29,7 +29,6 @@ int is_valid_move(t_game *game, float new_x, float new_y)
         {new_x - buffer, new_y + buffer},
         {new_x + buffer, new_y + buffer}
     };
-
     while (i < 4)
     {
         int cx = (int)(corners[i][0] / TILE_SIZE);
@@ -60,15 +59,29 @@ void move_forward(t_game *game)
     float move_y = sin(game->player->angle) * PLAYER_SPEED;
     float new_x = game->player->x + move_x;
     float new_y = game->player->y + move_y;
-    
+
     if (is_valid_move(game, new_x, new_y))
     {
         game->player->x = new_x;
         game->player->y = new_y;
-    } else {
-        printf("Invalid move: move forward failed.\n");
+    }
+    else if (is_valid_move(game, game->player->x + move_x, game->player->y))
+    {
+        game->player->x += move_x;
+    }
+    else if (is_valid_move(game, game->player->x, game->player->y + move_y))
+    {
+        game->player->y += move_y;
+    }
+    else
+    {
+        if (game->keys_held & (1 << 2))
+            strafe_left(game);
+        else if (game->keys_held & (1 << 3))
+            strafe_right(game);
     }
 }
+
 
 void move_backward(t_game *game)
 {
@@ -82,8 +95,21 @@ void move_backward(t_game *game)
     {
         game->player->x = new_x;
         game->player->y = new_y;
-    } else {
-        printf("Invalid move: move backward failed.\n");
+    }
+    else if (is_valid_move(game, game->player->x + move_x, game->player->y))
+    {
+        game->player->y += move_y;
+    }
+    else if (is_valid_move(game, game->player->x, game->player->y + move_y))
+    {
+        game->player->x += move_x;
+    }
+    else
+    {
+        if (game->keys_held & (1 << 2))
+            strafe_left(game);
+        else if (game->keys_held & (1 << 3))
+            strafe_right(game);
     }
 }
 
