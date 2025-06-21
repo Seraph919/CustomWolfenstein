@@ -6,6 +6,14 @@
 #include <stdio.h>
 typedef struct s_data t_data;
 
+
+// for each door
+typedef struct doorpos{
+    int x;
+    int y;
+    bool is_open;
+}   t_doorpos;
+
 typedef struct door{
     float ray_angle;
     float door_hit_x;
@@ -109,7 +117,6 @@ typedef struct s_game
     t_door door;
 } t_game;
 
-
 typedef struct s_direction{
     char *east_p;
     char *west_p;
@@ -198,6 +205,8 @@ typedef struct s_data
     size_t player_y;
     t_direction_p *direction_paths;
     char player_char;
+    t_doorpos *doors;
+    int ndoors;
 }   t_data;
 
 #endif

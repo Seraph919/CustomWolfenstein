@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/31 17:44:24 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/21 11:36:26 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 #define SUCCESS 0
 #define ERROR 1
 #define SYERROR 2
+
+#define VALIDCHARS "DNWES10 \n"
 
 #define DRAW_RAYS 0
 
@@ -152,7 +154,6 @@ bool is_door(t_game *game, float x, float y);
 
 int char_in(char *s);
 bool not_in_str(char c, char *s);
-bool not_in_str(char c, char *s);
 bool is_white_space(char c);
 bool file_copying(t_data *data, int len, char **av);
 bool get_allocation_size(int *y, char **av);
@@ -182,8 +183,12 @@ void free_texture(t_data *data);
 bool outer_resources(t_data *data);
 bool outer_error_check(t_data *data);
 bool texture_valid(char *s1, char *s2);
+bool above_checker(char **map, int y);
+bool is_void(char **map, size_t x, size_t y, size_t map_max);
 void print_stff(t_data *data);
-char **remove_newlines(t_data *data);
+char **newlinecut(t_data *data);
+int countChars(int c, t_data *data, bool assign);
+bool is_open(int x, int y, t_game *game, bool unlock_door);
 
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
 void draw_weapon(t_game *game, int index);

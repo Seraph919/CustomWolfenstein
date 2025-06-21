@@ -73,6 +73,8 @@ int game_loop(t_game *game)
         game->player->angle -= 0.05;
     if (game->keys_held & (1 << 5))
         game->player->angle += 0.05;
+    if (game->keys_held & (1 << 6))
+        is_open(game->player->x , game->player->y, game, true); // !update this
     if (game->sounds.fire || game->sounds.game_vibes)
     {
         game->vibesound_id = play_sound(game);

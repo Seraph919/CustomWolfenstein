@@ -44,11 +44,19 @@ int is_valid_move(t_game *game, float new_x, float new_y)
             printf("Invalid move: too close to wall!\n");
             return 0;
         }
+        if ((game->map[cy][cx] == 'D' && is_open(cx, cy, game, false) == false))
+        {
+            printf("check x = %d y = %d\n", cx, cy);
+            return printf("Unlock the door first!\n"), 0;
+        }
         i++;
     }
-
-    static int j = 1;
-    printf("Move-> %d\n", j++);
+    // for (int i = 0; game->map[i]; i++)
+    // {
+    //     printf("'%s'\n", game->map[i]);
+    // }
+    // static int j = 1;
+    // printf("Move-> %d\n", j++);
     return 1;
 }
 
@@ -165,7 +173,8 @@ void update_player_position(t_game *game, int new_x, int new_y)
         printf("Invalid move: out of bounds\n");
         return;
     }
-    game->map[(int)game->player->y][(int)game->player->x] = '0';
+    if (game->map[(int)game->player->y][(int)game->player->x] != 'C')
+        game->map[(int)game->player->y][(int)game->player->x] = '0';
     game->map[new_y][new_x] = game->data->player_char;
     game->player->x = new_x;
     game->player->y = new_y;

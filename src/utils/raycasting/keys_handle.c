@@ -19,6 +19,8 @@ int key_press(int keycode, t_game *game)
         game->keys_held |= (1 << 4);
     else if (keycode == RIGHT_ARROW)
         game->keys_held |= (1 << 5);
+    else if (keycode == XK_E || keycode == XK_e)
+        game->keys_held |= (1 << 6);
     else if (keycode == XK_Escape)
         close_window(game);
     return 0;
@@ -37,6 +39,8 @@ int key_release(int keycode, t_game *game)
     else if (keycode == LEFT_ARROW)
         game->keys_held &= ~(1 << 4);
     else if (keycode == RIGHT_ARROW)
-        game->keys_held &= ~(1 << 5); 
+        game->keys_held &= ~(1 << 5);
+    else if (keycode == XK_E || keycode == XK_e)
+        game->keys_held &= ~(1 << 6);
     return 0;
 }

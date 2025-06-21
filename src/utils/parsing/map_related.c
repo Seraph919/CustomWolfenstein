@@ -6,11 +6,33 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:35:54 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/31 09:57:01 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:33:35 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../headers/cub3d.h"
+
+
+int check_next_index(char **map, int x, int y)
+{
+    if (!map || !*map || !map[y])
+        return ERROR;
+    if (map[y][x] != '0' && map[y][x] != '\0' && is_white_space(map[y][x]) == false)
+        return SUCCESS;
+    return ERROR;
+}
+
+
+bool not_surr(char **map, int x, int y)
+{
+    // check for holes or completly surronded by 0
+    if (check_next_index(map, x + 1, y) == SUCCESS && check_next_index(map, x - 1, y) == SUCCESS)
+        return false;
+    if (check_next_index(map, x, y + 1) == SUCCESS && check_next_index(map, x, y - 1) == SUCCESS)
+        return false;
+    return true;
+}
+
 
 bool check_srnds(t_data *data, int x, int y, size_t map_max)
 {
@@ -19,6 +41,11 @@ bool check_srnds(t_data *data, int x, int y, size_t map_max)
     if (y > 0 && data->map[y][x] && data->map[y][x] == '0')
     {
         if (is_void(data->map, x, y, map_max))
+            return (false);
+    }
+    else if (y > 0 && data->map[y][x] && data->map[y][x] == 'D')
+    {
+        if (not_surr(data->map, x, y))
             return (false);
     }
     else if(!not_in_str(data->map[y][x], "NSEW"))

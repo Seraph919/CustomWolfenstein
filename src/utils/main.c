@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/31 17:09:25 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:21:55 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int main(int ac, char **av)
     if (file_process(&data, av))
         return (ERROR);
     t_game game;
-    printf("the player side is : %c\n", data.player_char);
+    // printf("the player side is : %c\n", data.player_char);
     game.map = NULL;
     game.data = &data;
     start_gaming(game, data.map);
@@ -138,3 +138,7 @@ int main(int ac, char **av)
 // ! free memory after game opening success..
 // ! use gc only for errors..
 // TODO : check all the image sources and return an error if something fails..
+
+//  TODO : create a t_door stucture where you save the door index and condition (open/closed)  done!
+//  TODO : force the player to not move if the next is D and door is closed.. 
+//  TODO : save door rays and draw texture.

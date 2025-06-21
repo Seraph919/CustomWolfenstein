@@ -60,7 +60,8 @@ int texture_data(t_game *game)
     game->textures[WEST].addr = mlx_get_data_addr(game->textures[WEST].img, &game->textures[WEST].bpp, &game->textures[WEST].size_line, &game->textures[WEST].endian);
     game->textures[AIM].addr = mlx_get_data_addr(game->textures[AIM].img, &game->textures[AIM].bpp, &game->textures[AIM].size_line, &game->textures[AIM].endian);
     game->textures[OPEN].addr = mlx_get_data_addr(game->textures[OPEN].img, &game->textures[OPEN].bpp, &game->textures[OPEN].size_line, &game->textures[OPEN].endian);
-    game->textures[DOOR].addr = mlx_get_data_addr(game->textures[DOOR].img, &game->textures[DOOR].bpp, &game->textures[DOOR].size_line, &game->textures[DOOR].endian);
+    game->textures[DOOR].addr = mlx_get_data_addr(game->textures[DOOR].img, &game->textures[DOOR].bpp, &game->textures[DOOR].size_line, &game->textures[DOOR].endian); // ! you can loop here..
+
     return (SUCCESS);
 }
 
@@ -111,14 +112,14 @@ int init_mlx(t_game *game, char **map)
             {
                 game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
                 game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
-                game->player->angle = PI / 2;
                 game->map[y][x] = '0';
+                game->player->angle = 3 * PI / 2;
             }
             else if (map[y][x] == 'S')
             {
                 game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
                 game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
-                game->player->angle = 3 * PI / 2;
+                game->player->angle = PI / 2;
                 game->map[y][x] = '0';
             }
             else if (map[y][x] == 'E')
@@ -151,7 +152,7 @@ int init_mlx(t_game *game, char **map)
     game->textures[WEST].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->west_p, &game->textures[WEST].width, &game->textures[WEST].height);
     game->textures[AIM].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/aim_cross.xpm", &game->textures[AIM].width, &game->textures[AIM].height);
     game->textures[OPEN].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/opening_scene.xpm", &game->textures[OPEN].width, &game->textures[OPEN].height);
-    game->textures[DOOR].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/door.xpm", &game->textures[DOOR].width, &game->textures[DOOR].height);
+    game->textures[DOOR].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/door.xpm", &game->textures[DOOR].width, &game->textures[DOOR].height);  // ! you can loop here..
     game->imgs = alloc(sizeof(char *) * 4, ALLOC);
 
     if (texture_data(game) == ERROR)
