@@ -17,7 +17,7 @@ int get_texture_color(t_texture *texture, int tex_x, int tex_y)
     return *(unsigned int *)pixel;
 }
 
-void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id)
+void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id, bool isdoor)
 {
     t_ray *ray;
     int face;
@@ -32,7 +32,9 @@ void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int 
     face= ray->wall_face;
     if (face < 0 || face > 3 || !game->textures[face].addr)
         return;
-    texture = &game->textures[face]; // ! here are the sides..
+    texture = &game->textures[DOOR];
+    if (isdoor == false)
+        texture = &game->textures[face]; // ! here are the sides..
     if (ray->hit_vertical)
         wall_x = ray->wall_hit_y;
     else
@@ -67,12 +69,11 @@ void generate_3d_projection(t_game *game)
         wall_height = (TILE_SIZE / y_distance) * ((game->window_width / 2) / tan(game->player->fov / 2));
         game->rays[i].wall_height = wall_height;
         wall_top = (game->window_height / 2) - (wall_height / 2);
-        if (wall_top < 0) wall_top = 0;
-        draw_textured_wall(game, i, wall_top, wall_height, i);
+        if (wall_top < 0)
+            wall_top = 0;
+        draw_textured_wall(game, i, wall_top, wall_height, i, game->rays[i].is_door);
     }
 }
-
-
 
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h)
 {

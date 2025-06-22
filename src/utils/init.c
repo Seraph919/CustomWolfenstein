@@ -50,7 +50,7 @@ char **duplicate_map(char **map)
     return new_map;
 }
 
-int texture_data(t_game *game)
+int texture_data(t_game *game) // TODO : ADD ALL TEXTS TO THIS AND USE LOOP..
 {
      if (!game->textures[NORTH].img || !game->textures[SOUTH].img || !game->textures[EAST].img || !game->textures[WEST].img || !game->textures[AIM].img)
         return (printfd(2, "Failed to load direction textures\n"), alloc (0, FREE), ERROR);
@@ -153,7 +153,7 @@ int init_mlx(t_game *game, char **map)
     game->textures[AIM].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/aim_cross.xpm", &game->textures[AIM].width, &game->textures[AIM].height);
     game->textures[OPEN].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/opening_scene.xpm", &game->textures[OPEN].width, &game->textures[OPEN].height);
     game->textures[DOOR].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/door.xpm", &game->textures[DOOR].width, &game->textures[DOOR].height);  // ! you can loop here..
-    game->imgs = alloc(sizeof(char *) * 4, ALLOC);
+    game->imgs = alloc(sizeof(char *) * 4, ALLOC); // !make sure that this is usefull
 
     if (texture_data(game) == ERROR)
         return (ERROR);

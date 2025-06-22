@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/21 11:36:26 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:02:54 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int start_gaming(t_game game, char **map);
 
 // Texture drawing functions
 int get_texture_color(t_texture *texture, int tex_x, int tex_y);
-void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id);
+void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id, bool isdoor);
 
 bool is_door(t_game *game, float x, float y);
 

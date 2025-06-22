@@ -20,7 +20,7 @@ int key_press(int keycode, t_game *game)
     else if (keycode == RIGHT_ARROW)
         game->keys_held |= (1 << 5);
     else if (keycode == XK_E || keycode == XK_e)
-        game->keys_held |= (1 << 6);
+        is_open(game->player->x , game->player->y, game, true); // * lock/unlock door
     else if (keycode == XK_Escape)
         close_window(game);
     return 0;
@@ -40,7 +40,12 @@ int key_release(int keycode, t_game *game)
         game->keys_held &= ~(1 << 4);
     else if (keycode == RIGHT_ARROW)
         game->keys_held &= ~(1 << 5);
-    else if (keycode == XK_E || keycode == XK_e)
-        game->keys_held &= ~(1 << 6);
+    else if (keycode == XK_p || keycode == XK_P)
+    {
+        for (int i = 0; i < NUM_RAYS; i++)
+        {
+            printf("ray[%d] isdoor == %d\n", i, game->rays[i].is_door);
+        }
+    }
     return 0;
 }

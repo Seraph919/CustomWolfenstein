@@ -167,13 +167,14 @@ void update_player_position(t_game *game, int new_x, int new_y)
         game->player->angle -= 0.05;
     if (game->keys_held & (1 << 5))
         game->player->angle += 0.05;
-
+        
     if (new_x < 0 || new_x >= game->map_w || new_y < 0 || new_y >= game->map_h)
     {
         printf("Invalid move: out of bounds\n");
         return;
     }
-    if (game->map[(int)game->player->y][(int)game->player->x] != 'C')
+    if (game->map[(int)game->player->y][(int)game->player->x] != 'D'  // ! make sure that this is usefuLL
+        && game->map[(int)game->player->y][(int)game->player->x] != 'O')
         game->map[(int)game->player->y][(int)game->player->x] = '0';
     game->map[new_y][new_x] = game->data->player_char;
     game->player->x = new_x;

@@ -14,14 +14,6 @@ typedef struct doorpos{
     bool is_open;
 }   t_doorpos;
 
-typedef struct door{
-    float ray_angle;
-    float door_hit_x;
-    float door_hit_y;
-    float distance;
-    bool hit_vertical;
-}   t_door;
-
 typedef struct s_ray
 {
     float ray_angle;
@@ -32,6 +24,7 @@ typedef struct s_ray
     // int hit_horizontal; // 1 if the ray hit a horizontal wall, 0 otherwise
     int wall_face;   // 0=north, 1=south, 2=east, 3=west
     int wall_height;
+    bool is_door;
 } t_ray;
 
 typedef struct sound{
@@ -114,7 +107,6 @@ typedef struct s_game
     t_sounds sounds;
     pid_t vibesound_id;
     pid_t opsound_id;
-    t_door door;
 } t_game;
 
 typedef struct s_direction{

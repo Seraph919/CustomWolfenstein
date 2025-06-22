@@ -64,7 +64,7 @@ float normalize_angle(float angle)
 bool is_door(t_game *game, float x, float y)
 {
     if (x < 0 || x >= game->map_w * TILE_SIZE || y < 0 || y >= game->map_h * TILE_SIZE)
-        return true;
+        return false;
 
     int map_x = (int)(x / TILE_SIZE);
     int map_y = (int)(y / TILE_SIZE);
@@ -123,7 +123,7 @@ t_ray_dir init_ray_direction(float ray_angle)
     return dir;
 }
 
-t_wall_hit find_horizontal_intersection(t_game *game, float ray_angle, t_ray_dir dir)
+t_wall_hit find_horizontal_intersection(t_game *game, float ray_angle, t_ray_dir dir, bool *found_door)
 {
     t_wall_hit hit = {0, 0, false};
     float y_intercept;
@@ -159,6 +159,14 @@ t_wall_hit find_horizontal_intersection(t_game *game, float ray_angle, t_ray_dir
             check_y = next_h_y - 1;
         else
             check_y = next_h_y;
+        if (is_door(game, check_x, check_y))
+        {
+            *found_door = true;
+            hit.x = next_h_x;
+            hit.y = next_h_y;
+            hit.found = true;
+            return hit;
+        }
         if (is_wall(game, check_x, check_y))
         {
             hit.x = next_h_x;
@@ -172,7 +180,7 @@ t_wall_hit find_horizontal_intersection(t_game *game, float ray_angle, t_ray_dir
     return hit;
 }
 
-t_wall_hit find_vertical_intersection(t_game *game, float ray_angle, t_ray_dir dir)
+t_wall_hit find_vertical_intersection(t_game *game, float ray_angle, t_ray_dir dir, bool *found_door)
 {
     t_wall_hit hit = {0, 0, false};
     float x_intercept;
@@ -208,6 +216,14 @@ t_wall_hit find_vertical_intersection(t_game *game, float ray_angle, t_ray_dir d
             check_x = next_v_x - 1;
         else
             check_x = next_v_x;
+        if (is_door(game, check_x, check_y))
+        {
+            *found_door = true;
+            hit.x = next_v_x;
+            hit.y = next_v_y;
+            hit.found = true;
+            return hit;
+        }
         if (is_wall(game, check_x, check_y))
         {
             hit.x = next_v_x;
@@ -222,7 +238,7 @@ t_wall_hit find_vertical_intersection(t_game *game, float ray_angle, t_ray_dir d
 }
 
 void store_ray_properties(t_game *game, int ray_id, float ray_angle,
-                        t_wall_hit h_hit, t_wall_hit v_hit, t_ray_dir dir)
+                        t_wall_hit h_hit, t_wall_hit v_hit, t_ray_dir dir, bool for_door)
 {
     float h_distance;
     float v_distance;
@@ -237,6 +253,9 @@ void store_ray_properties(t_game *game, int ray_id, float ray_angle,
     else
         v_distance = FLT_MAX;
 
+    game->rays[ray_id].is_door = false;    
+    if (for_door)
+        game->rays[ray_id].is_door = true;
     if (v_distance < h_distance)
     {
         game->rays[ray_id].wall_hit_x = v_hit.x;
@@ -267,7 +286,9 @@ void cast_ray(t_game *game, float ray_angle, int ray_id)
 {
     ray_angle = normalize_angle(ray_angle);
     t_ray_dir dir = init_ray_direction(ray_angle);
-    t_wall_hit h_hit = find_horizontal_intersection(game, ray_angle, dir);
-    t_wall_hit v_hit = find_vertical_intersection(game, ray_angle, dir);
-    store_ray_properties(game, ray_id, ray_angle, h_hit, v_hit, dir);
+    // for walls:
+    bool is_wall = false;
+    t_wall_hit h_hit = find_horizontal_intersection(game, ray_angle, dir, &is_wall);
+    t_wall_hit v_hit = find_vertical_intersection(game, ray_angle, dir, &is_wall);
+    store_ray_properties(game, ray_id, ray_angle, h_hit, v_hit, dir, is_wall);
 }
