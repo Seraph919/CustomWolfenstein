@@ -13,10 +13,13 @@ void render_minimap(t_game *game)
         for (int x = 0; x < game->map_w; x++)
         {
             int color;
+            color = WALL_COLOR;
             if (game->map[y][x] == '1')
                 color = EMPTY_COLOR;
-            else
-                color = WALL_COLOR;
+            else if (game->map[y][x] == 'D')
+                color = 0xFF0000;
+            else if (game->map[y][x] == 'O')
+                color = 0x00FF00;
             draw_rect(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, color);
         }
     }

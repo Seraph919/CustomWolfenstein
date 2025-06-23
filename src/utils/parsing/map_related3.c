@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/21 11:54:26 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/23 06:18:18 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ int countChars(int c, t_data *data, bool assign)
     return counter;
 }
 
-bool close_enough(int x, int dx, int y,  int dy)
+bool close_enough(char **map, int x, int y)
 {
-    if ((x == dx || x - 1 == dx || dx - 1 == x || x + 1 == dx || dx + 1 == x) && y == dy)
-        return true;
-    if ((y == dy || y - 1 == dy || dy - 1 == y || y + 1 == dy || dy + 1 == y) && x == dx)
-        return true;
+    for (int dy = -1; dy <= 2; dy++) {
+        for (int dx = -1; dx <= 2; dx++) {
+            int nx = x + dx;
+            int ny = y + dy;
+            if (map[ny][nx] == 'D' || map[ny][nx] == 'O')
+                return true;
+        }
+    }
     return false;
 }
 
@@ -67,7 +71,7 @@ bool is_open(int x, int y, t_game *game, bool unlock_door)
     while (i < ndoors)
     {
         head = &game->data->doors[i];
-        if (unlock_door == true)
+        if (unlock_door == true && close_enough(game->map, x, y))
         {
             head->is_open = !head->is_open;
             if (head->is_open == false)
@@ -78,7 +82,7 @@ bool is_open(int x, int y, t_game *game, bool unlock_door)
             game->map[head->y][head->x] = 'O';
             return true;
         }
-        if (close_enough(x, head->x, y, head->y) && head->is_open == false)
+        if (close_enough(game->map, head->x,head->y) && head->is_open == false)
         {   
             return false;
         }
