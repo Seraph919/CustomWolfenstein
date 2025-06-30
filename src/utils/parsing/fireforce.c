@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:42:06 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 16:41:28 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:03:31 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ void fireforce(t_data *data, t_place place)
         free_texture(data);
     mlx_destroy_display(data->mlx_ptr);
     free(data->mlx_ptr);
+}
+
+void exit_error(char *s)
+{
+    if (s)
+        printfd(2, "%s\n", s);
+    exit(1);
 }

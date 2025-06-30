@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/31 17:07:33 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:13:45 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char *strend_trim(char *str, size_t nbytes, int start_index)
     end = strlen(str);
     returned = alloc((sizeof(char) * end - nbytes) + 1, ALLOC);
     if (!returned)
-        return (NULL);
+        return (exit_error("fatal allocation error"), NULL);
     while (++i  < end - nbytes)
         returned[k++] = str[i];
     returned[k] = '\0';

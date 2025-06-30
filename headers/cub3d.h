@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/22 12:02:54 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:03:57 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,5 @@ bool is_open(int x, int y, t_game *game, bool unlock_door);
 
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
 void draw_weapon(t_game *game, int index);
-
+void exit_error(char *s);
 #endif

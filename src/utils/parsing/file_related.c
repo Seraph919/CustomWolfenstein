@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:47:07 by asoudani          #+#    #+#             */
-/*   Updated: 2025/05/27 19:51:34 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:04:47 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int allocations(t_data *data)
 {
     data->colors = alloc(sizeof(t_colors), ALLOC);
     if (!data->colors)
-        return (ERROR);
+        return (exit_error("fatal allocation error"), 1);
     data->direction_paths = alloc(sizeof (t_direction_p), ALLOC);
     if (!data->direction_paths)
-        return (ERROR);
+        return (exit_error("fatal allocation error"), 1);
     data->map = alloc(sizeof(char *) * (data->map_y - 6) + 1, ALLOC);
     if (!data->map)
-        return (ERROR); 
+        return (exit_error("fatal allocation error"), 1); 
     return (SUCCESS);
 }
 

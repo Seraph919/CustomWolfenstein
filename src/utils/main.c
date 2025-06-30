@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/20 17:21:55 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:07:27 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ bool color_filling(t_data *data)
     colors->f_c = alloc(sizeof(int) * 4, ALLOC);
     colors->c_c = alloc(sizeof(int) * 4, ALLOC);
     if (!colors->f_c || !colors->c_c )
-    return (ERROR);
+    return (exit_error("fatal allocation error"), 1);
     i = -1;
     while (++i < 3)
     {

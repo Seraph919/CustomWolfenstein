@@ -97,9 +97,9 @@ int init_mlx(t_game *game, char **map)
     if (!game->img)
         return 0;
     game->addr = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
-    game->rays = malloc(sizeof(t_ray) * NUM_RAYS);
+    game->rays = alloc(sizeof(t_ray) * NUM_RAYS, ALLOC);
     if (!game->rays)
-        return 0;
+        return exit_error("fatal allocation error"), 0;
     game->player->dir_x = 1.0;
     game->player->dir_y = 0.0;
     game->player->plane_x = 0.66;
@@ -145,7 +145,7 @@ int init_mlx(t_game *game, char **map)
     mlx_mouse_hide(game->mlx, game->window);
     game->textures = alloc(sizeof(t_texture) *  7, ALLOC);
     if (!game->textures)
-        return (alloc(0, FREE), exit(1), ERROR);
+        return (exit_error("fatal allocation error"), 1);
     game->textures[NORTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->north_p, &game->textures[NORTH].width, &game->textures[NORTH].height);
     game->textures[SOUTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->south_p, &game->textures[SOUTH].width, &game->textures[SOUTH].height);
     game->textures[EAST].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->east_p, &game->textures[EAST].width, &game->textures[EAST].height);
