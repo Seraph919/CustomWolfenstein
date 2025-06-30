@@ -63,7 +63,7 @@ float normalize_angle(float angle)
 
 bool is_door(t_game *game, float x, float y)
 {
-    if (x < 0 || x >= game->map_w * TILE_SIZE || y < 0 || y >= game->map_h * TILE_SIZE)
+    if (x < 0 || x >= (game->map_w - 1) * TILE_SIZE || y < 0 || y >= (game->map_h - 1) * TILE_SIZE)
         return false;
 
     int map_x = (int)(x / TILE_SIZE);
@@ -77,7 +77,7 @@ bool is_door(t_game *game, float x, float y)
 
 bool is_wall(t_game *game, float x, float y)
 {
-    if (x < 0 || x >= game->map_w * TILE_SIZE || y < 0 || y >= game->map_h * TILE_SIZE)
+    if (x < 0 || x >= (game->map_w - 1) * TILE_SIZE || y < 0 || y >= (game->map_h - 1) * TILE_SIZE)
         return true;
 
     int map_x = (int)(x / TILE_SIZE);

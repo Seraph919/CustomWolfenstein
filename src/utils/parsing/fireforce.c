@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:42:06 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 10:03:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:38:52 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ void fireforce(t_data *data, t_place place)
     free(data->mlx_ptr);
 }
 
-void exit_error(char *s)
+void exit_error(t_data *data, char *s)
 {
     if (s)
         printfd(2, "%s\n", s);
+    fireforce(data, AFTER);
+    // alloc(0, FREE); // !doenst contain the mlx ptr and stuff.. so free them prev
     exit(1);
 }

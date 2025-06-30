@@ -8,17 +8,17 @@ void render_minimap(t_game *game)
     (void)minimap_width;
     (void)minimap_height;
 
-    for (int y = 0; y < game->map_h; y++)
+    for (int y = 0; y < game->map_h - 1; y++)
     {
-        for (int x = 0; x < game->map_w; x++)
+        for (int x = 0; x < game->map_w - 1; x++)
         {
             int color;
             color = WALL_COLOR;
-            if (game->map[y][x] == '1')
+            if (game->map[y][x] && game->map[y][x]== '1')
                 color = EMPTY_COLOR;
-            else if (game->map[y][x] == 'D')
+            else if (game->map[y][x] && game->map[y][x]== 'D')
                 color = 0xFF0000;
-            else if (game->map[y][x] == 'O')
+            else if (game->map[y][x] && game->map[y][x]== 'O')
                 color = 0x00FF00;
             draw_rect(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, color);
         }

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:43:20 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 10:14:40 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:10:30 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char **newlinecut(t_data *data)
     {
         data->doors = alloc(sizeof(t_doorpos) * data->ndoors, ALLOC);
         if (!data->doors)
-            exit_error("fatal allocation error");
+            return fireforce(data, AFTER), exit(1), NULL;
         countChars('D', data, true);
     }
     return (data->map);

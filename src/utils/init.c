@@ -52,11 +52,11 @@ char **duplicate_map(char **map)
 
 int texture_data(t_game *game) // TODO : ADD ALL TEXTS TO THIS AND USE LOOP..
 {
-     if (!game->textures[NORTH].img || !game->textures[SOUTH].img || !game->textures[EAST].img || !game->textures[WEST].img || !game->textures[AIM].img)
-        return (printfd(2, "Failed to load direction textures\n"), alloc (0, FREE), ERROR);
     int i = -1;
     while (++i < 7)
     {
+        if (!game->textures[i].img)
+            return exit_error(game->data, "Failed to load texture"), 1;
         game->textures[i].addr = mlx_get_data_addr(game->textures[i].img, 
         &game->textures[i].bpp, &game->textures[i].size_line,
         &game->textures[i].endian);
@@ -98,7 +98,7 @@ int init_mlx(t_game *game, char **map)
     game->addr = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
     game->rays = alloc(sizeof(t_ray) * NUM_RAYS, ALLOC);
     if (!game->rays)
-        return exit_error("fatal allocation error"), 0;
+        return exit_error(game->data, "fatal allocation error"), 0;
     game->player->dir_x = 1.0;
     game->player->dir_y = 0.0;
     game->player->plane_x = 0.66;
@@ -144,7 +144,7 @@ int init_mlx(t_game *game, char **map)
     mlx_mouse_hide(game->mlx, game->window);
     game->textures = alloc(sizeof(t_texture) *  7, ALLOC);
     if (!game->textures)
-        return (exit_error("fatal allocation error"), 1);
+        return (exit_error(game->data, "fatal allocation error"), 1);
     game->textures[NORTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->north_p, &game->textures[NORTH].width, &game->textures[NORTH].height);
     game->textures[SOUTH].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->south_p, &game->textures[SOUTH].width, &game->textures[SOUTH].height);
     game->textures[EAST].img = mlx_xpm_file_to_image(game->mlx, game->data->direction_paths->east_p, &game->textures[EAST].width, &game->textures[EAST].height);
@@ -163,7 +163,7 @@ int init_mlx(t_game *game, char **map)
     {
         game->pistol_texture[i].img = mlx_xpm_file_to_image(game->mlx, ft_strjoin("./src/textures/", ft_strjoin(ft_itoa(i + 1), ".xpm")), &width, &height);
         if (!game->pistol_texture[i].img)
-            printf("Failed to load pistol texture\n");
+            return exit_error(game->data, "Failed to load pistol texture"), 1;
         else {
             game->pistol_texture[i].addr = mlx_get_data_addr(game->pistol_texture[i].img, &game->pistol_texture[i].bpp, &game->pistol_texture[i].size_line, &game->pistol_texture[i].endian);
             game->pistol_texture[i].width = width;

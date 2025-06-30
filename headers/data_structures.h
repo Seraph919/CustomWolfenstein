@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 typedef struct s_data t_data;
-
+typedef struct s_game t_game;
 
 // for each door
 typedef struct doorpos{

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 10:10:29 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:07:26 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool file_copying(t_data *data, int len, char **av)
         return (printfd(2, "Error\nError in file opening\n"),ERROR);
     data->cub_file = alloc(sizeof(char *) * (len + 1), ALLOC);
     if (!data->cub_file)
-        return (exit_error("fatal allocation error"), 1);
+        return (fireforce(data, AFTER), 1);
     while ((line = get_next_line(fd)))
     {
         data->cub_file[y++] = ft_strdup(line);
