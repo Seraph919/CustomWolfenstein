@@ -54,14 +54,13 @@ int texture_data(t_game *game) // TODO : ADD ALL TEXTS TO THIS AND USE LOOP..
 {
      if (!game->textures[NORTH].img || !game->textures[SOUTH].img || !game->textures[EAST].img || !game->textures[WEST].img || !game->textures[AIM].img)
         return (printfd(2, "Failed to load direction textures\n"), alloc (0, FREE), ERROR);
-    game->textures[NORTH].addr = mlx_get_data_addr(game->textures[NORTH].img, &game->textures[NORTH].bpp, &game->textures[NORTH].size_line, &game->textures[NORTH].endian);
-    game->textures[SOUTH].addr = mlx_get_data_addr(game->textures[SOUTH].img, &game->textures[SOUTH].bpp, &game->textures[SOUTH].size_line, &game->textures[SOUTH].endian);
-    game->textures[EAST].addr = mlx_get_data_addr(game->textures[EAST].img, &game->textures[EAST].bpp, &game->textures[EAST].size_line, &game->textures[EAST].endian);
-    game->textures[WEST].addr = mlx_get_data_addr(game->textures[WEST].img, &game->textures[WEST].bpp, &game->textures[WEST].size_line, &game->textures[WEST].endian);
-    game->textures[AIM].addr = mlx_get_data_addr(game->textures[AIM].img, &game->textures[AIM].bpp, &game->textures[AIM].size_line, &game->textures[AIM].endian);
-    game->textures[OPEN].addr = mlx_get_data_addr(game->textures[OPEN].img, &game->textures[OPEN].bpp, &game->textures[OPEN].size_line, &game->textures[OPEN].endian);
-    game->textures[DOOR].addr = mlx_get_data_addr(game->textures[DOOR].img, &game->textures[DOOR].bpp, &game->textures[DOOR].size_line, &game->textures[DOOR].endian); // ! you can loop here..
-
+    int i = -1;
+    while (++i < 7)
+    {
+        game->textures[i].addr = mlx_get_data_addr(game->textures[i].img, 
+        &game->textures[i].bpp, &game->textures[i].size_line,
+        &game->textures[i].endian);
+    }
     return (SUCCESS);
 }
 
@@ -159,8 +158,8 @@ int init_mlx(t_game *game, char **map)
         return (ERROR);
     int width, height;
     int i = -1;
-    game->pistol_texture = alloc(sizeof (t_texture) * 52, ALLOC);
-    while (++i < 52)
+    game->pistol_texture = alloc(sizeof (t_texture) * 6, ALLOC);
+    while (++i < 6)
     {
         game->pistol_texture[i].img = mlx_xpm_file_to_image(game->mlx, ft_strjoin("./src/textures/", ft_strjoin(ft_itoa(i + 1), ".xpm")), &width, &height);
         if (!game->pistol_texture[i].img)
