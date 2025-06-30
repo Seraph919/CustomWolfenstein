@@ -158,8 +158,8 @@ int init_mlx(t_game *game, char **map)
         return (ERROR);
     int width, height;
     int i = -1;
-    game->pistol_texture = alloc(sizeof (t_texture) * 6, ALLOC);
-    while (++i < 6)
+    game->pistol_texture = alloc(sizeof (t_texture) * 7, ALLOC);
+    while (++i < 7)
     {
         game->pistol_texture[i].img = mlx_xpm_file_to_image(game->mlx, ft_strjoin("./src/textures/", ft_strjoin(ft_itoa(i + 1), ".xpm")), &width, &height);
         if (!game->pistol_texture[i].img)
