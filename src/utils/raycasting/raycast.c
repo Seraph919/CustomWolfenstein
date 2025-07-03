@@ -284,11 +284,30 @@ void store_ray_properties(t_game *game, int ray_id, float ray_angle,
 
 void cast_ray(t_game *game, float ray_angle, int ray_id)
 {
+    float h_distance;
+    float v_distance;
+    bool final_hit_is_door = false;
+
     ray_angle = normalize_angle(ray_angle);
     t_ray_dir dir = init_ray_direction(ray_angle);
-    // for walls:
-    bool is_wall = false;
-    t_wall_hit h_hit = find_horizontal_intersection(game, ray_angle, dir, &is_wall);
-    t_wall_hit v_hit = find_vertical_intersection(game, ray_angle, dir, &is_wall);
-    store_ray_properties(game, ray_id, ray_angle, h_hit, v_hit, dir, is_wall);
+    // for doors:
+    bool found_door_h = false;
+    bool found_door_v = false;
+    t_wall_hit h_hit = find_horizontal_intersection(game, ray_angle, dir, &found_door_h);
+    t_wall_hit v_hit = find_vertical_intersection(game, ray_angle, dir, &found_door_v);
+    
+    if (h_hit.found)
+        h_distance = distance_between_points(game->player->x, game->player->y, h_hit.x, h_hit.y);
+    else h_distance = FLT_MAX;
+    if (v_hit.found)
+        v_distance = distance_between_points(game->player->x, game->player->y, v_hit.x, v_hit.y);
+    else
+        v_distance = FLT_MAX;
+    
+    if (v_distance < h_distance && found_door_v)
+        final_hit_is_door = true;
+    else if (h_distance <= v_distance && found_door_h)
+        final_hit_is_door = true;
+
+    store_ray_properties(game, ray_id, ray_angle, h_hit, v_hit, dir, final_hit_is_door);
 }

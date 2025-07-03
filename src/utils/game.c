@@ -174,7 +174,7 @@ int start_gaming(t_game game, char **map)
     // game.opsound_id = play_opening_sound();
     render_map(&game, map);
     // draw_opening_scene(&game);
-    game.sounds.game_vibes = true;
+    // game.sounds.game_vibes = true;
     mlx_hook(game.window, 2, 1L << 0, key_press, &game);
     mlx_hook(game.window, 3, 1L << 1, key_release, &game);
     mlx_hook(game.window, 6, 1L << 6, mouse_move, &game);

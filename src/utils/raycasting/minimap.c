@@ -42,7 +42,7 @@ void render_minimap(t_game *game)
 
         for (int i = 0; i < NUM_RAYS; i++)
         {
-            draw_line(game, 
+            draw_line(game,
                     game->player->x, 
                     game->player->y, 
                     game->rays[i].wall_hit_x, 

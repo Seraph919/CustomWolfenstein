@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/23 06:18:18 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/03 04:13:20 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ int countChars(int c, t_data *data, bool assign)
     return counter;
 }
 
-bool close_enough(char **map, int x, int y)
+bool ray_hit(t_ray *rays)
 {
-    for (int dy = -1; dy <= 2; dy++) {
-        for (int dx = -1; dx <= 2; dx++) {
-            int nx = x + dx;
-            int ny = y + dy;
-            if (map[ny][nx] == 'D' || map[ny][nx] == 'O')
-                return true;
-        }
+    int i = 0;
+    while (i < WINDOW_WIDTH)
+    {
+        if (rays[i].is_door == true && rays[i].distance <= 10)
+            return true;
+        i++;
     }
     return false;
+    
 }
 
 bool is_open(int x, int y, t_game *game, bool unlock_door)
@@ -71,7 +71,7 @@ bool is_open(int x, int y, t_game *game, bool unlock_door)
     while (i < ndoors)
     {
         head = &game->data->doors[i];
-        if (unlock_door == true && close_enough(game->map, x, y))
+        if (unlock_door == true && ray_hit(game->rays))
         {
             head->is_open = !head->is_open;
             if (head->is_open == false)
@@ -82,11 +82,11 @@ bool is_open(int x, int y, t_game *game, bool unlock_door)
             game->map[head->y][head->x] = 'O';
             return true;
         }
-        if (close_enough(game->map, head->x,head->y) && head->is_open == false)
-        {   
-            return false;
-        }
-        else if (head->x == x && head->y == y && head->is_open == true)
+        // if (close_enough(game->map, head->x,head->y) && head->is_open == false)
+        // {   
+        //     return false;
+        // }
+        if (head->x == x && head->y == y && head->is_open == true)
         {
             printf("closed\n");
             return true;
