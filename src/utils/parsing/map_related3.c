@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/03 04:13:20 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/16 00:40:33 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,48 @@ bool ray_hit(t_ray *rays)
     
 }
 
+void change_door_state(char **s)
+{
+    int i;
+    char *c;
+
+    i = 0;
+    if (s && *s)
+    {
+        while (s[i])
+        {       
+            c = s[i];
+            while (*c)
+            {
+                if (*c == 'D')
+                    *c = 'O';
+                else if (*c == 'O')
+                    *c = 'D';
+                c++;
+            }     
+            i++;
+        }
+    }
+
+}
+
+bool is_door2(t_game *game, float x, float y)
+{
+    if (x < 0 || x >= (game->map_w - 1) * TILE_SIZE || y < 0 || y >= (game->map_h - 1) * TILE_SIZE)
+        return false;
+
+    int map_x = (int)(x / TILE_SIZE);
+    int map_y = (int)(y / TILE_SIZE);
+
+    if (game->map[map_y][map_x] == 'D' || game->map[map_y][map_x] == 'O')
+        return true;
+    else
+        return false;
+}
+
 bool is_open(int x, int y, t_game *game, bool unlock_door)
 {
+    // static bool return_type = false;
     int i;
     int ndoors = game->data->ndoors;
     t_doorpos *head;
@@ -68,30 +108,26 @@ bool is_open(int x, int y, t_game *game, bool unlock_door)
     x /= TILE_SIZE;
     y /= TILE_SIZE;
     i = 0;
-    while (i < ndoors)
+    if (ndoors > 0)
     {
         head = &game->data->doors[i];
-        if (unlock_door == true && ray_hit(game->rays))
+        if (unlock_door)
         {
-            head->is_open = !head->is_open;
-            if (head->is_open == false)
+            if (!is_door2(game, game->player->x, game->player->y))
             {
-                game->map[head->y][head->x] = 'D';
-                return false;
+                while (i < ndoors)
+                {
+                    head = &game->data->doors[i];
+                    head->is_open = !head->is_open; 
+                    i++;
+                }
+                i = 0;
+                change_door_state(game->map);
             }
-            game->map[head->y][head->x] = 'O';
-            return true;
+            else
+                printfd(1, "you're stepping on one of the doors\n");
         }
-        // if (close_enough(game->map, head->x,head->y) && head->is_open == false)
-        // {   
-        //     return false;
-        // }
-        if (head->x == x && head->y == y && head->is_open == true)
-        {
-            printf("closed\n");
-            return true;
-        }
-        i++;
+        return head->is_open;
     }
     return false;
 }

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 12:07:02 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/16 00:41:38 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,3 @@ int main(int ac, char **av)
     
     return 0;
 }
-// ! free memory after game opening success..
-// ! use gc only for errors..
-// TODO : check all the image sources and return an error if something fails..
-
-//  TODO : create a t_door stucture where you save the door index and condition (open/closed)  done!
-//  TODO : force the player to not move if the next is D and door is closed.. 
-//  TODO : save door rays and draw texture.
