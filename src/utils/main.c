@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/16 00:41:38 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:25:12 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,13 @@ int main(int ac, char **av)
     data.mlx_ptr = mlx_init();
     if (file_process(&data, av))
         return (ERROR);
-    t_game game;
+    // t_game game;
     // printf("the player side is : %c\n", data.player_char);
-    game.map = NULL;
-    game.data = &data;
-    start_gaming(game, data.map);
-    
+    // game.map = NULL;
+    // game.data = &data;
+    // start_gaming(game, data.map);
+    fireforce(&data, AFTER);
+
     return 0;
 }
+// TODO : use file colors..

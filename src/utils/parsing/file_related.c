@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:47:07 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 12:42:48 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/16 02:28:54 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void t_norm2_init(t_data *data, t_norm2 *norm)
     norm->k = 0;
 }
 
-bool element_allocation(t_data *data, t_norm2 *n)
+bool element_allocation(t_data *data, t_norm2 *n) // ! leaks here!
 {
     if (ft_strncmpp("1", skip_spaces(data->cub_file[n->i]), 1) && n->after_map > 0)
         return (ERROR);
