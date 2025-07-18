@@ -127,11 +127,11 @@ int main(int ac, char **av)
     data.mlx_ptr = mlx_init();
     if (file_process(&data, av))
         return (ERROR);
-    // t_game game;
-    // printf("the player side is : %c\n", data.player_char);
-    // game.map = NULL;
-    // game.data = &data;
-    // start_gaming(game, data.map);
+    t_game game;
+    printf("the player side is : %c\n", data.player_char);
+    game.map = NULL;
+    game.data = &data;
+    start_gaming(game, data.map);
     fireforce(&data, AFTER);
 
     return 0;

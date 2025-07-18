@@ -161,7 +161,14 @@ int init_mlx(t_game *game, char **map)
     game->pistol_texture = alloc(sizeof (t_texture) * 7, ALLOC);
     while (++i < 7)
     {
-        game->pistol_texture[i].img = mlx_xpm_file_to_image(game->mlx, ft_strjoin("./src/textures/", ft_strjoin(ft_itoa(i + 1), ".xpm")), &width, &height);
+        char *num_str = ft_itoa(i + 1);
+        char *file_name = ft_strjoin(num_str, ".xpm");
+        char *path = ft_strjoin("./src/textures/", file_name);
+
+        game->pistol_texture[i].img = mlx_xpm_file_to_image(game->mlx, path, &width, &height);
+        free(num_str);
+        free(file_name);
+        free(path);
         if (!game->pistol_texture[i].img)
             return exit_error(game->data, "Failed to load pistol texture"), 1;
         else {

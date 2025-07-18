@@ -185,10 +185,80 @@ void update_player_position(t_game *game, int new_x, int new_y)
 
 int close_window(t_game *game)
 {
+
+    int i = 0;
+    while (i <= DOOR)
+    {
+        mlx_destroy_image(game->mlx, game->textures[i].img);
+        i++;
+    }
+
+    // mlx_destroy_image(game->mlx, game->textures[NORTH].img);
+    // mlx_destroy_image(game->mlx, game->textures[SOUTH].img);
+    // mlx_destroy_image(game->mlx, game->textures[EAST].img);
+    // mlx_destroy_image(game->mlx, game->textures[WEST].img);
+    // mlx_destroy_image(game->mlx, game->textures[AIM].img);
+    // mlx_destroy_image(game->mlx, game->textures[OPEN].img);
+    // mlx_destroy_image(game->mlx, game->textures[DOOR].img);
+
+
+    i = 0;
+    while (i < 7)
+    {
+        mlx_destroy_image(game->mlx, game->pistol_texture[i].img);
+        i++;
+    }
+    // mlx_destroy_image(game->mlx, game->pistol_texture[0].img);
+    // mlx_destroy_image(game->mlx, game->pistol_texture[1].img);
+    // mlx_destroy_image(game->mlx, game->pistol_texture[2].img);
+    // mlx_destroy_image(game->mlx, game->pistol_texture[3].img);
+    // mlx_destroy_image(game->mlx, game->pistol_texture[4].img);
+    // mlx_destroy_image(game->mlx, game->pistol_texture[5].img);
+    // mlx_destroy_image(game->mlx, game->pistol_texture[6].img);
+
+
     mlx_destroy_window(game->mlx, game->window);
     mlx_destroy_image(game->mlx, game->img);
     mlx_destroy_display(game->mlx);
+    free(game->map);
+    free(game->player);
+    
+    // free(game->pistol_texture[0].img);
+    // free(game->pistol_texture[1].img);
+    // free(game->pistol_texture[2].img);
+    // free(game->pistol_texture[3].img);
+    // free(game->pistol_texture[4].img);
+    // free(game->pistol_texture[5].img);
+    // free(game->pistol_texture[6].img);
+
+    // int i = 0;
+    // while (i < 7)
+    // {
+    //     if (game->pistol_texture[i].addr)
+    //     {
+    //         free(game->pistol_texture[i].addr);
+    //     }
+    //     i++;
+    // }
+
+
+    // free(game->textures[NORTH].img);
+    // free(game->textures[SOUTH].img);
+    // free(game->textures[EAST].img);
+    // free(game->textures[WEST].img);
+    // free(game->textures[AIM].img);
+    // free(game->textures[OPEN].img);
+    // free(game->textures[DOOR].img);
+
+//     for (int i = 0; i <= DOOR; i++)
+// {
+//     if (game->textures[i].img)
+//         mlx_destroy_image(game->mlx, game->textures[i].img);
+// }
+
+
     free(game->mlx);
+    free(game->data->mlx_ptr);
     alloc(0, FREE);
     // printf("PID 1 = %d PID 2 = %d\n", game->vibesound_id, game->opsound_id);
     if (game->vibesound_id > 0)
