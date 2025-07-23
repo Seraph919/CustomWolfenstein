@@ -86,6 +86,10 @@ int init_mlx(t_game *game, char **map)
     game->player->fov = FOV * DEG_TO_RAD;
     game->player->move_speed = MOVE_SPEED;
     game->player->rotation_speed = ROTATION_SPEED;
+    // mlx_destroy_window(game->data->mlx_ptr, game->data->win_ptr);
+    // mlx_destroy_image(game->mlx, game->img);
+    // mlx_destroy_display(game->data->mlx_ptr);
+    // free(game->data->mlx_ptr);
     game->mlx = mlx_init();
     if (!game->mlx)
         return 0;

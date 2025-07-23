@@ -199,6 +199,7 @@ typedef struct s_data
     char player_char;
     t_doorpos *doors;
     int ndoors;
+    t_game *game;
 }   t_data;
 
 #endif

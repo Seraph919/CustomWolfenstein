@@ -193,14 +193,10 @@ int close_window(t_game *game)
         i++;
     }
 
-    // mlx_destroy_image(game->mlx, game->textures[NORTH].img);
-    // mlx_destroy_image(game->mlx, game->textures[SOUTH].img);
-    // mlx_destroy_image(game->mlx, game->textures[EAST].img);
-    // mlx_destroy_image(game->mlx, game->textures[WEST].img);
-    // mlx_destroy_image(game->mlx, game->textures[AIM].img);
-    // mlx_destroy_image(game->mlx, game->textures[OPEN].img);
-    // mlx_destroy_image(game->mlx, game->textures[DOOR].img);
-
+    mlx_destroy_image(game->data->mlx_ptr, game->data->north);
+    mlx_destroy_image(game->data->mlx_ptr, game->data->west);
+    mlx_destroy_image(game->data->mlx_ptr, game->data->east);
+    mlx_destroy_image(game->data->mlx_ptr, game->data->south);
 
     i = 0;
     while (i < 7)
@@ -208,20 +204,13 @@ int close_window(t_game *game)
         mlx_destroy_image(game->mlx, game->pistol_texture[i].img);
         i++;
     }
-    // mlx_destroy_image(game->mlx, game->pistol_texture[0].img);
-    // mlx_destroy_image(game->mlx, game->pistol_texture[1].img);
-    // mlx_destroy_image(game->mlx, game->pistol_texture[2].img);
-    // mlx_destroy_image(game->mlx, game->pistol_texture[3].img);
-    // mlx_destroy_image(game->mlx, game->pistol_texture[4].img);
-    // mlx_destroy_image(game->mlx, game->pistol_texture[5].img);
-    // mlx_destroy_image(game->mlx, game->pistol_texture[6].img);
-
 
     mlx_destroy_window(game->mlx, game->window);
     mlx_destroy_image(game->mlx, game->img);
     mlx_destroy_display(game->mlx);
     free(game->map);
     free(game->player);
+    
     
     // free(game->pistol_texture[0].img);
     // free(game->pistol_texture[1].img);
@@ -258,7 +247,9 @@ int close_window(t_game *game)
 
 
     free(game->mlx);
+    mlx_destroy_display(game->data->mlx_ptr);
     free(game->data->mlx_ptr);
+    // free(game->data->mlx_ptr);
     alloc(0, FREE);
     // printf("PID 1 = %d PID 2 = %d\n", game->vibesound_id, game->opsound_id);
     if (game->vibesound_id > 0)
