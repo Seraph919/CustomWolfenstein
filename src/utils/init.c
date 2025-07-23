@@ -86,9 +86,9 @@ int init_mlx(t_game *game, char **map)
     game->player->fov = FOV * DEG_TO_RAD;
     game->player->move_speed = MOVE_SPEED;
     game->player->rotation_speed = ROTATION_SPEED;
-    game->mlx = mlx_init();
-    if (!game->mlx)
-        return 0;
+    // game->mlx = mlx_init();
+    // if (!game->mlx)
+    //     return 0;
     game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "cub3D");
     if (!game->window)
         return 0;

@@ -76,6 +76,11 @@ typedef struct s_ray_dir
 
 typedef struct s_game
 {
+    void *east;
+    void *west;
+    void *north;
+    void *south;
+
     void **imgs;
     void *mlx;
     void *window;
@@ -181,12 +186,8 @@ typedef struct usedonce2{
 
 typedef struct s_data
 {
-    void *east;
-    void *west;
-    void *north;
-    void *south;
-    void *mlx_ptr;
-    void *win_ptr;
+    // void *mlx_ptr;
+    // void *win_ptr;
     char **map;
     char **cub_file;
     size_t file_size;
@@ -199,6 +200,7 @@ typedef struct s_data
     char player_char;
     t_doorpos *doors;
     int ndoors;
+    t_game *game;
 }   t_data;
 
 #endif

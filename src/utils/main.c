@@ -20,10 +20,11 @@ void set_tozero(t_data *data)
     data->direction_paths->n_ofn = 0;
     data->direction_paths->n_ofc = 0;
     data->direction_paths->n_off = 0;
-    data->south = NULL;
-    data->north = NULL;
-    data->west = NULL;
-    data->east = NULL;
+    data->game->south = NULL;
+    printf("ssssssssssssssssssss\n");
+    data->game->north = NULL;
+    data->game->west = NULL;
+    data->game->east = NULL;
 }
 
 bool texture_loading(t_data *data)
@@ -35,17 +36,17 @@ bool texture_loading(t_data *data)
     dir = data->direction_paths;
     // i = 0;
     // exit(0);
-    data->north = mlx_xpm_file_to_image(data->mlx_ptr, dir->north_p, &width, &height);
-    if (!data->north)
+    data->game->north = mlx_xpm_file_to_image(data->game->mlx, dir->north_p, &width, &height);
+    if (!data->game->north)
         return (printf("Error\nTexture Error\n"), ERROR);
-    data->west = mlx_xpm_file_to_image(data->mlx_ptr, dir->west_p, &width, &height);
-    if (!data->west)
+    data->game->west = mlx_xpm_file_to_image(data->game->mlx, dir->west_p, &width, &height);
+    if (!data->game->west)
         return (printf("Error\nTexture Error\n"), ERROR);
-    data->east = mlx_xpm_file_to_image(data->mlx_ptr, dir->east_p, &width, &height);
-    if (!data->east)
+    data->game->east = mlx_xpm_file_to_image(data->game->mlx, dir->east_p, &width, &height);
+    if (!data->game->east)
         return (printf("Error\nTexture Error\n"), ERROR);
-    data->south = mlx_xpm_file_to_image(data->mlx_ptr, dir->south_p, &width, &height);
-    if (!data->south)
+    data->game->south = mlx_xpm_file_to_image(data->game->mlx, dir->south_p, &width, &height);
+    if (!data->game->south)
         return (printf("Error\nTexture Error\n"), ERROR);
     return (SUCCESS);
 }
@@ -123,13 +124,17 @@ int main(int ac, char **av)
 
     if (ac != 2)
         return (1);
-    t_data data;
-    data.mlx_ptr = mlx_init();
+    t_data data.map = NULL;
+    t_game game.map = NULL;
+    game.mlx = mlx_init();
+    if (!game.mlx)
+        return 0;
+    // game.map = NULL;
+    // data.map = NULL;
+    // data.mlx_ptr = mlx_init();
     if (file_process(&data, av))
         return (ERROR);
-    t_game game;
-    printf("the player side is : %c\n", data.player_char);
-    game.map = NULL;
+    // printf("the player side is : %c\n", data.player_char);
     game.data = &data;
     start_gaming(game, data.map);
     fireforce(&data, AFTER);

@@ -29,14 +29,14 @@ void free2d(char **s, size_t size)
 
 void free_texture(t_data *data)
 {
-    if (data->south)
-        mlx_destroy_image(data->mlx_ptr, data->south);
-    if (data->north)
-        mlx_destroy_image(data->mlx_ptr, data->north);
-    if (data->west)
-        mlx_destroy_image(data->mlx_ptr, data->west);
-    if (data->east)
-        mlx_destroy_image(data->mlx_ptr, data->east);
+    if (data->game->south)
+        mlx_destroy_image(data->game->mlx, data->game->south);
+    if (data->game->north)
+        mlx_destroy_image(data->game->mlx, data->game->north);
+    if (data->game->west)
+        mlx_destroy_image(data->game->mlx, data->game->west);
+    if (data->game->east)
+        mlx_destroy_image(data->game->mlx, data->game->east);
 }
 
 void fireforce(t_data *data, t_place place)
@@ -45,8 +45,8 @@ void fireforce(t_data *data, t_place place)
 
     if (place == AFTER)
         free_texture(data);
-    mlx_destroy_display(data->mlx_ptr);
-    free(data->mlx_ptr);
+    mlx_destroy_display(data->game->mlx);
+    free(data->game->mlx);
 }
 
 void exit_error(t_data *data, char *s)

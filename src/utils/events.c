@@ -258,7 +258,7 @@ int close_window(t_game *game)
 
 
     free(game->mlx);
-    free(game->data->mlx_ptr);
+    // free(game->data->mlx_ptr);
     alloc(0, FREE);
     // printf("PID 1 = %d PID 2 = %d\n", game->vibesound_id, game->opsound_id);
     if (game->vibesound_id > 0)
