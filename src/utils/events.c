@@ -37,12 +37,12 @@ int is_valid_move(t_game *game, float new_x, float new_y)
         if (cx < 0 || cx >= game->map_w || cy < 0 || cy >= game->map_h)
         {
             printf("Invalid move: out of bounds!\n");
-            return 0;
+            return (0);
         }
         if (game->map[cy][cx] == '1')
         {
             printf("Invalid move: too close to wall!\n");
-            return 0;
+            return (0);
         }
         if ((game->map[cy][cx] == 'D' && is_open(cx, cy, game, false) == false))
         {
@@ -51,13 +51,7 @@ int is_valid_move(t_game *game, float new_x, float new_y)
         }
         i++;
     }
-    // for (int i = 0; game->map[i]; i++)
-    // {
-    //     printf("'%s'\n", game->map[i]);
-    // }
-    // static int j = 1;
-    // printf("Move-> %d\n", j++);
-    return 1;
+    return (1);
 }
 
 
@@ -74,13 +68,9 @@ void move_forward(t_game *game)
         game->player->y = new_y;
     }
     else if (is_valid_move(game, game->player->x + move_x, game->player->y))
-    {
         game->player->x += move_x;
-    }
     else if (is_valid_move(game, game->player->x, game->player->y + move_y))
-    {
         game->player->y += move_y;
-    }
     else
     {
         if (game->keys_held & (1 << 2))
@@ -105,13 +95,9 @@ void move_backward(t_game *game)
         game->player->y = new_y;
     }
     else if (is_valid_move(game, game->player->x + move_x, game->player->y))
-    {
         game->player->y += move_y;
-    }
     else if (is_valid_move(game, game->player->x, game->player->y + move_y))
-    {
         game->player->x += move_x;
-    }
     else
     {
         if (game->keys_held & (1 << 2))
@@ -167,7 +153,6 @@ void update_player_position(t_game *game, int new_x, int new_y)
         game->player->angle -= 0.05;
     if (game->keys_held & (1 << 5))
         game->player->angle += 0.05;
-        
     if (new_x < 0 || new_x >= game->map_w || new_y < 0 || new_y >= game->map_h)
     {
         printf("Invalid move: out of bounds\n");
@@ -192,66 +177,25 @@ int close_window(t_game *game)
         mlx_destroy_image(game->mlx, game->textures[i].img);
         i++;
     }
-
     mlx_destroy_image(game->data->mlx_ptr, game->data->north);
     mlx_destroy_image(game->data->mlx_ptr, game->data->west);
     mlx_destroy_image(game->data->mlx_ptr, game->data->east);
     mlx_destroy_image(game->data->mlx_ptr, game->data->south);
-
     i = 0;
     while (i < 7)
     {
         mlx_destroy_image(game->mlx, game->pistol_texture[i].img);
         i++;
     }
-
     mlx_destroy_window(game->mlx, game->window);
     mlx_destroy_image(game->mlx, game->img);
     mlx_destroy_display(game->mlx);
     free(game->map);
     free(game->player);
-    
-    
-    // free(game->pistol_texture[0].img);
-    // free(game->pistol_texture[1].img);
-    // free(game->pistol_texture[2].img);
-    // free(game->pistol_texture[3].img);
-    // free(game->pistol_texture[4].img);
-    // free(game->pistol_texture[5].img);
-    // free(game->pistol_texture[6].img);
-
-    // int i = 0;
-    // while (i < 7)
-    // {
-    //     if (game->pistol_texture[i].addr)
-    //     {
-    //         free(game->pistol_texture[i].addr);
-    //     }
-    //     i++;
-    // }
-
-
-    // free(game->textures[NORTH].img);
-    // free(game->textures[SOUTH].img);
-    // free(game->textures[EAST].img);
-    // free(game->textures[WEST].img);
-    // free(game->textures[AIM].img);
-    // free(game->textures[OPEN].img);
-    // free(game->textures[DOOR].img);
-
-//     for (int i = 0; i <= DOOR; i++)
-// {
-//     if (game->textures[i].img)
-//         mlx_destroy_image(game->mlx, game->textures[i].img);
-// }
-
-
     free(game->mlx);
     mlx_destroy_display(game->data->mlx_ptr);
     free(game->data->mlx_ptr);
-    // free(game->data->mlx_ptr);
     alloc(0, FREE);
-    // printf("PID 1 = %d PID 2 = %d\n", game->vibesound_id, game->opsound_id);
     if (game->vibesound_id > 0)
         kill(game->vibesound_id, SIGKILL);
     if (game->opsound_id > 0)
