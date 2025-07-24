@@ -26,26 +26,23 @@ void set_tozero(t_data *data)
     data->east = NULL;
 }
 
+
 bool texture_loading(t_data *data)
 {
     t_direction_p *dir;
     int width;
     int height;
-    int     i;
 
     dir = data->direction_paths;
-    i = 0;
-    data->north = mlx_xpm_file_to_image(data->mlx_ptr, dir->north_p, &width, &height);
-    if (!data->north)
-        return (printf("Error\nTexture Error\n"), ERROR);
-    data->west = mlx_xpm_file_to_image(data->mlx_ptr, dir->west_p, &width, &height);
-    if (!data->west)
-        return (printf("Error\nTexture Error\n"), ERROR);
-    data->east = mlx_xpm_file_to_image(data->mlx_ptr, dir->east_p, &width, &height);
-    if (!data->east)
-        return (printf("Error\nTexture Error\n"), ERROR);
-    data->south = mlx_xpm_file_to_image(data->mlx_ptr, dir->south_p, &width, &height);
-    if (!data->south)
+    data->north = mlx_xpm_file_to_image(data->mlx_ptr, dir->north_p
+        , &width, &height);
+    data->west = mlx_xpm_file_to_image(data->mlx_ptr, dir->west_p
+        , &width, &height);
+    data->east = mlx_xpm_file_to_image(data->mlx_ptr, dir->east_p
+        , &width, &height);
+    data->south = mlx_xpm_file_to_image(data->mlx_ptr, dir->south_p
+        , &width, &height);
+    if (!data->north || !data->west || !data->east || !data->south)
         return (printf("Error\nTexture Error\n"), ERROR);
     return (SUCCESS);
 }
@@ -79,12 +76,8 @@ void print_stff(t_data *data)
     printf("the player is in(%zu,%zu)\n", data->player_x, data->player_y);
 }
 
-bool color_filling(t_data *data)
+bool is_valid_color(t_colors *colors)
 {
-    int i;
-    t_colors *colors;
-
-    colors = data->colors;
     colors->c = skip_spaces(colors->c);
     colors->f = skip_spaces(colors->f);
     if (!valid_colorstr(colors->c + 1) || !valid_colorstr(colors->f + 1))
@@ -98,23 +91,34 @@ bool color_filling(t_data *data)
     colors->f_c = alloc(sizeof(int) * 4, ALLOC);
     colors->c_c = alloc(sizeof(int) * 4, ALLOC);
     if (!colors->f_c || !colors->c_c )
-    return (ERROR);
+        return (ERROR);
+    return (SUCCESS);
+}
+
+bool color_filling(t_data *data)
+{
+    int i;
+    if (!is_valid_color(data->colors))
+        return (ERROR);
+
     i = -1;
     while (++i < 3)
     {
-        colors->f_c[i] = ft_atoi(colors->splitted_f[i]);
-        colors->c_c[i] = ft_atoi(colors->splitted_c[i]);
-        if (colors->f_c[i] == -1 || colors->c_c[i] == -1)
+        data->colors->f_c[i] = ft_atoi(data->colors->splitted_f[i]);
+        data->colors->c_c[i] = ft_atoi(data->colors->splitted_c[i]);
+        if (data->colors->f_c[i] == -1 || data->colors->c_c[i] == -1)
         {
-            free2d(colors->splitted_c, 5);
-            free2d(colors->splitted_f, 5);
+            free2d(data->colors->splitted_c, 5);
+            free2d(data->colors->splitted_f, 5);
             return (ERROR);
         }
     }
-    free2d(colors->splitted_c, 5);
-    free2d(colors->splitted_f, 5);
-    colors->c_color = rgb_to_int(colors->c_c[0], colors->c_c[1], colors->c_c[2]);
-    colors->f_color = rgb_to_int(colors->f_c[0], colors->f_c[1], colors->f_c[2]);
+    free2d(data->colors->splitted_c, 5);
+    free2d(data->colors->splitted_f, 5);
+    data->colors->c_color = rgb_to_int(data->colors->c_c[0]
+        , data->colors->c_c[1], data->colors->c_c[2]);
+    data->colors->f_color = rgb_to_int(data->colors->f_c[0]
+        , data->colors->f_c[1], data->colors->f_c[2]);
     return (SUCCESS);
 }
 

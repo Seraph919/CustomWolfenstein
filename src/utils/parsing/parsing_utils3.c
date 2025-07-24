@@ -66,10 +66,13 @@ char *strend_trim(char *str, size_t nbytes, int start_index)
 
 bool file_process(t_data *data, char **av)
 {
-    if (file_read(data, av) || outer_resources(data) || outer_error_check(data))
-        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
+    if (file_read(data, av) || outer_resources(data) 
+    || outer_error_check(data))
+        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"),
+         fireforce(data, M_ERROR), ERROR);
     if (map_validation(data->map, data->map_y, data) == ERROR)
-        return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR);
+        return (printfd(2, "ERROR\nFound an Error in map\n"),
+         fireforce(data, M_ERROR), ERROR);
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
     print_stff(data);

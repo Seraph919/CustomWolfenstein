@@ -33,7 +33,8 @@ bool above_checker(char **map, int y)
 bool is_void(char **map, size_t x, size_t y, size_t map_max)
 {
     if ((map[y - 1][x] && is_white_space(map[y - 1][x]))
-            || (y + 1 < map_max - 1 && map[y + 1] && map[y + 1][x] && is_white_space(map[y + 1][x])) 
+            || (y + 1 < map_max - 1 && map[y + 1] && map[y + 1][x] 
+                && is_white_space(map[y + 1][x])) 
             || ( x != 0 && is_white_space(map[y][x - 1])) 
             || (map[y][x + 1] && is_white_space(map[y][x + 1]))
             || !map[y][x + 1])

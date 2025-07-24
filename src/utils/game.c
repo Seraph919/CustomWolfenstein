@@ -51,14 +51,11 @@ int game_loop(t_game *game)
         game->player->angle -= 0.05;
     if (game->keys_held & (1 << 5))
         game->player->angle += 0.05;
-
     cast_rays(game);
     generate_3d_projection(game);
     render_minimap(game);
     if (!game->syle_animation_running)
         draw_weapon(game, game->current_anim_index);
-    // else
-    //     draw_weapon(game, game->current_style_index);
     draw_sprite(game, &game->textures[AIM],(WINDOW_WIDTH/ 2) -45, (WINDOW_HEIGHT / 2) - 45, 45, 45);
     mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
     return 0;

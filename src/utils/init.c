@@ -46,15 +46,24 @@ char **duplicate_map(char **map)
     return new_map;
 }
 
+char *get_data(enum direction dir, t_game *game)
+{
+    return mlx_get_data_addr(game->textures[dir].img, &game->textures[dir].bpp
+        , &game->textures[dir].size_line, &game->textures[dir].endian);
+}
+
 int texture_data(t_game *game)
 {
-     if (!game->textures[NORTH].img || !game->textures[SOUTH].img || !game->textures[EAST].img || !game->textures[WEST].img || !game->textures[AIM].img)
-        return (printfd(2, "Failed to load direction textures\n"), alloc (0, FREE), ERROR);
-    game->textures[NORTH].addr = mlx_get_data_addr(game->textures[NORTH].img, &game->textures[NORTH].bpp, &game->textures[NORTH].size_line, &game->textures[NORTH].endian);
-    game->textures[SOUTH].addr = mlx_get_data_addr(game->textures[SOUTH].img, &game->textures[SOUTH].bpp, &game->textures[SOUTH].size_line, &game->textures[SOUTH].endian);
-    game->textures[EAST].addr = mlx_get_data_addr(game->textures[EAST].img, &game->textures[EAST].bpp, &game->textures[EAST].size_line, &game->textures[EAST].endian);
-    game->textures[WEST].addr = mlx_get_data_addr(game->textures[WEST].img, &game->textures[WEST].bpp, &game->textures[WEST].size_line, &game->textures[WEST].endian);
-    game->textures[AIM].addr = mlx_get_data_addr(game->textures[AIM].img, &game->textures[AIM].bpp, &game->textures[AIM].size_line, &game->textures[AIM].endian);
+     if (!game->textures[NORTH].img || !game->textures[SOUTH].img 
+        || !game->textures[EAST].img || !game->textures[WEST].img 
+        || !game->textures[AIM].img)
+        return (printfd(2, "Failed to load direction textures\n"),
+         alloc (0, FREE), ERROR);
+    int i = -1;
+    while (++i < 5)
+    {
+        game->textures->addr = get_data(i, game);
+    }
     return (SUCCESS);
 }
 
