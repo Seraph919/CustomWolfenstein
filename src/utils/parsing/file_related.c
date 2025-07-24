@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:47:07 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/16 02:28:54 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:57:49 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int allocations(t_data *data)
     data->colors = alloc(sizeof(t_colors), ALLOC);
     if (!data->colors)
         return (exit_error(NULL, "fatal allocation error"), 1);
+    data->colors->f = NULL;
+    data->colors->c = NULL;
     data->direction_paths = alloc(sizeof (t_direction_p), ALLOC);
     if (!data->direction_paths)
         return (exit_error(NULL, "fatal allocation error"), 1);
@@ -72,8 +74,8 @@ bool outer_resources(t_data *data)
     {
         if (char_in(data->cub_file[norm.i]))
         {
-            if (element_allocation(data, &norm) == ERROR)
-                return(ERROR); 
+            if (element_allocation(data, &norm) == ERROR || !data->colors->f || !data->colors->c)
+                return(ERROR);
         }
         else if (norm.after_map)
             return (ERROR);
