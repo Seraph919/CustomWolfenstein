@@ -47,5 +47,5 @@ int key_release(int keycode, t_game *game)
             printf("ray[%d] isdoor == %d\n", i, game->rays[i].is_door);
         }
     }
-    return 0;
+    return (0);
 }

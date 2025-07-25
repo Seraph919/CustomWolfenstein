@@ -7,6 +7,15 @@
 typedef struct s_data t_data;
 typedef struct s_game t_game;
 
+typedef struct s_rect
+{
+    int x;
+    int y;
+    int width;
+    int height;
+    int color;
+} t_rect;
+
 // for each door
 typedef struct doorpos{
     int x;
@@ -201,5 +210,58 @@ typedef struct s_data
     int ndoors;
     t_game *game;
 }   t_data;
+
+
+typedef struct s_intercept_steps
+{
+    float x_intercept;
+    float y_intercept;
+    float x_step;
+    float y_step;
+} t_intercept_steps;
+
+typedef struct s_ray_input
+{
+    float angle;
+    t_ray_dir dir;
+    bool *found_door;
+} t_ray_input;
+
+typedef struct s_ray_trace
+{
+    t_game *game;
+    t_ray_input input;
+} t_ray_trace;
+
+typedef struct s_trace_params
+{
+    t_ray_dir dir;
+    bool *found_door;
+} t_trace_params;
+
+typedef struct s_ray_hit_data
+{
+    float ray_angle;
+    int ray_id;
+    t_ray_dir dir;
+    t_wall_hit h_hit;
+    t_wall_hit v_hit;
+    bool for_door;
+} t_ray_hit_data;
+
+
+typedef struct s_cast_ray_data
+{
+    float ray_angle;
+    int ray_id;
+    t_ray_dir dir;
+    bool found_door_h;
+    bool found_door_v;
+    t_wall_hit h_hit;
+    t_wall_hit v_hit;
+    bool final_hit_is_door;
+    float h_distance;
+    float v_distance;
+} t_cast_ray_data;
 
 #endif

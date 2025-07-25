@@ -124,7 +124,7 @@ void render_map(t_game *game, char **map);
 
 // Raycasting funcs
 void cast_ray(t_game *game, float ray_angle, int ray_id);
-void draw_rect(t_game *game, int x, int y, int width, int height, int color);
+void draw_rect(t_game *game, t_rect rect);
 void draw_line(t_game *game, int x1, int y1, int x2, int y2, int color);
 float normalize_angle(float angle);
 bool is_wall(t_game *game, float x, float y);
@@ -193,4 +193,12 @@ bool is_open(t_game *game, bool unlock_door);
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
 void draw_weapon(t_game *game, int index);
 void exit_error(t_data *data, char *s);
+t_ray_dir init_ray_direction(float ray_angle);
+t_intercept_steps calc_h_inter_and_steps(t_game *game, float angle, t_ray_dir dir);
+t_wall_hit find_horizontal_intersection(t_game *game, t_ray_input input);
+t_wall_hit find_vertical_intersection(t_game *game, t_ray_input input);
+void set_ray_hit_result(t_ray *ray, t_ray_hit_data input, float h_distance, float v_distance);
+void store_ray_properties(t_game *game, t_ray_hit_data input);
+void init_cast_ray_data(t_game *game, t_cast_ray_data *data, float ray_angle, int ray_id);
+
 #endif
