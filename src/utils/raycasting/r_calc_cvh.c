@@ -1,6 +1,5 @@
 #include "../../../headers/cub3d.h"
 
-
 static t_wall_hit trace_h_ray(t_game *game, t_trace_params params, t_intercept_steps steps)
 {
     t_wall_hit hit;
