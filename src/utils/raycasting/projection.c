@@ -17,10 +17,15 @@ int get_texture_color(t_texture *texture, int tex_x, int tex_y)
     return *(unsigned int *)pixel;
 }
 
-void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id, bool isdoor)
+void tex_x_assign(int *tex_x, bool hit_vertical, float ray_angle, int width)
+{
+    if ((!hit_vertical && ray_angle > PI) || (hit_vertical && (ray_angle < PI/2 || ray_angle > 3*PI/2)))
+        *tex_x = width - *tex_x - 1;
+}
+
+void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id)
 {
     t_ray *ray;
-    int face;
     t_texture *texture;
     float wall_x;
     int tex_x;
@@ -28,14 +33,12 @@ void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int 
     int tex_y;
     int color;
 
-    (void) isdoor;
     ray = &game->rays[ray_id];
-    face= ray->wall_face;
-    if (face < 0 || face > 3 || !game->textures[face].addr)
+    if (!game->textures[ray->wall_face].addr)
         return;
     texture = &game->textures[DOOR];
     if (ray->is_door == false)
-        texture = &game->textures[face];
+        texture = &game->textures[ray->wall_face];
     if (ray->hit_vertical)
         wall_x = ray->wall_hit_y;
     else
@@ -43,10 +46,7 @@ void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int 
     wall_x /= TILE_SIZE;
     wall_x -= floor(wall_x);
     tex_x = (int)(wall_x * (float)texture->width);
-
-    if ((!ray->hit_vertical && ray->ray_angle > PI) || (ray->hit_vertical && (ray->ray_angle < PI/2 || ray->ray_angle > 3*PI/2)))
-        tex_x = texture->width - tex_x - 1;
-
+    tex_x_assign(&tex_x, ray->hit_vertical, ray->ray_angle, texture->width);
     for (int y = wall_top; y < wall_top + wall_height; y++)
     {
         d = y * 256 - game->window_height * 128 + wall_height * 128;
@@ -72,7 +72,7 @@ void generate_3d_projection(t_game *game)
         wall_top = (game->window_height / 2) - (wall_height / 2);
         if (wall_top < 0)
             wall_top = 0;
-        draw_textured_wall(game, i, wall_top, wall_height, i, game->rays[i].is_door);
+        draw_textured_wall(game, i, wall_top, wall_height, i);
     }
 }
 
