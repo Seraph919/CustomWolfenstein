@@ -1,6 +1,6 @@
 #include "../../headers/cub3d.h"
 
-void draw_weapon(t_game *game, int index)
+void animation(t_game *game)
 {
     if (game->animation_running)
     {
@@ -17,6 +17,11 @@ void draw_weapon(t_game *game, int index)
         game->current_style_index++;
         usleep(7000);
     }
+}
+
+void draw_weapon(t_game *game, int index)
+{
+    animation(game);
     if (game->current_style_index > 52)
     {
         game->syle_animation_running = false;
@@ -30,7 +35,8 @@ void draw_weapon(t_game *game, int index)
     int pistol_h = 1000;
     int pistol_x = (game->window_width - pistol_w) / 2 + 200;
     int pistol_y = game->window_height - pistol_h;
-    draw_sprite(game, &game->pistol_texture[game->current_anim_index], pistol_x, pistol_y, pistol_w, pistol_h);
+    draw_sprite(game, &game->pistol_texture[game->current_anim_index],
+        pistol_x, pistol_y, pistol_w, pistol_h);
 }
 
 pid_t play_sound(t_game *game)
@@ -43,7 +49,8 @@ pid_t play_sound(t_game *game)
         while (fd < 1024)
             close(fd++);
         if (game->sounds.game_vibes)
-            execlp("paplay", "paplay", "./sounds/one_piece_ingame.wav", (char *)NULL);
+            execlp("paplay", "paplay", "./sounds/one_piece_ingame.wav",
+                (char *)NULL);
         else
         {
             execlp("paplay", "paplay", "./sounds/pew.wav", (char *)NULL);
@@ -55,12 +62,9 @@ pid_t play_sound(t_game *game)
     else
         return (0);
 }
-int game_loop(t_game *game)
-{
-    if (!game->is_game_running)
-        return 1;
-    mlx_clear_window(game->mlx, game->window);
 
+void moves(t_game *game)
+{
     if (game->keys_held & (1 << 0))
         move_forward(game);
     if (game->keys_held & (1 << 1))
@@ -73,6 +77,15 @@ int game_loop(t_game *game)
         game->player->angle -= 0.05;
     if (game->keys_held & (1 << 5))
         game->player->angle += 0.05;
+}
+
+int game_loop(t_game *game)
+{
+    if (!game->is_game_running)
+        return 1;
+    mlx_clear_window(game->mlx, game->window);
+
+    moves(game);
     // if (game->keys_held & (1 << 6))
     //      // !update this
     if (game->sounds.fire || game->sounds.game_vibes)
@@ -84,13 +97,10 @@ int game_loop(t_game *game)
     cast_rays(game);
     generate_3d_projection(game);
     render_minimap(game);
-    // if (!game->syle_animation_running)
     draw_weapon(game, game->current_anim_index);
-    // else
-    //     draw_weapon(game, game->current_style_index);
-    draw_sprite(game, &game->textures[AIM],(WINDOW_WIDTH/ 2) -45, (WINDOW_HEIGHT / 2) - 45, 45, 45);
+    draw_sprite(game, &game->textures[AIM],(WINDOW_WIDTH/ 2) -45,
+     (WINDOW_HEIGHT / 2) - 45, 45, 45);
     mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
-
     return 0;
 }
 
@@ -100,22 +110,6 @@ void render_map(t_game *game, char **map)
     game->key_state = 0;
 }
 
-// int weapon_shoting(t_game *game)
-// {
-//     int i;
-//     size_t k;
-    
-//     i = -1;
-//     while (++i < 34)
-//     {
-//         k = 0;
-//         mlx_clear_window(game->mlx, game->window);
-//         draw_weapon(game, i);
-//         usleep(30000);
-//         mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
-//     }
-//     return (0);
-// }
 int mouse_butt(int button, int x, int y, void *param)
 {
     t_game *game;

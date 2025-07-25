@@ -22,7 +22,7 @@ int mouse_move(int x, int y, t_game *game)
 int is_valid_move(t_game *game, float new_x, float new_y)
 {
     int i = 0;
-    float buffer = 1.0f; // distance from the wall bel pixels
+    float buffer = 1.0f;
     float corners[4][2] = {
         {new_x - buffer, new_y - buffer},
         {new_x + buffer, new_y - buffer},
@@ -35,20 +35,11 @@ int is_valid_move(t_game *game, float new_x, float new_y)
         int cy = (int)(corners[i][1] / TILE_SIZE);
 
         if (cx < 0 || cx >= game->map_w || cy < 0 || cy >= game->map_h)
-        {
-            printf("Invalid move: out of bounds!\n");
-            return (0);
-        }
+            return (printf("Invalid move: out of bounds!\n"), 0);
         if (game->map[cy][cx] == '1')
-        {
-            printf("Invalid move: too close to wall!\n");
-            return (0);
-        }
+            return (printf("Invalid move: too close to wall!\n"), 0);
         if ((game->map[cy][cx] == 'D' && is_open(game, false) == false))
-        {
-            printf("check x = %d y = %d\n", cx, cy);
             return printf("Unlock the door first!\n"), 0;
-        }
         i++;
     }
     return (1);
@@ -170,23 +161,18 @@ void update_player_position(t_game *game, int new_x, int new_y)
 
 int close_window(t_game *game)
 {
+    int i;
 
-    int i = 0;
-    while (i <= DOOR)
-    {
+    i = -1;
+    while (++i <= DOOR)
         mlx_destroy_image(game->mlx, game->textures[i].img);
-        i++;
-    }
     mlx_destroy_image(game->data->mlx_ptr, game->data->north);
     mlx_destroy_image(game->data->mlx_ptr, game->data->west);
     mlx_destroy_image(game->data->mlx_ptr, game->data->east);
     mlx_destroy_image(game->data->mlx_ptr, game->data->south);
-    i = 0;
-    while (i < 7)
-    {
+    i = -1;
+    while (++i < 7)
         mlx_destroy_image(game->mlx, game->pistol_texture[i].img);
-        i++;
-    }
     mlx_destroy_window(game->mlx, game->window);
     mlx_destroy_image(game->mlx, game->img);
     mlx_destroy_display(game->mlx);
@@ -196,10 +182,6 @@ int close_window(t_game *game)
     mlx_destroy_display(game->data->mlx_ptr);
     free(game->data->mlx_ptr);
     alloc(0, FREE);
-    if (game->vibesound_id > 0)
-        kill(game->vibesound_id, SIGKILL);
-    if (game->opsound_id > 0)
-        kill(game->opsound_id, SIGKILL);
     system("pkill -9 paplay");
     exit(0);
 }
