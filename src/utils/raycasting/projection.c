@@ -35,7 +35,7 @@ void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int 
         return;
     texture = &game->textures[DOOR];
     if (ray->is_door == false)
-        texture = &game->textures[face]; // ! here are the sides..
+        texture = &game->textures[face];
     if (ray->hit_vertical)
         wall_x = ray->wall_hit_y;
     else

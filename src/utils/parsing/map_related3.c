@@ -6,37 +6,38 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/16 00:40:33 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/25 09:18:29 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../headers/cub3d.h"
 
+void assigner(t_data *data, int x, int y, int counter)
+{
+    data->doors[counter].is_open = false;
+    data->doors[counter].x = x;
+    data->doors[counter].y = y;
+}
+
 int countChars(int c, t_data *data, bool assign)
 {
-    if (!data || !data->map)
-        return 0;
-    char **arr; 
     int i;
     int k;
     int counter; 
+    if (!data || !data->map)
+        return 0;
     
-    i = 0;
-    arr = data->map;    
+    i = 0;  
     counter = 0;
-    while (arr[i])
+    while (data->map[i])
     {
         k = 0;
-        while (arr[i][k])
+        while (data->map[i][k])
         {
-            if (arr[i][k] == c)
+            if (data->map[i][k] == c)
             {
                 if (assign)
-                {
-                    data->doors[counter].is_open = false;
-                    data->doors[counter].x = k;
-                    data->doors[counter].y = i;
-                }
+                    assigner(data, k, i, counter);
                 counter++;
             }
             k++;
@@ -86,7 +87,8 @@ void change_door_state(char **s)
 
 bool is_door2(t_game *game, float x, float y)
 {
-    if (x < 0 || x >= (game->map_w - 1) * TILE_SIZE || y < 0 || y >= (game->map_h - 1) * TILE_SIZE)
+    if (x < 0 || x >= (game->map_w - 1) * TILE_SIZE 
+    || y < 0 || y >= (game->map_h - 1) * TILE_SIZE)
         return false;
 
     int map_x = (int)(x / TILE_SIZE);
@@ -98,24 +100,20 @@ bool is_door2(t_game *game, float x, float y)
         return false;
 }
 
-bool is_open(int x, int y, t_game *game, bool unlock_door)
+bool is_open(t_game *game, bool unlock_door)
 {
-    // static bool return_type = false;
     int i;
-    int ndoors = game->data->ndoors;
     t_doorpos *head;
 
-    x /= TILE_SIZE;
-    y /= TILE_SIZE;
     i = 0;
-    if (ndoors > 0)
+    if (game->data->ndoors > 0)
     {
         head = &game->data->doors[i];
         if (unlock_door)
         {
             if (!is_door2(game, game->player->x, game->player->y))
             {
-                while (i < ndoors)
+                while (i < game->data->ndoors)
                 {
                     head = &game->data->doors[i];
                     head->is_open = !head->is_open; 
@@ -124,8 +122,6 @@ bool is_open(int x, int y, t_game *game, bool unlock_door)
                 i = 0;
                 change_door_state(game->map);
             }
-            else
-                printfd(1, "you're stepping on one of the doors\n");
         }
         return head->is_open;
     }

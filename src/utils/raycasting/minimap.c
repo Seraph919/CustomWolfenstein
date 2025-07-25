@@ -20,7 +20,8 @@ void render_minimap(t_game *game)
                 color = 0xFF0000;
             else if (game->map[y][x] && game->map[y][x]== 'O')
                 color = 0x00FF00;
-            draw_rect(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, color);
+            draw_rect(game, x * TILE_SIZE, y * TILE_SIZE,
+                 TILE_SIZE, TILE_SIZE, color);
         }
     }
 

@@ -44,7 +44,7 @@ int is_valid_move(t_game *game, float new_x, float new_y)
             printf("Invalid move: too close to wall!\n");
             return (0);
         }
-        if ((game->map[cy][cx] == 'D' && is_open(cx, cy, game, false) == false))
+        if ((game->map[cy][cx] == 'D' && is_open(game, false) == false))
         {
             printf("check x = %d y = %d\n", cx, cy);
             return printf("Unlock the door first!\n"), 0;

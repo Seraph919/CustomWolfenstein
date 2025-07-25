@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:43:20 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 12:10:30 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/25 09:10:19 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ bool above_checker(char **map, int y)
 bool is_void(char **map, size_t x, size_t y, size_t map_max)
 {
     if ((map[y - 1][x] && is_white_space(map[y - 1][x]))
-            || (y + 1 < map_max - 1 && map[y + 1] && map[y + 1][x] && is_white_space(map[y + 1][x])) 
+            || (y + 1 < map_max - 1 && map[y + 1] 
+                && map[y + 1][x] && is_white_space(map[y + 1][x])) 
             || ( x != 0 && is_white_space(map[y][x - 1])) 
             || (map[y][x + 1] && is_white_space(map[y][x + 1]))
             || !map[y][x + 1])

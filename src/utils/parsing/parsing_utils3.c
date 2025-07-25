@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/17 18:16:08 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/25 09:19:31 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,15 @@ char *strend_trim(char *str, size_t nbytes, int start_index)
     return (returned);
 }
 
-void optimizer(t_data *data)
-{
-    (void) data;
-    // free(data->colors->c);
-    // free(data->colors->f);
-    // free2d(data->colors->splitted_c, 3);
-    // free2d(data->colors->splitted_f, 3);
-    // free(data->direction_paths->south_p);
-    // free(data->direction_paths->north_p);
-    // free(data->direction_paths->east_p);
-    // free(data->direction_paths->west_p);
-    // free(data->direction_paths->
-    // data->
-}
-
 bool file_process(t_data *data, char **av)
 {
-    if (file_read(data, av) || outer_resources(data) || outer_error_check(data))
-        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"), fireforce(data, M_ERROR), ERROR);
+    if (file_read(data, av) || outer_resources(data) 
+    || outer_error_check(data))
+        return (printfd(2, "ERROR\nFound an Error in .cub Processing\n"),
+         fireforce(data, M_ERROR), ERROR);
     if (map_validation(data->map, data->map_y, data) == ERROR)
-        return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data, M_ERROR), ERROR);
+        return (printfd(2, "ERROR\nFound an Error in map\n"),
+         fireforce(data, M_ERROR), ERROR);
     // print_stff(data);
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);

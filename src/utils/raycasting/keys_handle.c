@@ -20,7 +20,7 @@ int key_press(int keycode, t_game *game)
     else if (keycode == RIGHT_ARROW)
         game->keys_held |= (1 << 5);
     else if (keycode == XK_E || keycode == XK_e)
-        is_open(game->player->x , game->player->y, game, true); // * lock/unlock door
+        is_open(game, true); // * lock/unlock door
     else if (keycode == XK_Escape)
         close_window(game);
     return 0;
