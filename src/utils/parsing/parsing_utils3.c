@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/25 09:19:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:49:25 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool file_process(t_data *data, char **av)
     // print_stff(data);
     if (texture_loading(data))
         return (fireforce(data, AFTER), ERROR);
-    optimizer(data);
+    // optimizer(data);
     return (SUCCESS);
 }
 
