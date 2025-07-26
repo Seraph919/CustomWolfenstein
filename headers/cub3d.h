@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/25 09:15:38 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:20:11 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@
 
 
 // Init funcs
-int init_mlx(t_game *game, char **map);
+int init_mlx(t_game *game);
 int get_map_height(char **map);
 int get_map_width(char **map);
-int init_mlx(t_game *game, char **map);
+int init_mlx(t_game *game);
 
 // Events funcs
 int key_press(int keycode, t_game *game);

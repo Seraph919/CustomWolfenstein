@@ -32,7 +32,6 @@ char **duplicate_map(char **map)
     new_map = malloc(sizeof(char *) * (height + 1));
     if (!new_map)
         return (NULL);
-
     while (i < height)
     {
         new_map[i] = ft_strdup(map[i]);
@@ -50,7 +49,7 @@ char **duplicate_map(char **map)
     return new_map;
 }
 
-int texture_data(t_game *game) // TODO : ADD ALL TEXTS TO THIS AND USE LOOP..
+int texture_data(t_game *game)
 {
     int i = -1;
     while (++i < 7)
@@ -64,42 +63,69 @@ int texture_data(t_game *game) // TODO : ADD ALL TEXTS TO THIS AND USE LOOP..
     return (SUCCESS);
 }
 
-int init_mlx(t_game *game, char **map)
+int init_vars(t_game *game)
 {
     game->vibesound_id = 0;
     game->opsound_id = 0;
+    game->current_anim_index = 0;
     game->first_time = true;
     game->syle_animation_running = false;
-    game->current_anim_index = 0; // ! change now its unused
     game->current_style_index = 0;
     game->animation_running = false;
     game->keys_held = false;
-
     game->sounds.opening_song = true;
     game->sounds.game_vibes = false;
     game->sounds.fire = false;
-
-
-    game->map = duplicate_map(map);
+    game->map = duplicate_map(game->data->map);
     game->window_width = WINDOW_WIDTH;
     game->window_height = WINDOW_HEIGHT;
     game->player->fov = FOV * DEG_TO_RAD;
     game->player->move_speed = MOVE_SPEED;
     game->player->rotation_speed = ROTATION_SPEED;
-    // mlx_destroy_window(game->data->mlx_ptr, game->data->win_ptr);
-    // mlx_destroy_image(game->mlx, game->img);
-    // mlx_destroy_display(game->data->mlx_ptr);
-    // free(game->data->mlx_ptr);
     game->mlx = mlx_init();
     if (!game->mlx)
-        return 0;
+        return (ERROR);
     game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "cub3D");
     if (!game->window)
-        return 0;
+        return (ERROR);
     game->img = mlx_new_image(game->mlx, game->window_width, game->window_height);
     if (!game->img)
-        return 0;
-    game->addr = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
+        return (ERROR);
+    return SUCCESS;
+}
+
+void set_player_stuff(int x, int y, t_game *game, float angle)
+{
+    game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
+    game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
+    game->map[y][x] = '0';
+    game->player->angle = angle;
+}
+
+void get_player_angle(t_game *game, int y)
+{
+    int x = -1;
+    while (game->map[y][++x])
+    {
+        if (game->map[y][x] == 'N')
+            set_player_stuff(x, y, game, 3 * PI / 2);
+        else if (game->map[y][x] == 'S')
+            set_player_stuff(x, y, game, PI / 2);
+        else if (game->map[y][x] == 'E')
+            set_player_stuff(x, y, game, 0);
+        else if (game->map[y][x] == 'W')
+            set_player_stuff(x, y, game, PI);
+    }
+}
+
+int init_mlx(t_game *game)
+{
+    int y;
+
+    if (init_vars(game) == ERROR)
+        return (0);
+    game->addr = mlx_get_data_addr(game->img, &game->bpp, 
+        &game->size_line, &game->endian);
     game->rays = alloc(sizeof(t_ray) * NUM_RAYS, ALLOC);
     if (!game->rays)
         return exit_error(game->data, "fatal allocation error"), 0;
@@ -107,43 +133,13 @@ int init_mlx(t_game *game, char **map)
     game->player->dir_y = 0.0;
     game->player->plane_x = 0.66;
     game->player->plane_y = 0.0;
-    for (int y = 0; y < game->map_h; y++)
+    y = -1;
+    while (++y < game->map_h)
     {
-        for (int x = 0; map[y][x]; x++)
-        {
-            if (map[y][x] == 'N')
-            {
-                game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
-                game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
-                game->map[y][x] = '0';
-                game->player->angle = 3 * PI / 2;
-            }
-            else if (map[y][x] == 'S')
-            {
-                game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
-                game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
-                game->player->angle = PI / 2;
-                game->map[y][x] = '0';
-            }
-            else if (map[y][x] == 'E')
-            {
-                game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
-                game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
-                game->player->angle = 0;
-                game->map[y][x] = '0';
-            }
-            else if (map[y][x] == 'W')
-            {
-                game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
-                game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
-                game->player->angle = PI;
-                game->map[y][x] = '0';
-            }
-        }
+        get_player_angle(game, y);
     }
     game->last_mouse_x = WINDOW_WIDTH / 2;
     game->last_mouse_y = WINDOW_HEIGHT / 2;
-
     mlx_mouse_move(game->mlx, game->window, game->last_mouse_x, game->last_mouse_y);
     mlx_mouse_hide(game->mlx, game->window);
     game->textures = alloc(sizeof(t_texture) *  7, ALLOC);
@@ -157,7 +153,6 @@ int init_mlx(t_game *game, char **map)
     game->textures[OPEN].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/opening_scene.xpm", &game->textures[OPEN].width, &game->textures[OPEN].height);
     game->textures[DOOR].img = mlx_xpm_file_to_image(game->mlx, "./src/textures/door.xpm", &game->textures[DOOR].width, &game->textures[DOOR].height);  // ! you can loop here..
     game->imgs = alloc(sizeof(char *) * 4, ALLOC); // !make sure that this is usefull
-
     if (texture_data(game) == ERROR)
         return (ERROR);
     int width, height;
