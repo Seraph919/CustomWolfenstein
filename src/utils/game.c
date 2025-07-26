@@ -160,7 +160,7 @@ int start_gaming(t_game game, char **map)
         return exit_error(game.data, "fatal allocation error"), 1;
     game.map_h = get_map_height(map); // ! do u still work with this stuff??
     game.map_w = get_map_width(map);
-    if (!init_mlx(&game, map))
+    if (!init_mlx(&game))
     {
         free(game.player);
         return (1);
