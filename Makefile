@@ -14,10 +14,11 @@ CLIB = cub3d.a
 GREEN = \033[1;32m
 RESET = \033[0m
 
-SRCS = main.c ./parsing/parsing_utils.c init.c events.c game.c ./parsing/parsing_utils.c ./parsing/parsing_utils2.c ./parsing/parsing_utils3.c ./parsing/parsing_utils4.c \
+SRCS = main.c ./parsing/parsing_utils.c ./initialization/init.c events.c game.c ./parsing/parsing_utils.c ./parsing/parsing_utils2.c ./parsing/parsing_utils3.c ./parsing/parsing_utils4.c \
  	   ./parsing/map_related.c ./parsing/map_related2.c ./parsing/fireforce.c ./parsing/file_related.c ./raycasting/raycast.c ./raycasting/projection.c ./raycasting/minimap.c \
 	   ./raycasting/move_player.c ./raycasting/keys_handle.c ./parsing/map_related3.c ./raycasting/r_draw_and_check.c ./raycasting/r_calc_c.c ./raycasting/r_calc_cvh.c \
-	   ./raycasting/r_set_store.c
+	   ./raycasting/r_set_store.c ./initialization/texture.c ./initialization/coloring.c ./initialization/maping.c ./initialization/init_player.c ./initialization/init_texsound.c \
+	   ./gaming/animation.c ./gaming/sound.c ./moves.c
 
 LIBFT_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
     	ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \

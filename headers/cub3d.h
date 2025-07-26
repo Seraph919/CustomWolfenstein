@@ -201,4 +201,21 @@ void set_ray_hit_result(t_ray *ray, t_ray_hit_data input, float h_distance, floa
 void store_ray_properties(t_game *game, t_ray_hit_data input);
 void init_cast_ray_data(t_game *game, t_cast_ray_data *data, float ray_angle, int ray_id);
 
+// init stuff
+bool initialize_game_data(t_data *data, t_game *game);
+void init_player_vars(t_game *game);
+void set_player_stuff(int x, int y, t_game *game, float angle);
+void get_player_angle(t_game *game, int y);
+void set_player_direction(t_game *game);
+int init_vars(t_game *game);
+void init_sound_vars(t_game *game);
+void set_mouse_and_textures(t_game *game);
+int load_direction_textures(t_game *game);
+int texture_data(t_game *game);
+int	is_valid_move(t_game *game, float new_x, float new_y);
+
+// gaming moves and sounds
+pid_t play_sound(t_game *game);
+pid_t play_opening_sound(void);
+
 #endif

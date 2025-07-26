@@ -1,68 +1,5 @@
 #include "../../headers/cub3d.h"
 
-void animation(t_game *game)
-{
-    if (game->animation_running)
-    {
-        game->current_anim_index++;
-        usleep(7000);
-    }
-    if (game->current_anim_index > 6)
-    {
-        game->animation_running = false;
-        game->current_anim_index = 0;
-    }
-    if (game->syle_animation_running)
-    {
-        game->current_style_index++;
-        usleep(7000);
-    }
-}
-
-void draw_weapon(t_game *game, int index)
-{
-    animation(game);
-    if (game->current_style_index > 52)
-    {
-        game->syle_animation_running = false;
-        game->current_style_index = 34;
-    }
-    if (index == 1)
-        index = game->current_style_index;
-    else
-        index = game->current_anim_index;
-    int pistol_w = 1000;
-    int pistol_h = 1000;
-    int pistol_x = (game->window_width - pistol_w) / 2 + 200;
-    int pistol_y = game->window_height - pistol_h;
-    draw_sprite(game, &game->pistol_texture[game->current_anim_index],
-        pistol_x, pistol_y, pistol_w, pistol_h);
-}
-
-pid_t play_sound(t_game *game)
-{
-    int fd;
-    int id = fork();
-    if (id == 0)
-    {
-        fd = 3;
-        while (fd < 1024)
-            close(fd++);
-        if (game->sounds.game_vibes)
-            execlp("paplay", "paplay", "./sounds/one_piece_ingame.wav",
-                (char *)NULL);
-        else
-        {
-            execlp("paplay", "paplay", "./sounds/pew.wav", (char *)NULL);
-        }
-         _exit(1);
-    }
-    if (game->sounds.game_vibes)
-        return id;
-    else
-        return (0);
-}
-
 void moves(t_game *game)
 {
     if (game->keys_held & (1 << 0))
@@ -127,30 +64,6 @@ int mouse_butt(int button, int x, int y, void *param)
     else
         printf("button == %d\n", button);
     return (0);
-}
-
-pid_t play_opening_sound()
-{
-    int id;
-    int fd;
-
-    id = fork();
-    if (id == 0)
-    {
-        fd = 3;
-        while (fd < 1024)
-            close(fd++);
-        execlp("paplay", "paplay", "./sounds/op.wav", (char *)NULL);
-        _exit(1);
-    }
-    return id;
-}
-
-void draw_opening_scene(t_game *game)
-{
-    draw_sprite(game, &game->textures[OPEN], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
-    sleep(10);
 }
 
 int start_gaming(t_game game, char **map)
