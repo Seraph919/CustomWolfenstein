@@ -63,9 +63,9 @@ char	*returned_line(char **stored, int readen)
 
 char	*get_next_line(int fd)
 {
-	char			*allocated;
-	int				readen;
-	static char		*stored;
+	char		*allocated;
+	int			readen;
+	static char	*stored;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

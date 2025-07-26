@@ -12,8 +12,8 @@
 
 #include "../../../headers/cub3d.h"
 
-void	set_ray_hit_result(t_ray *ray, t_ray_hit_data input,
-		float h_distance, float v_distance)
+void	set_ray_hit_result(t_ray *ray, t_ray_hit_data input, float h_distance,
+		float v_distance)
 {
 	if (v_distance < h_distance)
 	{
@@ -46,13 +46,13 @@ void	store_ray_properties(t_game *game, t_ray_hit_data input)
 	t_ray	*ray;
 
 	if (input.h_hit.found)
-		h_distance = distance_between_points(game->player->x,
-				game->player->y, input.h_hit.x, input.h_hit.y);
+		h_distance = distance_between_points(game->player->x, game->player->y,
+				input.h_hit.x, input.h_hit.y);
 	else
 		h_distance = FLT_MAX;
 	if (input.v_hit.found)
-		v_distance = distance_between_points(game->player->x,
-				game->player->y, input.v_hit.x, input.v_hit.y);
+		v_distance = distance_between_points(game->player->x, game->player->y,
+				input.v_hit.x, input.v_hit.y);
 	else
 		v_distance = FLT_MAX;
 	ray = &game->rays[input.ray_id];
@@ -61,8 +61,8 @@ void	store_ray_properties(t_game *game, t_ray_hit_data input)
 	set_ray_hit_result(ray, input, h_distance, v_distance);
 }
 
-void	init_cast_ray_data(t_game *game, t_cast_ray_data *data,
-		float ray_angle, int ray_id)
+void	init_cast_ray_data(t_game *game, t_cast_ray_data *data, float ray_angle,
+		int ray_id)
 {
 	(void)game;
 	data->ray_angle = normalize_angle(ray_angle);

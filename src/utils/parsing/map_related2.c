@@ -12,61 +12,58 @@
 
 #include "../../../headers/cub3d.h"
 
-bool above_checker(char **map, int y)
+bool	above_checker(char **map, int y)
 {
-    int x;
+	int	x;
 
-    x = -1;
-    if (!map || !map[y] )
-        return (ERROR);
-    while (map[y][++x])
-    {
-        if (is_white_space(map[y][x]) 
-            && map[y - 1][x] && map[y - 1][x] == '0')
-            return (ERROR);
-    }
-    if (map[y][x] == '\0' && map[y - 1][x] && map[y - 1][x] == '0')
-        return (ERROR);
-    return (SUCCESS);
+	x = -1;
+	if (!map || !map[y])
+		return (ERROR);
+	while (map[y][++x])
+	{
+		if (is_white_space(map[y][x]) && map[y - 1][x] && map[y - 1][x] == '0')
+			return (ERROR);
+	}
+	if (map[y][x] == '\0' && map[y - 1][x] && map[y - 1][x] == '0')
+		return (ERROR);
+	return (SUCCESS);
 }
 
-bool is_void(char **map, size_t x, size_t y, size_t map_max)
+bool	is_void(char **map, size_t x, size_t y, size_t map_max)
 {
-    if ((map[y - 1][x] && is_white_space(map[y - 1][x]))
-            || (y + 1 < map_max - 1 && map[y + 1] 
-                && map[y + 1][x] && is_white_space(map[y + 1][x])) 
-            || ( x != 0 && is_white_space(map[y][x - 1])) 
-            || (map[y][x + 1] && is_white_space(map[y][x + 1]))
-            || !map[y][x + 1])
-            return (true);
-    if (y + 1 == map_max - 1)
-    {
-        if (above_checker(map, y + 1))
-            return (true);
-    }
-    return (false);
+	if ((map[y - 1][x] && is_white_space(map[y - 1][x])) || (y + 1 < map_max - 1
+			&& map[y + 1] && map[y + 1][x] && is_white_space(map[y + 1][x]))
+		|| (x != 0 && is_white_space(map[y][x - 1])) || (map[y][x + 1]
+			&& is_white_space(map[y][x + 1])) || !map[y][x + 1])
+		return (true);
+	if (y + 1 == map_max - 1)
+	{
+		if (above_checker(map, y + 1))
+			return (true);
+	}
+	return (false);
 }
 
-char **newlinecut(t_data *data)
+char	**newlinecut(t_data *data)
 {
-    size_t i;
-    if (!data->map)
-        return (NULL);
+	size_t	i;
 
-    data->ndoors = 0;
-    i = -1;
-    while (++i < data->map_y)
-    {
-        if (data->map[i] && i != (data->map_y - 1))
-            data->map[i] = strend_trim(data->map[i], 1, 0);
-    }
-    data->ndoors = countChars('D', data, false);
-    if (data->ndoors > 0)
-    {
-        data->doors = alloc(sizeof(t_doorpos) * data->ndoors, ALLOC);
-        if (!data->doors)
-            return fireforce(data, AFTER), exit(1), NULL;
-        countChars('D', data, true);
-    }
-    return (data->map);
+	if (!data->map)
+		return (NULL);
+	data->ndoors = 0;
+	i = -1;
+	while (++i < data->map_y)
+	{
+		if (data->map[i] && i != (data->map_y - 1))
+			data->map[i] = strend_trim(data->map[i], 1, 0);
+	}
+	data->ndoors = countChars('D', data, false);
+	if (data->ndoors > 0)
+	{
+		data->doors = alloc(sizeof(t_doorpos) * data->ndoors, ALLOC);
+		if (!data->doors)
+			return (fireforce(data, AFTER), exit(1), NULL);
+		countChars('D', data, true);
+	}
+	return (data->map);
 }

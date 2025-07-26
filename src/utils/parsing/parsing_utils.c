@@ -12,84 +12,84 @@
 
 #include "../../../headers/cub3d.h"
 
-bool file_copying(t_data *data, int len, char **av)
+bool	file_copying(t_data *data, int len, char **av)
 {
-    int fd;
-    int y;
-    char *line;
-    
-    y = 0;
-    data->file_size = len;
-    fd = open(av[1], O_RDONLY);
-    if (fd < 0 || len == 0)
-        return (printfd(2, "Error\nError in file opening\n"),ERROR);
-    data->cub_file = alloc(sizeof(char *) * (len + 1), ALLOC);
-    if (!data->cub_file)
-        return (fireforce(data, AFTER), 1);
-    while ((line = get_next_line(fd)))
-    {
-        data->cub_file[y++] = ft_strdup(line);
-        free(line);
-    }
-    data->cub_file[y] = NULL;
-    data->map_y = y;
-    close(fd);
-    return (SUCCESS);
+	int		fd;
+	int		y;
+	char	*line;
+
+	y = 0;
+	data->file_size = len;
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0 || len == 0)
+		return (printfd(2, "Error\nError in file opening\n"), ERROR);
+	data->cub_file = alloc(sizeof(char *) * (len + 1), ALLOC);
+	if (!data->cub_file)
+		return (fireforce(data, AFTER), 1);
+	while ((line = get_next_line(fd)))
+	{
+		data->cub_file[y++] = ft_strdup(line);
+		free(line);
+	}
+	data->cub_file[y] = NULL;
+	data->map_y = y;
+	close(fd);
+	return (SUCCESS);
 }
 
-bool get_allocation_size(int *y, char **av)
+bool	get_allocation_size(int *y, char **av)
 {
-    char *line;
-    int fd;
-    
-    *y = 0;
-    fd = open(av[1], O_RDONLY);
-    if (fd < 0)
-        return (printfd(2, "Error in file opening\n"),ERROR);
-    line = get_next_line(fd);
-    while (line)
-    {
-        *y += 1;
-        free(line);
-        line = get_next_line(fd);
-    }
-    close(fd);
-    if (*y == 0)
-        return (ERROR);
-    return (SUCCESS);
+	char	*line;
+	int		fd;
+
+	*y = 0;
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		return (printfd(2, "Error in file opening\n"), ERROR);
+	line = get_next_line(fd);
+	while (line)
+	{
+		*y += 1;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	if (*y == 0)
+		return (ERROR);
+	return (SUCCESS);
 }
 
-bool file_read(t_data *data, char **av)
+bool	file_read(t_data *data, char **av)
 {
-    int y;
+	int	y;
 
-    y = 0;
-    if (!valid_file_name(av[1]))
-        return (ERROR);
-    if (get_allocation_size(&y, av) || file_copying(data, y, av))
-        return (ERROR);
-    return (SUCCESS);
+	y = 0;
+	if (!valid_file_name(av[1]))
+		return (ERROR);
+	if (get_allocation_size(&y, av) || file_copying(data, y, av))
+		return (ERROR);
+	return (SUCCESS);
 }
 
-bool texture_valid(char *s1, char *s2)
+bool	texture_valid(char *s1, char *s2)
 {
-    if (ft_strncmpp(skip_spaces(s1), s2, 2) == 0)
-        return (true);
-    return (false);
+	if (ft_strncmpp(skip_spaces(s1), s2, 2) == 0)
+		return (true);
+	return (false);
 }
 
-size_t count_char(char *s, char c)
+size_t	count_char(char *s, char c)
 {
-    size_t counter;
+	size_t	counter;
 
-    counter = 0;
-    if (!s)
-        return (0);
-    while (*s)
-    {
-        if (*s == c)
-            counter++;
-        s++;
-    }
-    return (counter);
+	counter = 0;
+	if (!s)
+		return (0);
+	while (*s)
+	{
+		if (*s == c)
+			counter++;
+		s++;
+	}
+	return (counter);
 }

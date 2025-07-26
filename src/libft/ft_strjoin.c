@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:14:35 by asoudani          #+#    #+#             */
-/*   Updated: 2024/11/06 12:27:09 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/26 20:21:24 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*returned;
 
 	if (!s1 || !s2)
-		return (NULL);              // for better results, if one is null, you return  the other one, and include this condition
-	i = -1;				    // to hundle the other case :     if (!s1 && !s2) return NULL;
+		return (NULL);
+	i = -1;
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	returned = malloc(sizeof(char) * len1 + len2 + 1);

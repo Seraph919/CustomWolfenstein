@@ -6,12 +6,12 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:15:28 by asoudani          #+#    #+#             */
-/*   Updated: 2025/04/07 13:42:48 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/26 20:24:33 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef printfd_H
-# define printfd_H
+#ifndef PRINTFD_H
+# define PRINTFD_H
 
 # include <stdarg.h>
 # include <stdio.h>
@@ -23,9 +23,9 @@ typedef struct s_args
 {
 	va_list		args;
 	int			count;
-	int 			err;
-	const char 	*form;
-	int				fd;
+	int			err;
+	const char	*form;
+	int			fd;
 }	t_args;
 
 int			printfd(int fd, const char *form, ...);

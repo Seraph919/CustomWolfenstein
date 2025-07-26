@@ -126,7 +126,7 @@ char	**ft_split(const char *s, char c)
 // 	for (int i = 0; i < countwords(hi, ' '); i++)
 // 		printf("%s\n", words[i]);
 // 	printf("--------------------\n");
-/////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////
 // 	char	**wordss = ft_split(NULL,' ');
 // 	hi = "hello  there! is everying good? ok. ...\n";
 // 	printf("--------------------\n");

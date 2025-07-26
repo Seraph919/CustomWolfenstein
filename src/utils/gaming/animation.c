@@ -52,8 +52,8 @@ void	draw_weapon(t_game *game, int index)
 	pistol_h = 1000;
 	pistol_x = (game->window_width - pistol_w) / 2 + 200;
 	pistol_y = game->window_height - pistol_h;
-	draw_sprite(game, &game->pistol_texture[game->current_anim_index],
-		pistol_x, pistol_y, pistol_w, pistol_h);
+	draw_sprite(game, &game->pistol_texture[game->current_anim_index], pistol_x,
+		pistol_y, pistol_w, pistol_h);
 }
 
 void	draw_opening_scene(t_game *game)

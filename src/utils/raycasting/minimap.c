@@ -16,18 +16,17 @@ void	draw_final(t_game *game)
 {
 	t_rect	r;
 
-	r = (t_rect){game->player->x - PLAYER_SIZE / 2,
-		game->player->y - PLAYER_SIZE / 2,
-		PLAYER_SIZE, PLAYER_SIZE, 0xffffff};
+	r = (t_rect){game->player->x - PLAYER_SIZE / 2, game->player->y
+		- PLAYER_SIZE / 2, PLAYER_SIZE, PLAYER_SIZE, 0xffffff};
 	draw_rect(game, r);
 }
 
 void	render_minimap(t_game *game)
 {
-	int			y;
-	int			x;
-	int			c;
-	t_rect		r;
+	int		y;
+	int		x;
+	int		c;
+	t_rect	r;
 
 	y = 0;
 	while (y < game->map_h - 1)

@@ -6,54 +6,52 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:42:06 by asoudani          #+#    #+#             */
-/*   Updated: 2025/06/30 12:38:52 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:34:02 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../headers/cub3d.h"
 
-void free2d(char **s, size_t size)
+void	free2d(char **s, size_t size)
 {
-    size_t i;
+	size_t	i;
 
-    i = -1;
-    if (!s)
-        return ;
-    while (++i < size - 1)
-    {
-        if (s && s[i])
-            free(s[i]);
-    }
-    free(s);
+	i = -1;
+	if (!s)
+		return ;
+	while (++i < size - 1)
+	{
+		if (s && s[i])
+			free(s[i]);
+	}
+	free(s);
 }
 
-void free_texture(t_data *data)
+void	free_texture(t_data *data)
 {
-    if (data->south)
-        mlx_destroy_image(data->mlx_ptr, data->south);
-    if (data->north)
-        mlx_destroy_image(data->mlx_ptr, data->north);
-    if (data->west)
-        mlx_destroy_image(data->mlx_ptr, data->west);
-    if (data->east)
-        mlx_destroy_image(data->mlx_ptr, data->east);
+	if (data->south)
+		mlx_destroy_image(data->mlx_ptr, data->south);
+	if (data->north)
+		mlx_destroy_image(data->mlx_ptr, data->north);
+	if (data->west)
+		mlx_destroy_image(data->mlx_ptr, data->west);
+	if (data->east)
+		mlx_destroy_image(data->mlx_ptr, data->east);
 }
 
-void fireforce(t_data *data, t_place place)
+void	fireforce(t_data *data, t_place place)
 {
-    alloc(0, FREE);
-
-    if (place == AFTER)
-        free_texture(data);
-    mlx_destroy_display(data->mlx_ptr);
-    free(data->mlx_ptr);
+	alloc(0, FREE);
+	if (place == AFTER)
+		free_texture(data);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
 }
 
-void exit_error(t_data *data, char *s)
+void	exit_error(t_data *data, char *s)
 {
-    if (s)
-        printfd(2, "%s\n", s);
-    fireforce(data, AFTER);
-    // alloc(0, FREE); // !doenst contain the mlx ptr and stuff.. so free them prev
-    exit(1);
+	if (s)
+		printfd(2, "%s\n", s);
+	fireforce(data, AFTER);
+	exit(1);
 }

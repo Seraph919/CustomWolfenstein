@@ -54,16 +54,16 @@ t_ray_dir	init_ray_direction(float ray_angle)
 	return (dir);
 }
 
-t_intercept_steps	calc_h_inter_and_steps(t_game *game,
-		float angle, t_ray_dir dir)
+t_intercept_steps	calc_h_inter_and_steps(t_game *game, float angle,
+		t_ray_dir dir)
 {
 	t_intercept_steps	steps;
 
 	steps.y_intercept = floor(game->player->y / TILE_SIZE) * TILE_SIZE;
 	if (dir.facing_down)
 		steps.y_intercept += TILE_SIZE;
-	steps.x_intercept = game->player->x
-		+ (steps.y_intercept - game->player->y) / tan(angle);
+	steps.x_intercept = game->player->x + (steps.y_intercept - game->player->y)
+		/ tan(angle);
 	if (dir.facing_up)
 		steps.y_step = TILE_SIZE * -1;
 	else

@@ -12,8 +12,8 @@
 
 #include "../../../headers/cub3d.h"
 
-t_wall_hit	trace_h_ray(t_game *game,
-		t_trace_params params, t_intercept_steps steps)
+t_wall_hit	trace_h_ray(t_game *game, t_trace_params params,
+		t_intercept_steps steps)
 {
 	t_wall_hit	hit;
 	float		x;
@@ -24,8 +24,8 @@ t_wall_hit	trace_h_ray(t_game *game,
 	x = steps.x_intercept;
 	y = steps.y_intercept;
 	hit = (t_wall_hit){0, 0, false};
-	while (x >= 0 && x < game->map_w * TILE_SIZE
-		&& y >= 0 && y < game->map_h * TILE_SIZE)
+	while (x >= 0 && x < game->map_w * TILE_SIZE && y >= 0 && y < game->map_h
+		* TILE_SIZE)
 	{
 		check_x = x;
 		if (params.dir.facing_up)
@@ -55,16 +55,16 @@ t_wall_hit	find_horizontal_intersection(t_game *game, t_ray_input input)
 	return (trace_h_ray(game, params, steps));
 }
 
-t_intercept_steps	calc_v_inter_and_steps(t_game *game,
-		float angle, t_ray_dir dir)
+t_intercept_steps	calc_v_inter_and_steps(t_game *game, float angle,
+		t_ray_dir dir)
 {
 	t_intercept_steps	steps;
 
 	steps.x_intercept = floor(game->player->x / TILE_SIZE) * TILE_SIZE;
 	if (dir.facing_right)
 		steps.x_intercept += TILE_SIZE;
-	steps.y_intercept = game->player->y
-		+ (steps.x_intercept - game->player->x) * tan(angle);
+	steps.y_intercept = game->player->y + (steps.x_intercept - game->player->x)
+		* tan(angle);
 	if (dir.facing_left)
 		steps.x_step = TILE_SIZE * -1;
 	else
@@ -89,8 +89,8 @@ t_wall_hit	trace_v_ray(t_game *game, t_trace_params params,
 	hit = (t_wall_hit){0, 0, false};
 	x = steps.x_intercept;
 	y = steps.y_intercept;
-	while (x >= 0 && x < game->map_w * TILE_SIZE
-		&& y >= 0 && y < game->map_h * TILE_SIZE)
+	while (x >= 0 && x < game->map_w * TILE_SIZE && y >= 0 && y < game->map_h
+		* TILE_SIZE)
 	{
 		if (params.dir.facing_left)
 			check_x = x - 1;

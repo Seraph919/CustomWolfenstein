@@ -31,9 +31,7 @@ int	main(void)
 {
 	char	*s;
 
- 	s = ft_calloc(0, 0);
- 	printf("%s\n", s);
-
-	
+	s = ft_calloc(0, 0);
+	printf("%s\n", s);
 }
 */

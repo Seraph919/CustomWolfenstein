@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:14:53 by asoudani          #+#    #+#             */
-/*   Updated: 2025/04/07 13:43:36 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/26 20:23:11 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static int	while_loop(t_args *args)
 	{
 		if (*(args->form) == '%' && check_char(*((args->form) + 1)) == 1)
 		{
-			(args->form) = formats((args->form), args->args, &args->count, args);
+			(args->form) = formats((args->form), args->args, &args->count,
+					args);
 			if (args->err == -1)
 				return (-1);
 			(args->form)++;
@@ -36,9 +37,8 @@ static int	while_loop(t_args *args)
 	return (args->count);
 }
 
-void args_init(t_args *args, int fd, const char *from)
+void	args_init(t_args *args, int fd, const char *from)
 {
-
 	args->form = from;
 	args->count = 0;
 	args->err = 0;
@@ -47,7 +47,6 @@ void args_init(t_args *args, int fd, const char *from)
 
 int	printfd(int fd, const char *form, ...)
 {
-
 	t_args	args;
 
 	args_init(&args, fd, form);

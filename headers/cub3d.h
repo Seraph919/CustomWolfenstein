@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/26 10:20:11 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:43:26 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,5 +217,18 @@ int	is_valid_move(t_game *game, float new_x, float new_y);
 // gaming moves and sounds
 pid_t play_sound(t_game *game);
 pid_t play_opening_sound(void);
+int	allocations(t_data *data);
+void	t_norm2_init(t_data *data, t_norm2 *norm);
+bool	handle_texture_direction(t_norm2 *n, char *line);
+bool	handle_texture_we_ea(t_norm2 *n, char *line);
+bool	outer_resources(t_data *data);
+bool	element_allocation(t_data *data, t_norm2 *n);
+void	handle_map_element(t_data *data, t_norm2 *n, char *line);
+bool	handle_colors(t_norm2 *n, char *line);
+bool	conditions(t_norm1 *norm);
+bool	checkbefore(char *s, int end);
+bool	check_srnds(t_data *data, int x, int y, size_t map_max);
+bool	not_surr(char **map, int x, int y);
+int	check_next_index(char **map, int x, int y);
 
 #endif

@@ -25,10 +25,10 @@ pid_t	play_sound(t_game *game)
 			close(fd++);
 		if (game->sounds.game_vibes)
 			execlp("paplay", "paplay", "./sounds/one_piece_ingame.wav",
-				(char *) NULL);
+				(char *)NULL);
 		else
 		{
-			execlp("paplay", "paplay", "./sounds/pew.wav", (char *) NULL);
+			execlp("paplay", "paplay", "./sounds/pew.wav", (char *)NULL);
 		}
 		_exit(1);
 	}
@@ -49,7 +49,7 @@ pid_t	play_opening_sound(void)
 		fd = 3;
 		while (fd < 1024)
 			close(fd++);
-		execlp("paplay", "paplay", "./sounds/op.wav", (char *) NULL);
+		execlp("paplay", "paplay", "./sounds/op.wav", (char *)NULL);
 		_exit(1);
 	}
 	return (id);

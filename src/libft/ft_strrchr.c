@@ -32,11 +32,11 @@ char	*ft_strrchr(const char *str, int chr)
 	return (lastseen);
 }
 /*
-int main()
+int	main(void)
 {
 	printf("%p\n",strrchr("https://www.find_the_Error.com", 't'));
 	printf("%p\n",ft_strrchr("https://www.find_the_Error.com", 't'));
 }
 */
-	// if (!str)
-	// 	return (NULL);
+// if (!str)
+// 	return (NULL);

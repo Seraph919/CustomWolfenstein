@@ -47,13 +47,8 @@ void	cast_ray(t_game *game, float ray_angle, int ray_id)
 	init_cast_ray_data(game, &data, ray_angle, ray_id);
 	cast_ray_intersections(game, &data);
 	finalize_hit_type(&data);
-	hit_data = (t_ray_hit_data){
-		.ray_angle = data.ray_angle,
-		.ray_id = data.ray_id,
-		.dir = data.dir,
-		.h_hit = data.h_hit,
-		.v_hit = data.v_hit,
-		.for_door = data.final_hit_is_door
-	};
+	hit_data = (t_ray_hit_data){.ray_angle = data.ray_angle,
+		.ray_id = data.ray_id, .dir = data.dir, .h_hit = data.h_hit,
+		.v_hit = data.v_hit, .for_door = data.final_hit_is_door};
 	store_ray_properties(game, hit_data);
 }

@@ -12,8 +12,8 @@
 
 #include "../../headers/cub3d.h"
 
-void	init_corners(float corners[4][2], float new_x,
-		float new_y, float buffer)
+void	init_corners(float corners[4][2], float new_x, float new_y,
+		float buffer)
 {
 	corners[0][0] = new_x - buffer;
 	corners[0][1] = new_y - buffer;
@@ -53,27 +53,28 @@ int	is_valid_move(t_game *game, float new_x, float new_y)
 
 int	mouse_move(int x, int y, t_game *game)
 {
-    int center_x = game->window_width / 2;
-    int center_y = game->window_height / 2;
-    int mouse_delta_x;
-    float sensitivity;
+	int		center_x;
+	int		center_y;
+	int		mouse_delta_x;
+	float	sensitivity;
 
-    mouse_delta_x = x - center_x;
-    sensitivity = 0.002f;
-    game->player->angle += mouse_delta_x * sensitivity;
-    mlx_mouse_move(game->mlx, game->window, center_x, center_y);
-    game->last_mouse_x = center_x;
-    game->last_mouse_y = center_y;
-
-    (void) y;
-    return (0);
+	center_x = game->window_width / 2;
+	center_y = game->window_height / 2;
+	mouse_delta_x = x - center_x;
+	sensitivity = 0.002f;
+	game->player->angle += mouse_delta_x * sensitivity;
+	mlx_mouse_move(game->mlx, game->window, center_x, center_y);
+	game->last_mouse_x = center_x;
+	game->last_mouse_y = center_y;
+	(void)y;
+	return (0);
 }
 
 void	update_player_position(t_game *game, int new_x, int new_y)
 {
 	if (game->keys_held & (1 << 0))
 		move_forward(game);
-       	if (game->keys_held & (1 << 1))
+	if (game->keys_held & (1 << 1))
 		move_backward(game);
 	if (game->keys_held & (1 << 2))
 		strafe_left(game);
@@ -89,7 +90,7 @@ void	update_player_position(t_game *game, int new_x, int new_y)
 		return ;
 	}
 	if (game->map[(int)game->player->y][(int)game->player->x] != 'D'
-			&& game->map[(int)game->player->y][(int)game->player->x] != 'O')
+		&& game->map[(int)game->player->y][(int)game->player->x] != 'O')
 		game->map[(int)game->player->y][(int)game->player->x] = '0';
 	game->map[new_y][new_x] = game->data->player_char;
 	game->player->x = new_x;
