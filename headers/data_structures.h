@@ -100,7 +100,7 @@ typedef struct s_game
     int window_height;
     t_player *player;
     t_ray *rays;
-    t_texture *textures; // North, South, East, West
+    t_texture *textures;
     t_texture *pistol_texture;
     bool is_game_running;
     int key_state;
