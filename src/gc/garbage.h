@@ -13,22 +13,22 @@
 #ifndef GARBAGE_H
 # define GARBAGE_H
 
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 
 typedef enum e_action
 {
 	ALLOC,
 	FREE
-}	t_action;
+}						t_action;
 
 typedef struct s_garbage
 {
 	void				*ptr;
 	struct s_garbage	*next;
-}	t_garbage;
+}						t_garbage;
 
-void	*alloc(size_t size, t_action action);
+void					*alloc(size_t size, t_action action);
 
 #endif

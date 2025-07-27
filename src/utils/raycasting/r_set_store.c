@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:44:01 by aanmazir          #+#    #+#             */
-/*   Updated: 2025/07/27 10:15:28 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 13:45:42 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	store_ray_properties(t_game *game, t_ray_hit_data input)
 		h_distance = distance_between_points(game->player->x, game->player->y,
 				input.h_hit.x, input.h_hit.y);
 	else
-		h_distance = FLT_MAX;
+		h_distance = F_FLT_MAX;
 	if (input.v_hit.found)
 		v_distance = distance_between_points(game->player->x, game->player->y,
 				input.v_hit.x, input.v_hit.y);
 	else
-		v_distance = FLT_MAX;
+		v_distance = F_FLT_MAX;
 	ray = &game->rays[input.ray_id];
 	ray->is_door = input.for_door;
 	ray->ray_angle = input.ray_angle;
@@ -71,8 +71,8 @@ void	init_cast_ray_data(t_game *game, t_cast_ray_data *data, float ray_angle,
 	data->found_door_h = false;
 	data->found_door_v = false;
 	data->final_hit_is_door = false;
-	data->h_distance = FLT_MAX;
-	data->v_distance = FLT_MAX;
+	data->h_distance = F_FLT_MAX;
+	data->v_distance = F_FLT_MAX;
 }
 
 int	count_chars(int c, t_data *data, bool assign)

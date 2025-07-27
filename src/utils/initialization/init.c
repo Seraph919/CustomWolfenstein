@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:50:04 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/26 21:19:09 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 13:50:12 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,23 @@ void	image_adrr(t_game *game, int i, int width, int height)
 
 int	load_pistol_textures(t_game *game)
 {
-	int		i;
-	int		width;
-	int		height;
-	char	*num_str;
-	char	*file_name;
+	t_pistol_stff	pistol;
 
-	i = -1;
+	pistol.i = -1;
 	game->pistol_texture = alloc(sizeof(t_texture) * 7, ALLOC);
-	while (++i < 7)
+	while (++pistol.i < 7)
 	{
-		num_str = ft_itoa(i + 1);
-		file_name = ft_strjoin(num_str, ".xpm");
-		game->pistol_texture[i].img = mlx_xpm_file_to_image(game->mlx,
-				ft_strjoin("./src/textures/", file_name), &width, &height);
-		free(num_str);
-		free(file_name);
-		if (!game->pistol_texture[i].img)
+		pistol.num_str = ft_itoa(pistol.i + 1);
+		pistol.file_name = ft_strjoin(pistol.num_str, ".xpm");
+		pistol.temp = ft_strjoin("./src/textures/", pistol.file_name);
+		game->pistol_texture[pistol.i].img = mlx_xpm_file_to_image(game->mlx,
+				pistol.temp, &pistol.width, &pistol.height);
+		free(pistol.num_str);
+		free(pistol.file_name);
+		free(pistol.temp);
+		if (!game->pistol_texture[pistol.i].img)
 			return (exit_error(game->data, "Failed to load pistol texture"), 1);
-		image_adrr(game, i, width, height);
+		image_adrr(game, pistol.i, pistol.width, pistol.height);
 	}
 	return (0);
 }
