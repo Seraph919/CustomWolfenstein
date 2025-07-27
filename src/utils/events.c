@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aanmazir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:32:44 by aanmazir          #+#    #+#             */
-/*   Updated: 2025/07/26 15:36:51 by aanmazir         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:43:19 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	update_player_position(t_game *game, int new_x, int new_y)
 	game->map[new_y][new_x] = game->data->player_char;
 	game->player->x = new_x;
 	game->player->y = new_y;
-	render_map(game, game->map);
+	game->key_state = 0;
 	mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
 }
 

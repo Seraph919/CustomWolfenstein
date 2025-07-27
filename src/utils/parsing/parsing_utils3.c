@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/25 10:49:25 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:20:38 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ bool	file_process(t_data *data, char **av)
 	if (map_validation(data->map, data->map_y, data) == ERROR)
 		return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data,
 				M_ERROR), ERROR);
-	// print_stff(data);
 	if (texture_loading(data))
 		return (fireforce(data, AFTER), ERROR);
-	// optimizer(data);
 	return (SUCCESS);
 }
 
@@ -100,18 +98,4 @@ bool	valid_colorstr(char *s)
 		s++;
 	}
 	return (true);
-}
-
-int	index_after_spaces(char *s)
-{
-	int i = 0;
-	if (!s)
-		return (0);
-	while (is_white_space(s[i]))
-		i++;
-	if (!s[i])
-		return (0);
-	while (!is_white_space(s[i]))
-		i++;
-	return (i);
 }

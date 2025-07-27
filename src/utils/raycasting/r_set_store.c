@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_set_store.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aanmazir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:44:01 by aanmazir          #+#    #+#             */
-/*   Updated: 2025/07/25 18:51:16 by aanmazir         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:15:28 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,32 @@ void	init_cast_ray_data(t_game *game, t_cast_ray_data *data, float ray_angle,
 	data->final_hit_is_door = false;
 	data->h_distance = FLT_MAX;
 	data->v_distance = FLT_MAX;
+}
+
+int	count_chars(int c, t_data *data, bool assign)
+{
+	int	i;
+	int	k;
+	int	counter;
+
+	if (!data || !data->map)
+		return (0);
+	i = 0;
+	counter = 0;
+	while (data->map[i])
+	{
+		k = 0;
+		while (data->map[i][k])
+		{
+			if (data->map[i][k] == c)
+			{
+				if (assign)
+					assigner(data, k, i, counter);
+				counter++;
+			}
+			k++;
+		}
+		i++;
+	}
+	return (counter);
 }

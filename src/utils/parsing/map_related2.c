@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:43:20 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/25 09:10:19 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:14:42 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ char	**newlinecut(t_data *data)
 		if (data->map[i] && i != (data->map_y - 1))
 			data->map[i] = strend_trim(data->map[i], 1, 0);
 	}
-	data->ndoors = countChars('D', data, false);
+	data->ndoors = count_chars('D', data, false);
 	if (data->ndoors > 0)
 	{
 		data->doors = alloc(sizeof(t_doorpos) * data->ndoors, ALLOC);
 		if (!data->doors)
 			return (fireforce(data, AFTER), exit(1), NULL);
-		countChars('D', data, true);
+		count_chars('D', data, true);
 	}
 	return (data->map);
 }

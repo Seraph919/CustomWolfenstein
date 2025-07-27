@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/26 21:43:26 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:40:14 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 #define SUCCESS 0
 #define ERROR 1
 #define SYERROR 2
+#define DEBUGGING 0
 
 #define VALIDCHARS "DNWES10 \n"
 
@@ -187,7 +188,7 @@ bool above_checker(char **map, int y);
 bool is_void(char **map, size_t x, size_t y, size_t map_max);
 void print_stff(t_data *data);
 char **newlinecut(t_data *data);
-int countChars(int c, t_data *data, bool assign);
+int count_chars(int c, t_data *data, bool assign);
 bool is_open(t_game *game, bool unlock_door);
 
 void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
@@ -230,5 +231,9 @@ bool	checkbefore(char *s, int end);
 bool	check_srnds(t_data *data, int x, int y, size_t map_max);
 bool	not_surr(char **map, int x, int y);
 int	check_next_index(char **map, int x, int y);
+int	count_chars(int c, t_data *data, bool assign);
+void	assigner(t_data *data, int x, int y, int counter);
+int	index_after_spaces(char *s);
+void	draw_opening_scene(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/25 09:18:29 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:15:07 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,6 @@ void	assigner(t_data *data, int x, int y, int counter)
 	data->doors[counter].is_open = false;
 	data->doors[counter].x = x;
 	data->doors[counter].y = y;
-}
-
-int	countChars(int c, t_data *data, bool assign)
-{
-	int	i;
-	int	k;
-	int	counter;
-
-	if (!data || !data->map)
-		return (0);
-	i = 0;
-	counter = 0;
-	while (data->map[i])
-	{
-		k = 0;
-		while (data->map[i][k])
-		{
-			if (data->map[i][k] == c)
-			{
-				if (assign)
-					assigner(data, k, i, counter);
-				counter++;
-			}
-			k++;
-		}
-		i++;
-	}
-	return (counter);
 }
 
 bool	ray_hit(t_ray *rays)

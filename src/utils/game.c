@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/27 10:36:44 by asoudani          #+#    #+#             */
+/*   Updated: 2025/07/27 10:42:23 by asoudani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../headers/cub3d.h"
 
 void	moves(t_game *game)
@@ -22,8 +34,6 @@ int	game_loop(t_game *game)
 		return (1);
 	mlx_clear_window(game->mlx, game->window);
 	moves(game);
-	// if (game->keys_held & (1 << 6))
-	//      // !update this
 	if (game->sounds.fire || game->sounds.game_vibes)
 	{
 		game->vibesound_id = play_sound(game);
@@ -40,11 +50,11 @@ int	game_loop(t_game *game)
 	return (0);
 }
 
-void	render_map(t_game *game, char **map)
-{
-	(void)map;
-	game->key_state = 0;
-}
+// void	render_map(t_game *game, char **map)
+// {
+// 	(void)map;
+	
+// }
 
 int	mouse_butt(int button, int x, int y, void *param)
 {
@@ -70,17 +80,17 @@ int	start_gaming(t_game game, char **map)
 	game.player = malloc(sizeof(t_player));
 	if (!game.player)
 		return (exit_error(game.data, "fatal allocation error"), 1);
-	game.map_h = get_map_height(map); // ! do u still work with this stuff??
+	game.map_h = get_map_height(map);
 	game.map_w = get_map_width(map);
 	if (!init_mlx(&game))
+		return (free(game.player), 1);
+	game.key_state = 0;
+	if (!DEBUGGING)
 	{
-		free(game.player);
-		return (1);
+		game.opsound_id = play_opening_sound();
+		draw_opening_scene(&game);
+		game.sounds.game_vibes = true;
 	}
-	// game.opsound_id = play_opening_sound();
-	render_map(&game, map);
-	// draw_opening_scene(&game);
-	// game.sounds.game_vibes = true;
 	mlx_hook(game.window, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.window, 3, 1L << 1, key_release, &game);
 	mlx_hook(game.window, 6, 1L << 6, mouse_move, &game);
