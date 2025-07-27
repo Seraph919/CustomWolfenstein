@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_calc_c.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aanmazir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:57 by aanmazir          #+#    #+#             */
-/*   Updated: 2025/07/25 18:42:54 by aanmazir         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:35:35 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,10 @@ t_intercept_steps	calc_h_inter_and_steps(t_game *game, float angle,
 	if (dir.facing_right && steps.x_step < 0)
 		steps.x_step *= -1;
 	return (steps);
+}
+
+void	generate_3d_projection(t_game *game)
+{
+	draw_ceiling_and_floor(game);
+	draw_projection_strips(game);
 }

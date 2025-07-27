@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:40:14 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:47:05 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 #define SUCCESS 0
 #define ERROR 1
 #define SYERROR 2
-#define DEBUGGING 0
+#define DEBUGGING 1
 
 #define VALIDCHARS "DNWES10 \n"
 
@@ -149,7 +149,7 @@ int start_gaming(t_game game, char **map);
 
 // Texture drawing functions
 int get_texture_color(t_texture *texture, int tex_x, int tex_y);
-void draw_textured_wall(t_game *game, int x, int wall_top, int wall_height, int ray_id, bool isdoor);
+void draw_textured_wall(t_wall_args *wall_args);
 
 bool is_door(t_game *game, float x, float y);
 
@@ -191,7 +191,7 @@ char **newlinecut(t_data *data);
 int count_chars(int c, t_data *data, bool assign);
 bool is_open(t_game *game, bool unlock_door);
 
-void draw_sprite(t_game *game, t_texture *sprite, int dest_x, int dest_y, int dest_w, int dest_h);
+void draw_sprite(t_sprite_args *sprite_args);
 void draw_weapon(t_game *game, int index);
 void exit_error(t_data *data, char *s);
 t_ray_dir init_ray_direction(float ray_angle);
@@ -216,9 +216,9 @@ int texture_data(t_game *game);
 int	is_valid_move(t_game *game, float new_x, float new_y);
 
 // gaming moves and sounds
-pid_t play_sound(t_game *game);
-pid_t play_opening_sound(void);
-int	allocations(t_data *data);
+pid_t	play_sound(t_game *game);
+pid_t 	play_opening_sound(void);
+int		allocations(t_data *data);
 void	t_norm2_init(t_data *data, t_norm2 *norm);
 bool	handle_texture_direction(t_norm2 *n, char *line);
 bool	handle_texture_we_ea(t_norm2 *n, char *line);
@@ -230,10 +230,34 @@ bool	conditions(t_norm1 *norm);
 bool	checkbefore(char *s, int end);
 bool	check_srnds(t_data *data, int x, int y, size_t map_max);
 bool	not_surr(char **map, int x, int y);
-int	check_next_index(char **map, int x, int y);
-int	count_chars(int c, t_data *data, bool assign);
+int		check_next_index(char **map, int x, int y);
+int		count_chars(int c, t_data *data, bool assign);
 void	assigner(t_data *data, int x, int y, int counter);
-int	index_after_spaces(char *s);
+int		index_after_spaces(char *s);
 void	draw_opening_scene(t_game *game);
+
+void	print_stff(t_data *data);
+bool	outer_error_check(t_data *data);
+bool	check_direction_counts(t_direction_p *dir);
+bool	texture_loading(t_data *data);
+bool	load_single_texture(t_data *data, void **texture, char *path);
+void	set_tozero(t_data *data);
+bool	validate_color_strings(t_colors *colors);
+bool	allocate_color_arrays(t_colors *colors, t_data *data);
+bool	parse_color_values(t_colors *colors);
+bool	color_filling(t_data *data);
+
+int		get_texture_color(t_texture *texture, int tex_x, int tex_y);
+int		get_tex_x(t_ray *ray, t_texture *texture);
+void	draw_textured_strip(t_strip_args *args);
+void	get_wall_texture(t_game *game, t_ray *ray, t_texture **texture, int *face);
+void	draw_ceiling_and_floor(t_game *game);
+void	draw_projection_strips(t_game *game);
+t_intercept_steps	calc_v_inter_and_steps(t_game *game, float angle, t_ray_dir dir);
+t_ray_dir	init_ray_direction(float ray_angle);
+float	distance_between_points(float x1, float y1, float x2, float y2);
+bool	check_v_wall_and_door(t_game *game, t_trace_params params, float check_x, float check_y);
+t_wall_hit	trace_v_ray(t_game *game, t_trace_params params, t_intercept_steps steps);
+t_wall_hit	find_vertical_intersection(t_game *game, t_ray_input input);
 
 #endif

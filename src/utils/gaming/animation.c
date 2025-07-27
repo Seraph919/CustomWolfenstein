@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aanmazir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 14:53:22 by aanmazir          #+#    #+#             */
-/*   Updated: 2025/07/26 14:56:40 by aanmazir         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:54:48 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,21 @@ void	animation(t_game *game)
 	}
 }
 
+void	sprite_args_init(t_sprite_args *sprite_args, int pistol_y,
+	int pistol_w, int pistol_h)
+{
+	sprite_args->dest_y = pistol_y;
+	sprite_args->dest_w = pistol_w;
+	sprite_args->dest_h = pistol_h;
+}
+
 void	draw_weapon(t_game *game, int index)
 {
-	int	pistol_w;
-	int	pistol_h;
-	int	pistol_x;
-	int	pistol_y;
+	int				pistol_w;
+	int				pistol_h;
+	int				pistol_x;
+	int				pistol_y;
+	t_sprite_args	sprite_args;
 
 	animation(game);
 	if (game->current_style_index > 52)
@@ -52,13 +61,24 @@ void	draw_weapon(t_game *game, int index)
 	pistol_h = 1000;
 	pistol_x = (game->window_width - pistol_w) / 2 + 200;
 	pistol_y = game->window_height - pistol_h;
-	draw_sprite(game, &game->pistol_texture[game->current_anim_index], pistol_x,
-		pistol_y, pistol_w, pistol_h);
+	sprite_args.game = game;
+	sprite_args.sprite = &game->pistol_texture[game->current_anim_index];
+	sprite_args.dest_x = pistol_x;
+	sprite_args_init(&sprite_args, pistol_y, pistol_w, pistol_h);
+	draw_sprite(&sprite_args);
 }
 
 void	draw_opening_scene(t_game *game)
 {
-	draw_sprite(game, &game->textures[OPEN], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+	t_sprite_args	sprite_args;
+
+	sprite_args.game = game;
+	sprite_args.sprite = &game->textures[OPEN];
+	sprite_args.dest_x = 0;
+	sprite_args.dest_y = 0;
+	sprite_args.dest_w = WINDOW_WIDTH;
+	sprite_args.dest_h = WINDOW_HEIGHT;
+	draw_sprite(&sprite_args);
 	mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
 	sleep(10);
 }

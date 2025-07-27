@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:36:44 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:42:23 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:29:44 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,41 @@ void	moves(t_game *game)
 		game->player->angle += 0.05;
 }
 
-int	game_loop(t_game *game)
+void	sound_start(t_game *game)
 {
-	if (!game->is_game_running)
-		return (1);
-	mlx_clear_window(game->mlx, game->window);
-	moves(game);
 	if (game->sounds.fire || game->sounds.game_vibes)
 	{
 		game->vibesound_id = play_sound(game);
 		game->sounds.fire = false;
 		game->sounds.game_vibes = false;
 	}
+}
+
+int	game_loop(t_game *game)
+{
+	t_sprite_args	sprite_args;
+
+	if (!game->is_game_running)
+		return (1);
+	mlx_clear_window(game->mlx, game->window);
+	moves(game);
+	sound_start(game);
 	cast_rays(game);
 	generate_3d_projection(game);
 	render_minimap(game);
 	draw_weapon(game, game->current_anim_index);
-	draw_sprite(game, &game->textures[AIM], (WINDOW_WIDTH / 2) - 45,
-		(WINDOW_HEIGHT / 2) - 45, 45, 45);
-	mlx_put_image_to_window(game->mlx, game->window, game->img, 0, 0);
-	return (0);
+	{
+		sprite_args.game = game;
+		sprite_args.sprite = &game->textures[AIM];
+		sprite_args.dest_x = (WINDOW_WIDTH / 2) - 45;
+		sprite_args.dest_y = (WINDOW_HEIGHT / 2) - 45;
+		sprite_args.dest_w = 45;
+		sprite_args.dest_h = 45;
+		draw_sprite(&sprite_args);
+	}
+	return (mlx_put_image_to_window(
+			game->mlx, game->window, game->img, 0, 0), 0);
 }
-
-// void	render_map(t_game *game, char **map)
-// {
-// 	(void)map;
-	
-// }
 
 int	mouse_butt(int button, int x, int y, void *param)
 {

@@ -16,6 +16,12 @@ typedef struct s_rect
     int color;
 } t_rect;
 
+typedef struct s_wall_atr
+{
+	int		wall_top;
+	float	wall_height;
+} t_wall_atr;
+
 // for each door
 typedef struct doorpos{
     int x;
@@ -52,6 +58,36 @@ typedef struct s_texture
     int size_line;
     int endian;
 } t_texture;
+
+typedef struct s_strip_args
+{
+	t_game		*game;
+	int			x;
+	int			wall_top;
+	int			wall_height;
+	t_texture	*texture;
+	int			tex_x;
+}	t_strip_args;
+
+typedef struct s_wall_args
+{
+	t_game	*game;
+	int		x;
+	int		wall_top;
+	int		wall_height;
+	int		ray_id;
+	bool	isdoor;
+}	t_wall_args;
+
+typedef struct s_sprite_args
+{
+	t_game		*game;
+	t_texture	*sprite;
+	int			dest_x;
+	int			dest_y;
+	int			dest_w;
+	int			dest_h;
+}	t_sprite_args;
 
 typedef struct s_player
 {
