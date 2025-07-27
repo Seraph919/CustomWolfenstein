@@ -1,6 +1,6 @@
-NO ./src/textures/toilet_wall.xpm
-SO ./src/textures/toilet_wall.xpm
-EA ./src/textures/toilet_wall.xpm
+NO ./src/textures/black.xpm
+SO ./src/textures/dirtyBlack.xpm
+EA ./src/textures/left_wall.xpm
 WE ./src/textures/toilet_wall.xpm
 
 F 90,90,90
