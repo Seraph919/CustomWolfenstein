@@ -13,12 +13,12 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../lib/mlx.h"
 # include "../src/gc/garbage.h"
 # include "../src/get_next_line/get_next_line.h"
 # include "../src/libft/libft.h"
 # include "../src/printfd/printfd.h"
 # include "data_structures.h"
+# include <mlx.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
