@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:26:40 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:49:58 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:34:04 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	print_stff(t_data *data)
 {
 	size_t	map_index;
 
-	printf("north :%s", data->direction_paths->north_p);
-	printf("west :%s", data->direction_paths->west_p);
-	printf("east :%s", data->direction_paths->east_p);
-	printf("south :%s\n", data->direction_paths->south_p);
-	printf("F :%s", data->colors->f);
-	printf("c :%s\n", data->colors->c);
+	printf("\nnorth :%s", data->direction_paths->north_p);
+	printf("\nwest :%s", data->direction_paths->west_p);
+	printf("\neast :%s", data->direction_paths->east_p);
+	printf("\nsouth :%s\n", data->direction_paths->south_p);
+	printf("\nF :%s", data->colors->f);
+	printf("\nc :%s\n", data->colors->c);
 	map_index = 0;
 	while (map_index < data->map_y)
 	{
-		printf("%s", data->map[map_index]);
+		printf("%s\n", data->map[map_index]);
 		map_index++;
 	}
 	printf("\n\n");

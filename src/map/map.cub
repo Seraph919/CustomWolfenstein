@@ -1,0 +1,12 @@
+NO ./src/textures/dirtyBlack.xpm
+SO ./src/textures/dirtyBlack.xpm
+EA ./src/textures/left_wall.xpm
+WE ./src/textures/toilet_wall.xpm
+
+F 90,90,90
+C 236,236,236
+
+1111111
+1000001
+100W001
+11111111

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:47:07 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/26 21:40:07 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:42:12 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,13 @@ bool	handle_texture_direction(t_norm2 *n, char *line)
 {
 	if (texture_valid(line, "NO"))
 	{
-		n->direction->north_p = ft_strdup(strend_trim(line, 1,
-					index_after_spaces(line)));
+		n->direction->north_p = ft_strdup(strafter_type(line));
 		n->direction->n_ofn++;
 		return (true);
 	}
 	if (texture_valid(line, "SO"))
 	{
-		n->direction->south_p = ft_strdup(strend_trim(line, 1,
-					index_after_spaces(line)));
+		n->direction->south_p = ft_strdup(strafter_type(line));
 		n->direction->n_ofs++;
 		return (true);
 	}
@@ -60,15 +58,13 @@ bool	handle_texture_we_ea(t_norm2 *n, char *line)
 {
 	if (texture_valid(line, "WE"))
 	{
-		n->direction->west_p = ft_strdup(strend_trim(line, 1,
-					index_after_spaces(line)));
+		n->direction->west_p = ft_strdup(strafter_type(line));
 		n->direction->n_ofw++;
 		return (true);
 	}
 	if (texture_valid(line, "EA"))
 	{
-		n->direction->east_p = ft_strdup(strend_trim(line, 1,
-					index_after_spaces(line)));
+		n->direction->east_p = ft_strdup(strafter_type(line));
 		n->direction->n_ofe++;
 		return (true);
 	}

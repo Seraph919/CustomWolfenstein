@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:47:47 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:20:38 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:37:39 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*strend_trim(char *str, size_t nbytes, int start_index)
 	if (!str)
 		return (NULL);
 	k = 0;
-	i = start_index--;
+	i = start_index - 1;
 	end = strlen(str);
 	returned = alloc((sizeof(char) * end - nbytes) + 1, ALLOC);
 	if (!returned)
@@ -73,6 +73,7 @@ bool	file_process(t_data *data, char **av)
 	if (map_validation(data->map, data->map_y, data) == ERROR)
 		return (printfd(2, "ERROR\nFound an Error in map\n"), fireforce(data,
 				M_ERROR), ERROR);
+	print_stff(data);
 	if (texture_loading(data))
 		return (fireforce(data, AFTER), ERROR);
 	return (SUCCESS);
