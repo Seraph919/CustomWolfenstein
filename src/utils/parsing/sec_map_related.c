@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:40:55 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:24:23 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:30:19 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ bool	str_validation(int line, bool end, t_data *data)
 			return (false);
 		else if (check_srnds(data, n.i, line, n.map_y) == false)
 			return (false);
-		if (n.i == ft_strlen(data->map[line]) - 2
-			&& data->map[line][n.i] != '1')
+		if ((n.line == 0 || n.end) && n.i == ft_strlen(data->map[line]) - 2
+			&& data->map[line][n.i] != '1' && ft_strlen(data->map[line]) > 2)
 		{
 			if (!checkbefore(n.temp, n.endl - 1))
 				return (false);

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:35:54 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/26 21:41:33 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:31:01 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ bool	check_srnds(t_data *data, int x, int y, size_t map_max)
 
 bool	checkbefore(char *s, int end)
 {
-	if (!s)
+	if (!s || end < 0)
 		return (false);
-	while (end > 0)
+	while (end >= 0)
 	{
 		if (s[end] == '1')
 			return (true);
@@ -76,12 +76,46 @@ bool	conditions(t_norm1 *norm)
 	{
 		norm->temp = skip_spaces(norm->map[norm->line]);
 		norm->endl = ft_strlen(norm->temp) - 1;
-		if (!norm->temp || *norm->temp != '1' || norm->temp[norm->endl
-				- 1] != '1')
+		if (!norm->temp || *norm->temp != '1')
+			return (false);
+		if (norm->endl > 0 && norm->temp[norm->endl] != '1')
 		{
 			if (!checkbefore(norm->temp, norm->endl - 1))
 				return (false);
 		}
 	}
 	return (true);
+}
+
+bool	is_player_void(char **map, size_t x, size_t y, size_t map_max)
+{
+	if (y > 0 && map[y - 1] && x < ft_strlen(map[y - 1]))
+	{
+		if (is_white_space(map[y - 1][x]))
+			return (true);
+	}
+	else if (y == 0)
+		return (true); 
+	if (y + 1 < map_max && map[y + 1] && x < ft_strlen(map[y + 1]))
+	{
+		if (is_white_space(map[y + 1][x]))
+			return (true);
+	}
+	else
+		return (true);
+	if (x > 0)
+	{
+		if (is_white_space(map[y][x - 1]))
+			return (true);
+	}
+	else
+		return (true);
+	if (x + 1 < ft_strlen(map[y]))
+	{
+		if (is_white_space(map[y][x + 1]))
+			return (true);
+	}
+	else
+		return (true);
+	return (false);
 }
