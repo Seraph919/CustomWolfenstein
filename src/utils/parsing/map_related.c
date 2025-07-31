@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:35:54 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/31 14:25:47 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/08/01 00:16:39 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ bool	check_srnds(t_data *data, int x, int y, size_t map_max)
 	}
 	else if (!not_in_str(data->map[y][x], "NSEW"))
 	{
+		if (is_void(data->map, x, y, map_max))
+			return (false);
 		data->player_x = x;
 		data->player_y = y;
 	}
