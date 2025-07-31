@@ -66,8 +66,9 @@ bool	conditions(t_norm1 *norm)
 	return (true);
 }
 
-bool	conditions(char **map, size_t x, size_t y, size_t map_max)
+bool	conditionss(char **map, size_t x, size_t y, size_t map_max)
 {
+	(void) map_max;
 	if (x > 0)
 	{
 		if (is_white_space(map[y][x - 1]))
@@ -80,8 +81,7 @@ bool	conditions(char **map, size_t x, size_t y, size_t map_max)
 		if (is_white_space(map[y][x + 1]))
 			return (true);
 	}
-	else
-		return (true);
+	return (true);
 }
 
 bool	is_player_void(char **map, size_t x, size_t y, size_t map_max)
@@ -100,6 +100,6 @@ bool	is_player_void(char **map, size_t x, size_t y, size_t map_max)
 	}
 	else
 		return (true);
-	return (conditions(map, x, y, map_max));
+	return (conditionss(map, x, y, map_max));
 	return (false);
 }

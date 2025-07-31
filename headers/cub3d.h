@@ -238,6 +238,7 @@ void				assigner(t_data *data, int x, int y, int counter);
 int					index_after_spaces(char *s);
 void				draw_opening_scene(t_game *game);
 
+bool				conditions(t_norm1 *norm);
 void				print_stff(t_data *data);
 bool				outer_error_check(t_data *data);
 bool				check_direction_counts(t_direction_p *dir);
