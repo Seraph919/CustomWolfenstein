@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:47:07 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/30 18:42:12 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:22:37 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,14 @@ bool	handle_texture_we_ea(t_norm2 *n, char *line)
 		return (true);
 	}
 	return (false);
+}
+
+int	check_next_index(char **map, int x, int y)
+{
+	if (!map || !*map || !map[y])
+		return (ERROR);
+	if (map[y][x] != '0' && map[y][x] != '\0'
+		&& is_white_space(map[y][x]) == false)
+		return (SUCCESS);
+	return (ERROR);
 }

@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:43:20 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/30 20:30:19 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:23:37 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,39 @@ bool	above_checker(char **map, int y)
 
 bool	is_void(char **map, size_t x, size_t y, size_t map_max)
 {
-	// Check above - ensure the string has enough characters
-	if (y > 0 && map[y - 1] && x < ft_strlen(map[y - 1]) && is_white_space(map[y - 1][x]))
+	if (y > 0 && map[y - 1] && x < ft_strlen(map[y - 1])
+		&& is_white_space(map[y - 1][x]))
 		return (true);
-	// Check if we're trying to access beyond the string above
 	if (y > 0 && map[y - 1] && x >= ft_strlen(map[y - 1]))
 		return (true);
-	
-	// Check below
-	if (y + 1 < map_max - 1 && map[y + 1] && x < ft_strlen(map[y + 1]) && is_white_space(map[y + 1][x]))
+	if (y + 1 < map_max - 1 && map[y + 1] && x < ft_strlen(map[y + 1])
+		&& is_white_space(map[y + 1][x]))
 		return (true);
-	// Check if we're trying to access beyond the string below  
 	if (y + 1 < map_max - 1 && map[y + 1] && x >= ft_strlen(map[y + 1]))
 		return (true);
-		
-	// Check left
 	if (x > 0 && is_white_space(map[y][x - 1]))
 		return (true);
-	// Check right
 	if (x < ft_strlen(map[y]) - 1 && is_white_space(map[y][x + 1]))
 		return (true);
-	// Check if we're at the end of current line
 	if (x >= ft_strlen(map[y]) - 1)
 		return (true);
-		
 	if (y + 1 == map_max - 1)
 	{
 		if (above_checker(map, y + 1))
 			return (true);
 	}
 	return (false);
+}
+
+bool	not_surr(char **map, int x, int y)
+{
+	if (check_next_index(map, x + 1, y) == SUCCESS && check_next_index(map, x
+			- 1, y) == SUCCESS)
+		return (false);
+	if (check_next_index(map, x, y + 1) == SUCCESS && check_next_index(map, x, y
+			- 1) == SUCCESS)
+		return (false);
+	return (true);
 }
 
 char	**newlinecut(t_data *data)
