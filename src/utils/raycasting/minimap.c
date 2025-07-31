@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:59:39 by aanmazir          #+#    #+#             */
-/*   Updated: 2025/07/31 14:12:13 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:35:58 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	render_minimap(t_game *game)
 	t_rect	r;
 
 	y = 0;
-	while (y < game->map_h)
+	while (y < game->map_h - 1)
 	{
 		x = 0;
-		while (x < game->map_w)
+		while (x < game->map_w - 1)
 		{
 			c = WALL_COLOR;
 			if (game->map[y][x] && game->map[y][x] == '1')

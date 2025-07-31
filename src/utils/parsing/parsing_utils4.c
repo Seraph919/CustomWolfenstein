@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:50:15 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/31 14:17:43 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:51:04 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	map_validation(char **map, int map_size, t_data *data)
 	if (!map || !*map)
 		return (ERROR);
 	i = 0;
+	door_allocation(data);
 	while (i < map_size)
 	{
 		if (i == 0)

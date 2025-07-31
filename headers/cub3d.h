@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 13:46:09 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:50:30 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ bool				texture_valid(char *s1, char *s2);
 bool				above_checker(char **map, int y);
 bool				is_void(char **map, size_t x, size_t y, size_t map_max);
 void				print_stff(t_data *data);
-char				**newlinecut(t_data *data);
+void				door_allocation(t_data *data);
 int					count_chars(int c, t_data *data, bool assign);
 bool				is_open(t_game *game, bool unlock_door);
 

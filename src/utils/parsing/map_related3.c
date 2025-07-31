@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:15:07 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:52:31 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	is_open(t_game *game, bool unlock_door)
 	t_doorpos	*head;
 
 	i = 0;
-	if (game->data->ndoors > 0)
+	if (game->data && game->data->ndoors > 0)
 	{
 		head = &game->data->doors[i];
 		if (unlock_door)

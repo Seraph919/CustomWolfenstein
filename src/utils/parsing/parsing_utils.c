@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:29:01 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/27 10:19:23 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:34:01 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ bool	file_read(t_data *data, char **av)
 	int	y;
 
 	y = 0;
+	data->ndoors = 0;
 	if (!valid_file_name(av[1]))
 		return (ERROR);
 	if (get_allocation_size(&y, av) || file_copying(data, y, av))

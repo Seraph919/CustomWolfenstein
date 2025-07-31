@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:43:20 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/31 14:23:37 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:51:35 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,18 @@ bool	not_surr(char **map, int x, int y)
 	return (true);
 }
 
-char	**newlinecut(t_data *data)
+void	door_allocation(t_data *data)
 {
-	size_t	i;
-
 	if (!data->map)
-		return (NULL);
+		return ;
 	data->ndoors = 0;
-	i = -1;
-	while (++i < data->map_y)
-	{
-		if (data->map[i] && i != (data->map_y - 1))
-			data->map[i] = strend_trim(data->map[i], 1, 0);
-	}
 	data->ndoors = count_chars('D', data, false);
 	if (data->ndoors > 0)
 	{
 		data->doors = alloc(sizeof(t_doorpos) * data->ndoors, ALLOC);
 		if (!data->doors)
-			return (fireforce(data, AFTER), exit(1), NULL);
+			return (fireforce(data, AFTER), exit(1), (void)0);
 		count_chars('D', data, true);
 	}
-	return (data->map);
+	return ;
 }
