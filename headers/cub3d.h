@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:54:18 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/31 16:50:30 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:28:39 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,5 +268,8 @@ bool				check_v_wall_and_door(t_game *game, t_trace_params params,
 t_wall_hit			trace_v_ray(t_game *game, t_trace_params params,
 						t_intercept_steps steps);
 t_wall_hit			find_vertical_intersection(t_game *game, t_ray_input input);
-
+bool				can_toggle_doors(t_game *game);
+bool				is_player_safe_from_doors(t_game *game);
+float				calculate_distance(float x1, float y1, float x2, float y2);
+bool				is_door2(t_game *game, float x, float y);
 #endif

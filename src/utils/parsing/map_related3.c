@@ -6,7 +6,7 @@
 /*   By: asoudani <asoudani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:52:02 by asoudani          #+#    #+#             */
-/*   Updated: 2025/07/31 16:52:31 by asoudani         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:26:55 by asoudani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	ray_hit(t_ray *rays)
 	i = 0;
 	while (i < WINDOW_WIDTH)
 	{
-		if (rays[i].is_door == true && rays[i].distance <= 10)
+		if (rays[i].is_door == true && rays[i].distance <= 5)
 			return (true);
 		i++;
 	}
@@ -84,7 +84,7 @@ bool	is_open(t_game *game, bool unlock_door)
 		head = &game->data->doors[i];
 		if (unlock_door)
 		{
-			if (!is_door2(game, game->player->x, game->player->y))
+			if (can_toggle_doors(game))
 			{
 				while (i < game->data->ndoors)
 				{
@@ -92,7 +92,6 @@ bool	is_open(t_game *game, bool unlock_door)
 					head->is_open = !head->is_open;
 					i++;
 				}
-				i = 0;
 				change_door_state(game->map);
 			}
 		}
